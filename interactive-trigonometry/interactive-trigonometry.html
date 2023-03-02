@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive trigonometry</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="interactive-trigonometry.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/toggle-switch.css">
+    <script src="interactive-trigonometry.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Interactive trigonometry</h1>
+    </header>
+    <main class="flex-column">
+        <div class="flex-row">
+            <div>
+                <!-- Graph -->
+                <h2>Graph</h2>
+                <svg id="svg" stroke-width="0.3" viewBox="0 0 100 100"></svg>
+            </div>
+            <!-- Controls -->
+            <div class="flex-column">
+                <div>
+                    <!-- Angle -->
+                    <h2>Angle</h2>
+                    <div class="flex-row">
+                        <div class="category flex-column">
+                            <!-- Toggles -->
+                            <label class="toggle">
+                                <p>Pointer</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-pointer-toggle"
+                                        onchange="showAnglePointer = event.target.checked; updateState();">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <label class="toggle">
+                                <p>Guide Lines</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-guidelines-toggle"
+                                        onchange="showAngleGuidingLines = event.target.checked; updateState();">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <div id="angle-label-toggle-wrapper">
+                                <label class="toggle">
+                                    <p>Labels</p>
+                                    <label class="toggler-wrapper">
+                                        <input type="checkbox" id="angle-labels-toggle"
+                                            onchange="showAngleLabels = event.target.checked; updateState();">
+                                        <div class="toggler-slider bool-toggle">
+                                            <div class="toggler-knob"></div>
+                                        </div>
+                                    </label>
+                                </label>
+                                <label class="toggle">
+                                    <p>Degree</p>
+                                    <label class="toggler-wrapper">
+                                        <input type="checkbox" id="angle-degrad-toggle"
+                                            onchange="labelsAreRad = event.target.checked; updateState();">
+                                        <div class="toggler-slider">
+                                            <div class="toggler-knob"></div>
+                                        </div>
+                                    </label>
+                                    <p>Rad</p>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="category flex-column">
+                            <!-- Current -->
+                            <h3>Current:</h3>
+                            <div class="flex-row">
+                                <h4 id="current-angle-degree">360°</h4>
+                                <h4 id="current-angle-radian">2π (rad)</h4>
+                            </div>
+                        </div>
+                        <div class="category flex-column">
+                            <!-- I want -->
+                            <h3>I want:</h3>
+                            <label class="toggle">
+                                <p>Degree</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-iwant-degrad"
+                                        onchange="angleWantIsRadians = event.target.checked; if (!iWantPiSmashed) iWantPi = event.target.checked; updateState();">
+                                    <div class="toggler-slider">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                                <p>Radians</p>
+                            </label>
+                            <div class="flex-row">
+                                <input type="text" inputmode="numeric"
+                                    onkeydown="fractionInput();"
+                                    id="angle-iwant-input">
+                                <label id="angle-iwant-pi-wrapper" onmousedown="reactWantPi(event);"
+                                    oncontextmenu="reactWantPi(event);">
+                                    π
+                                    <input type="checkbox" id="angle-iwant-pi" onchange="updateState();">
+                                </label>
+                            </div>
+                            <div class="flex-row">
+                                <button onclick="actionSetAngle();">Set</button>
+                                <button onclick="actionAddAngle();">Add</button>
+                                <button onclick="actionSubAngle();">Sub</button>
+                                <button onclick="actionSweepAngle();">Sweep</button>
+                            </div>
+                        </div>
+                        <div class="category flex-column">
+                            <!-- Utils -->
+                            <h3>Utils</h3>
+                            <label class="toggle">
+                                <p>Show x mirror</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-mirror-x"
+                                    onchange="angleUtilXMirror = event.target.checked; updateState();">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <label class="toggle">
+                                <p>Show y mirror</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-mirror-y"
+                                    onchange="angleUtilYMirror = event.target.checked; updateState();">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <label class="toggle">
+                                <p>Overwind</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox" id="angle-overwind-toggle"
+                                        onchange="angleUtilOverwind = event.target.checked; updateState();">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <div class="flex-row">
+                                <button onclick="pointerAngle += PIx2; updateState();">Inrement 360/2pi</button>
+                                <button onclick="pointerAngle -= PIx2; updateState();">Decrement 360/2pi</button>
+                            </div>
+                            <div class="flex-row">
+                                <button onclick="pointerAngle += pi; updateState();">Inrement 180/pi</button>
+                                <button onclick="pointerAngle -= pi; updateState();">Decrement 180/pi</button>
+                            </div>
+                        </div>
+                        <button class="resetter" onclick="defaultAngleState();"></button>
+                    </div>
+                </div>
+                <div>
+                    <!-- Functions -->
+                    <h2>Functions</h2>
+                    <div class="flex-row">
+                        <div class="category flex-column">
+                            <!-- Toggles -->
+                            <label class="toggle">
+                                <p>Show sin</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <label class="toggle">
+                                <p>Show cos</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                            <label class="toggle">
+                                <p>Show tan/ctan line</p>
+                                <label class="toggler-wrapper">
+                                    <input type="checkbox">
+                                    <div class="toggler-slider bool-toggle">
+                                        <div class="toggler-knob"></div>
+                                    </div>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="category flex-column">
+                            <h3>Current:</h3>
+                            <div class="flex-row">
+                                <label class="flex-column">sin<input type="radio" name="display_function"
+                                        value="sin" /></label>
+                                <label class="flex-column">cos<input type="radio" name="display_function"
+                                        value="cos" /></label>
+                                <label class="flex-column">tan<input type="radio" name="display_function"
+                                        value="tan" /></label>
+                                <label class="flex-column">ctan<input type="radio" name="display_function"
+                                        value="ctan" /></label>
+                            </div>
+                            <div class="flex-row">
+                                <div class="flex-column">
+                                    <h4>sin(0.46346 rad) = </h4>
+                                    <h4>sin(34°) = </h4>
+                                </div>
+                                <h4>0.4352353</h4>
+                                <button>W</button>
+                            </div>
+                        </div>
+                        <div class="category flex-column">
+                            <h3>Zones</h3>
+                            <div class="flex-row">
+                                <button>Positive</button>
+                                <button>Negative</button>
+                            </div>
+                            <div class="flex-row">
+                                <button>Equals</button>
+                                <input type="text" inputmode="numeric" onkeydown="fractionInput()" value="">
+                            </div>
+                            <div class="flex-row">
+                                <button>More</button>
+                                <input type="text" inputmode="numeric" onkeydown="fractionInput()" value="">
+                            </div>
+                            <div class="flex-row">
+                                <button>Less</button>
+                                <input type="text" inputmode="numeric" onkeydown="fractionInput()" value="">
+                            </div>
+                        </div>
+                        <button class="resetter"></button>
+                    </div>
+                </div>
+                <div>
+                    <!-- Formulae -->
+                    <h2>Formulae</h2>
+                    <div class="flex-row">
+                        <div class="category flex-column">
+                            <h3>Element</h3>
+                            <div class="flex-row">
+                                <input type="text">
+                                <button>W</button>
+                            </div>
+                        </div>
+                        <div class="category flex-column">
+                            <button>Get</button>
+                            <button>Use</button>
+                            <button>Find parents</button>
+                        </div>
+                        <div class="category flex-column">
+                            <h3>Use sin(x)</h3>
+                            <div>
+                                list of options here
+                            </div>
+                        </div>
+                        <button class="resetter"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <!-- Share -->
+            <h2>Share</h2>
+            <div class="flex-row nowrap">
+                <div class="category flex-column">
+                    <h3>Generate</h3>
+                    <div class="flex-row">
+                        <button>Create</button>
+                        <h4>State string here</h4>
+                        <button>Clipboard</button>
+                    </div>
+                </div>
+                <div class="category flex-column">
+                    <h3>Load</h3>
+                    <div class="flex-row">
+                        <h4>State string here</h4>
+                        <button>Load</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            @dzuchun, all rights reversed, 2023
+        </footer>
+    </main>
+</body>
+
+</html>
