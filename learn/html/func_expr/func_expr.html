@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Функції. Вирази. Область визначення та область значень.</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+    body {
+      min-width: 60%;
+      min-width: 500px;
+    }
+    table {
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 24px;
+      border-spacing: 5;
+      border: 2px solid black;
+    }
+
+    table th {
+      padding: 3px 10px;
+      background-color: white;
+      border-top: none;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      background-color: #DDDDDD;
+    }
+
+    table td {
+      padding: 3px 10px;
+      border-top: none;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-top: 1px solid black;
+      border-bottom: none;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Функції. Вирази. Область визначення та область
+значень.</h1>
+</header>
+<h1 class="unnumbered" id="section"></h1>
+<p><strong>Функція f</strong> - правило, за яким об’єкт A перетворюється
+на об’єкт B.<br />
+<strong>Область (множина) визначення D(f)</strong> - множина, якій має
+належати об’єкт A. Має включати в себе всі можливі вводи для функції та
+не включати значень, які функція не зможе прийняти..<br />
+<strong>Область (множина) значень E(f)</strong> - множина, якій
+належатиме об’єкт B. Має включати в сееб всі можливі результати
+виконання функції..<br />
+<strong>Аргументом функції f(x)</strong> - називають об’єкт x.<br />
+<strong>Значенням функції f(x)</strong> - називають результат виконання
+операції, тобто об’єкт f(x).<br />
+Тобто означення функції можна записати так: <span
+class="math display">\[A \mapsto B, \quad A \in D(f), B \in
+E(f)\]</span></p>
+<p><strong>Вираз</strong> - інструкція з виконання дій над
+об’єктами..<br />
+Виразом можна задати функцію, наприклад: <span
+class="math display">\[f(x) = x - 5 \qquad f(x) = x^2 \qquad f(x) =
+\frac{1}{x-1}\]</span></p>
+<p>Вираз може використовувавти інші функції, наприклад: <span
+class="math display">\[f(x) = \sqrt{x - 1} \qquad f(x) = log_{6} (x)
+\qquad f(x) = \sin(x^2 - 127)\]</span></p>
+<p>Примітка: Єдине обмеження - не можна задавати функцію, використовуючи
+її ж саму, наприклад: <span class="math display">\[f(x) = f(x)^2 +
+\sin(f(x)) + 1\]</span> Запис више задає не саму функцію, а лише певну
+властивість функції. Це - функціональне рівняння.</p>
+<h1 class="unnumbered" id="довідка">Довідка</h1>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span
+class="math inline">\(f(x)\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(D(f)\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(E(f)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(|x|\)</span> -
+модуль</td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(sgn(x)\)</span> - функція знаку</td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span>-1; 0; +1</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(x^0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{0\}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\{1\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за непарного <span class="math inline">\(n &lt; 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{0\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{0\}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за непарного <span class="math inline">\(n &gt; 0\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за парного <span class="math inline">\(n &lt; 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{0\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((0;
++\infty)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за парного <span class="math inline">\(n &gt; 0\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за нецілого <span class="math inline">\(n &lt; 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((0;
++\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((0;
++\infty)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(x^n\)</span>
+за нецілого <span class="math inline">\(n &gt; 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(\sqrt[n]{x}\)</span> за непарного <span
+class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(\sqrt[n]{x}\)</span> за парного <span
+class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
++\infty)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(\sin(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([-1;
++1]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(\cos(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([-1;
++1]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\tan(x) =
+tg(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{\frac{\pi}{2} + \pi n \}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\cot(x) =
+ctg(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb{R}
+\backslash \{\pi n \}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(arcsin(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([-1;
++1]\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\([-\frac{\pi}{2}; \frac{\pi}{2}]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(arccos(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([-1;
++1]\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([0;
+\pi]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(arctg(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\((-\frac{\pi}{2}; \frac{\pi}{2})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(arcctg(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((0;
+\pi)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\log_a
+(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((0; +\infty)
+\backslash \{1\}\)</span> для <span class="math inline">\(a\)</span>,
+<span class="math inline">\((0; +\infty)\)</span> для <span
+class="math inline">\(x\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\mathbb{R}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 class="unnumbered" id="приклади">Приклади</h1>
+<p><strong>1. Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\(x\)</span>.</strong><br />
+Розв’язок. Функція ніяк не оперує із своїм аргументом, тобто і причини
+якось його обмежувати теж немає. Функція видає те значення, яке в неї
+подають, тож області визначення та значень будуть однакові.<br />
+Відповідь: D(f) = <span class="math inline">\(\mathbb{R}\)</span>, E(f)
+= <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p><strong>2. Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\(x^2\)</span>.</strong><br />
+Розв’язок. Будь-яке число можна множити саме на себе, отже обмежувати
+D(f) причин нема. Піднесення до квадрату завжди дає невід’ємний
+результат (<span class="math inline">\(\ge0\)</span>), тож у цьому
+випадку і множима значень буде такою.<br />
+Відповідь: D(f) = <span class="math inline">\(\mathbb{R}\)</span>, E(f)
+= <span class="math inline">\([0; +\infty)\)</span>.<br />
+<strong>Зверніть увагу!</strong> Не завжди піднесення до квадрату
+гарантує множину значень <span class="math inline">\([0;
++\infty)\)</span> - це відбувається лише тоді, коли <strong>множина
+значень виразу, що підносять до квадарату</strong> містить у собі всі
+можливі значення за модулем. Якщо цього не відбувається, множина значень
+може бути іншою:<br />
+<strong>3. Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\((|x| + 1)^2\)</span>.</strong><br />
+Розв’язок. Всі операції у означенні є такими, які можна робити з
+будь-якими числами, тобто обмежувати D(f) причин нема. Взяття модуля
+завжди дає невід’ємний результат (<span
+class="math inline">\(\ge0\)</span>). Тоді вираз, що підноситься у
+квадрат має значення не менше одиниці (<span
+class="math inline">\(\ge1\)</span>). Це означає, що після піднесення
+його до квадрату результат буде більшим за 1, адже значення менші за 1
+отримуються при піднесені до квадарату значень у інтервалі <span
+class="math inline">\((-1; +1)\)</span>.<br />
+Відповідь: D(f) = <span class="math inline">\(\mathbb{R}\)</span>, E(f)
+= <span class="math inline">\([1; +\infty)\)</span>. На графіку це
+виглядає так:</p>
+<figure id="fig:gr1">
+<img src="gr1.png" />
+<figcaption> Графік рівності <span class="math inline">\(y = \left(|x| +
+1\right)^2\)</span></figcaption>
+</figure>
+<p>Зверніть увагу, як різко функція розвертається після досягання
+одиниці. Використання граферів може значно спростити опанування тем,
+пов’язаних із функціями.</p>
+<p><strong>3. Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\(\log_{x} (2)\)</span>.</strong><br />
+Розв’язок. Основою логарифму може бути будь-яке додатнє число окрім 1,
+отже і D(f) буде такою. 2 можна підносити до будь-якого степеня, а отже
+і всі можливі результати логарифму теж будуть присутні. Єдиним
+виключенням є результат 0, адже він завжди відповідає 1 (а не 2).<br />
+Відповідь: D(f) = <span class="math inline">\((0; 1) \cup (1; +\infty) =
+(0; +\infty) \backslash \{1\}\)</span>, E(f) = <span
+class="math inline">\((-\infty; 0) \cup (0; +\infty) =
+\mathbb{R}\backslash \{0\}\)</span>. На графіку це виглядає так:</p>
+<figure id="fig:gr2">
+<img src="gr2.png" />
+<figcaption> Графік рівності <span class="math inline">\(y = \log_{x}
+(2)\)</span></figcaption>
+</figure>
+<p>Зверніть увагу на те, як поводить себе графік біля <span
+class="math inline">\(x = 1\)</span>. <strong>Зверніть увагу!</strong>
+Не соромтесь розбивати задачу на багато простих частин:<br />
+<strong>4. Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\(\log_{x^2} (2)\)</span>.</strong><br />
+Розв’язок. Основою логарифму може бути будь-яке додатнє число окрім 1,
+отже <span class="math inline">\(x^2 \in (0; 1) \cup (1; +\infty) = (0;
++\infty) \backslash \{1\}\)</span>. З такими результатами до квадрату
+підносяться всі числа окрім -1, 0 та 1, при цьому вони досягають вссіх
+значень у зазначеніть множині. 2 можна підносити до будь-якого степеня,
+а отже і всі можливі результати логарифму теж будуть присутні. Єдиним
+виключенням є результат 0, адже він завжди відповідає 1 (а не 2).<br />
+Відповідь: D(f) = <span class="math inline">\((-\infty; -1) \cup (-1; 0)
+\cup (0; +1) \cup (+1; +\infty) = \mathbb{R} \backslash \{-1; 0;
++1\}\)</span>, E(f) = <span class="math inline">\((-\infty; 0) \cup (0;
++\infty) = \mathbb{R}\backslash \{0\}\)</span>. На графіку це виглядає
+так:</p>
+<figure id="fig:gr2">
+<img src="gr3.png" />
+<figcaption> Графік рівності <span class="math inline">\(y = \log_{x^2}
+(2)\)</span></figcaption>
+</figure>
+<p>Як часто це буває, задача має не єдиний розв’язок:</p>
+<p><strong>4(2). Знайдіть D(f) та E(f), якщо f(x) = <span
+class="math inline">\(\log_{x^2} (2)\)</span>.</strong><br />
+Розв’язок. За властивостями логарифмів, знаходимо: <span
+class="math display">\[\log_{x^2} (2) = 2 \log_{\sqrt[2]{x^2}}
+(2)\]</span> Оскільки, <span class="math inline">\(\sqrt[2]{x^2} =
+|x|\)</span>, маємо: <span class="math display">\[\log_{x^2} (2) = 2
+\log_{|x|}(2)\]</span> Тепер <span class="math inline">\(|x| \in (0; 1)
+\cup (1; +\infty)\)</span>, а отже <span
+class="math inline">\(x\)</span> може лежати як у цій множині, так і у
+протилежній їй за знаком <span class="math inline">\((-\infty; -1) \cup
+(-1; 0)\)</span>. Об’єднавши їх, матимемо відповідь. Множення всіх чисел
+у множині <span class="math inline">\(\mathbb{R}\backslash
+\{0\}\)</span> на 2 залишає їх у зазначеній множині (число не стане
+нулем від множення на 2).<br />
+Відповідь: D(f) = <span class="math inline">\((-\infty; -1) \cup (-1; 0)
+\cup (0; +1) \cup (+1; +\infty) = \mathbb{R} \backslash \{-1; 0;
++1\}\)</span>, E(f) = <span class="math inline">\((-\infty; 0) \cup (0;
++\infty) = \mathbb{R}\backslash \{0\}\)</span>.</p>
+<footer>
+<span class="citation" data-cites="dzuchun">@dzuchun</span>, all rights
+reversed
+</footer>
+</body>
+</html>
