@@ -1,9 +1,13 @@
 * {
   transition-property: all;
   transition-duration: 20ms;
+
+  font-style: normal;
+  font-weight: 500;
+  font-family: sans-serif;
 }
 
-svg * {
+#svg * {
   transition-property: all;
   transition-duration: 100ms;
 }
@@ -13,7 +17,7 @@ svg * {
   transition-duration: 0;
 }
 
-svg {
+#svg {
   width: 100%;
   height: auto;
   min-width: 40vw;
@@ -24,7 +28,7 @@ svg {
   stroke: black;
 }
 
-svg > circle {
+#svg > circle {
   position: relative;
 }
 
@@ -37,7 +41,10 @@ h2,
 h3,
 h4,
 p,
-label {
+label,
+th,
+td,
+svg * {
   margin: auto;
   user-select: none;
 }
@@ -80,7 +87,7 @@ label {
 }
 
 .angle-label {
-  font-size: 4px;
+  font-size: 3px;
   font-weight: 150;
   font-style: normal;
   font-family: sans-serif;
@@ -88,21 +95,49 @@ label {
 }
 
 .pointer-label-bg {
-  font-size: 4px;
-  font-weight: 600;
+  font-size: 3px;
+  font-weight: 150;
   font-style: normal;
   font-family: sans-serif;
   color: transparent;
   stroke: white;
-  stroke-width: 0.6em;
+  stroke-width: 0.6px;
 }
 
 .pointer-label {
-  font-size: 4px;
+  font-size: 3px;
   font-weight: 150;
   font-style: normal;
   font-family: sans-serif;
   stroke: green;
+}
+
+.functions-label {
+  font-size: 2.5px;
+  font-weight: 150;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+.functions-label-bg {
+  font-size: 2.5px;
+  font-weight: 150;
+  font-style: normal;
+  font-family: sans-serif;
+  stroke: white;
+  stroke-width: 0.6px;
+}
+
+.sin-label {
+  stroke: blue;
+}
+
+.cos-label {
+  stroke: red;
+}
+
+.tan-label {
+  stroke: purple;
 }
 
 #angle-label-toggle-wrapper {
@@ -120,4 +155,13 @@ label {
 #angle-iwant-pi-wrapper {
   border-style: solid;
   border-width: 5px;
+}
+
+.katex * {
+  font-size: 0.98em !important;
+  font-style: normal !important;
+}
+
+.wikiref {
+  color: green;
 }

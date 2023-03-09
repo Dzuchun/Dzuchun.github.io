@@ -1,0 +1,165 @@
+[
+  {
+    "value": 0,
+    "litDeg": 0,
+    "litRad": "0",
+    "sin": "0",
+    "cos": "1",
+    "tan": "0",
+    "cot": "±∞",
+    "cot_tex": "\\pm\\infty"
+  },
+  {
+    "value": 0.523598,
+    "litDeg": 30,
+    "litRad": "π/6",
+    "sin": "1/2",
+    "sin_tex": "\\dfrac12",
+    "cos": "√3/2",
+    "cos_tex": "\\dfrac{\\sqrt{3}}{2}",
+    "tan": "1/√3",
+    "cot": "√3"
+  },
+  {
+    "value": 0.785398,
+    "litDeg": 45,
+    "litRad": "π/4",
+    "sin": "1/√2",
+    "cos": "1/√2",
+    "tan": "1",
+    "cot": "1"
+  },
+  {
+    "value": 1.047197,
+    "litDeg": 60,
+    "litRad": "π/3",
+    "sin": "√3/2",
+    "cos": "1/2",
+    "cos_tex": "\\dfrac12",
+    "tan": "√3",
+    "cot": "1/√3"
+  },
+  {
+    "value": 1.570796,
+    "litDeg": 90,
+    "litRad": "π/2",
+    "sin": "1",
+    "cos": "0",
+    "tan": "±∞",
+    "cot": "0"
+  },
+  {
+    "value": 2.094395,
+    "litDeg": 120,
+    "litRad": "2π/3",
+    "sin": "√3/2",
+    "cos": "-1/2",
+    "cos_tex": "-\\dfrac12",
+    "tan": "-√3",
+    "cot": "-1/√3"
+  },
+  {
+    "value": 2.356194,
+    "litDeg": 135,
+    "litRad": "3π/4",
+    "sin": "1/√2",
+    "cos": "-1/√2",
+    "tan": "-1",
+    "cot": "-1"
+  },
+  {
+    "value": 2.617993,
+    "litDeg": 150,
+    "litRad": "5π/6",
+    "sin": "1/2",
+    "sin_tex": "\\dfrac12",
+    "cos": "-√3/2",
+    "tan": "-1/√3",
+    "cot": "-√3"
+  },
+  {
+    "value": 3.141592,
+    "litDeg": "180",
+    "litRad": "π",
+    "sin": "0",
+    "cos": "-1",
+    "tan": "0",
+    "cot": "±∞"
+  },
+  {
+    "value": 3.665191,
+    "litDeg": 210,
+    "litRad": "7π/6",
+    "sin": "-1/2",
+    "sin_tex": "-\\dfrac12",
+    "cos": "-√3/2",
+    "tan": "1/√3",
+    "cot": "√3"
+  },
+  {
+    "value": 3.926990,
+    "litDeg": 225,
+    "litRad": "5π/4",
+    "sin": "-1/√2",
+    "cos": "-1/√2",
+    "tan": "1",
+    "cot": "1"
+  },
+  {
+    "value": 4.188790,
+    "litDeg": 240,
+    "litRad": "4π/3",
+    "sin": "-√3/2",
+    "cos": "-1/2",
+    "cos_tex": "-\\dfrac12",
+    "tan": "√3",
+    "cot": "1/√3"
+  },
+  {
+    "value": 4.712388,
+    "litDeg": 270,
+    "litRad": "3π/2",
+    "sin": "-1",
+    "cos": "0",
+    "tan": "±∞",
+    "cot": "0"
+  },
+  {
+    "value": 5.235987,
+    "litDeg": 300,
+    "litRad": "5π/3",
+    "sin": "-√3/2",
+    "cos": "1/2",
+    "cos_tex": "\\dfrac12",
+    "tan": "-√3",
+    "cot": "-1/√3"
+  },
+  {
+    "value": 5.497787,
+    "litDeg": 315,
+    "litRad": "7π/4",
+    "sin": "-1/√2",
+    "cos": "1/√2",
+    "tan": "-1",
+    "cot": "-1"
+  },
+  {
+    "value": 5.759786,
+    "litDeg": 330,
+    "litRad": "11π/6",
+    "sin": "-1/2",
+    "sin_tex": "-\\dfrac12",
+    "cos": "√3/2",
+    "tan": "-1/√3",
+    "cot": "-√3"
+  },
+  {
+    "value": 6.283185,
+    "litDeg": 360,
+    "litRad": "2π",
+    "sin": "0",
+    "cos": "1",
+    "tan": "0",
+    "cot": "±∞"
+  }
+]
