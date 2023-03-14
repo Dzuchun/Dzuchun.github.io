@@ -1104,7 +1104,7 @@ const defaultFunctions = {
     -Math.sqrt(3),
   ],
 };
-let loadGuidelines = fetch("./data/default-guidelines.json").then(async (r) =>
+let loadGuidelines = fetch("data/default-guidelines.json").then(async (r) =>
   r.json().then((res) => {
     defaultGuidelines = res;
   })
@@ -1873,7 +1873,7 @@ const functionAreas = [
 // #region Loading formulae base
 
 let formulaeBase;
-let fomulaePromise = fetch("./data/formulae.json").then(async (f) =>
+let fomulaePromise = fetch("data/formulae.json").then(async (f) =>
   f.json().then((r) => (formulaeBase = r))
 );
 
@@ -3008,7 +3008,7 @@ function loadThemes() {
 }
 
 function updateTheme() {
-  themeLink.href = `./themes/${selectTheme.value}/styles.css`;
+  themeLink.href = `themes/${selectTheme.value}/styles.css`;
 }
 
 // #endregion
@@ -3027,7 +3027,7 @@ function loadColors() {
 }
 
 function updateColors() {
-  let l = `./area-colors/${selectColors.value}.css`;
+  let l = `area-colors/${selectColors.value}.css`;
   colorsLink.href = l;
   errorImg.src = l;
 }
