@@ -1,0 +1,955 @@
+[
+  {
+    "id": 1,
+    "parents": [],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)",
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "1",
+    "tex": "cos^2(x) + sin^2(x) = 1",
+    "query": "cos^2(x) + sin^2(x) = 1",
+    "wikiref": "https://socratic.org/questions/how-do-you-prove-sin-2-x-cos-2-x-1-using-other-trigonometric-identities"
+  },
+  {
+    "id": 2,
+    "parents": [
+      1
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)"
+    ],
+    "result": "sin(x)",
+    "tex": "sin(x) = \\pm \\sqrt{1 - cos^2 (x)}",
+    "query": "sin(x) = +-sqrt(1 - cos^2 (x))"
+  },
+  {
+    "id": 3,
+    "parents": [
+      1
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "cos(x)",
+    "tex": "cos(x) = \\pm\\sqrt{1 - sin^2 (x)}",
+    "query": "cos(x) = +-sqrt(1 - sin^2 (x))"
+  },
+  {
+    "id": 4,
+    "parents": [
+      1
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)"
+    ],
+    "result": "sin^2(x)",
+    "tex": "sin^2(x) = 1 - cos^2 (x)",
+    "query": "sin^2(x) = 1 - cos^2 (x)"
+  },
+  {
+    "id": 5,
+    "parents": [
+      1
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "cos^2(x)",
+    "tex": "cos^2(x) = 1 - sin^2 (x)",
+    "query": "cos^2(x) = 1 - sin^2 (x)"
+  },
+  {
+    "id": 6,
+    "parents": [],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "cos(x+y)",
+    "tex": "cos(x+y) = cos(x)\\cdot cos(y) - sin(x) \\cdot sin(y)",
+    "query": "cos(x+y) = cos(x) * cos(y) - sin(x) * sin(y)"
+  },
+  {
+    "id": 7,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "cos(x-y)",
+    "tex": "cos(x-y) = cos(x)\\cdot cos(y) + sin(x) \\cdot sin(y)",
+    "query": "cos(x-y) = cos(x) * cos(y) + sin(x) * sin(y)"
+  },
+  {
+    "id": 8,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "cos(2x)",
+    "tex": "cos(2x) = cos^2(x) - sin^2(x)",
+    "query": "cos(2x) = cos^2(x) - sin^2(x)"
+  },
+  {
+    "id": 9,
+    "parents": [],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "sin(x+y)",
+    "tex": "sin(x+y) = cos(x)\\cdot sin(y) + sin(x) \\cdot cos(y)",
+    "query": "sin(x+y) = cos(x) * sin(y) + sin(x) * cos(y)"
+  },
+  {
+    "id": 10,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "sin(x-y)",
+    "tex": "sin(x-y) = cos(x)\\cdot sin(y) - sin(x) \\cdot cos(y)",
+    "query": "sin(x-y) = cos(x) * sin(y) - sin(x) * cos(y)"
+  },
+  {
+    "id": 11,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "sin(2x)",
+    "tex": "sin(2x) = 2\\cdot cos(x) \\cdot sin(x)",
+    "query": "sin(2x) = 2 * cos(x) * sin(x)"
+  },
+  {
+    "id": 12,
+    "parents": [
+      8,
+      1
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "cos(2x)",
+    "tex": "cos(2x) = 1 - 2\\cdot sin^2(x)",
+    "query": "cos(2x) = 1 - 2 * sin^2(x)"
+  },
+  {
+    "id": 13,
+    "parents": [
+      8,
+      1
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)"
+    ],
+    "result": "cos(2x)",
+    "tex": "cos(2x) = 2\\cdot cos^2(x) - 1",
+    "query": "cos(2x) = 2 * cos^2(x) - 1"
+  },
+  {
+    "id": 14,
+    "parents": [
+      8,
+      1
+    ],
+    "uses": [
+      "cos(2x)",
+      "cos(x)"
+    ],
+    "result": "sin^2(x)",
+    "tex": "sin^2(x) = \\dfrac12\\left( 1 - cos^2(x) \\right)",
+    "query": "sin^2(x) = ( 1 - cos^2(x))/2"
+  },
+  {
+    "id": 15,
+    "parents": [
+      8,
+      1
+    ],
+    "uses": [
+      "cos(2x)",
+      "cos(x)"
+    ],
+    "result": "cos^2(x)",
+    "tex": "cos^2(x) = \\dfrac12\\left( 1 + cos^2(x) \\right)",
+    "query": "cos^2(x) = ( 1 + cos^2(x))/2"
+  },
+  {
+    "id": 16,
+    "parents": [
+      12,
+      14
+    ],
+    "uses": [
+      "cos(x)"
+    ],
+    "result": "sin(x/2)",
+    "tex": "sin \\left( \\dfrac{x}{2} \\right) = \\pm \\sqrt{\\dfrac{1-cos(x)}{2}}",
+    "query": "sin(x/2) = +- sqrt((1-cos(x))/2)"
+  },
+  {
+    "id": 17,
+    "parents": [
+      13,
+      15
+    ],
+    "uses": [
+      "cos(x)"
+    ],
+    "result": "cos(x/2)",
+    "tex": "cos \\left( \\dfrac{x}{2} \\right) = \\pm \\sqrt{\\dfrac{1+cos(x)}{2}}",
+    "query": "cos(x/2) = +- sqrt((1+cos(x))/2)"
+  },
+  {
+    "id": 18,
+    "parents": [
+      1,
+      9,
+      10
+    ],
+    "uses": [
+      "sin(x)"
+    ],
+    "result": "sin(x+y)*sin(x-y)",
+    "tex": "sin(x+y)\\cdot sin(x-y) = sin^2(x) - sin^2(y)",
+    "query": "sin(x+y) * sin(x-y) = sin^2(x) - sin^2(y)"
+  },
+  {
+    "id": 19,
+    "parents": [
+      1,
+      9,
+      10
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "sin(x+y)*sin(x-y)",
+    "tex": "sin(x+y)\\cdot sin(x-y) = cos^2(y) - sin^2(x)",
+    "query": "sin(x+y) * sin(x-y) = cos^2(y) - sin^2(x)"
+  },
+  {
+    "id": 20,
+    "parents": [
+      6,
+      7
+    ],
+    "uses": [
+      "cos(x+y)",
+      "cos(x-y)"
+    ],
+    "result": "cos(x)+cos(y)",
+    "tex": "cos(x) + cos(y) = 2\\cdot cos\\left(\\dfrac{x+y}{2}\\right)\\cdot cos\\left(\\dfrac{x-y}{2}\\right)",
+    "query": "cos(x) + cos(y) = 2 * cos((x+y)/2) * cos((x-y)/2)"
+  },
+  {
+    "id": 21,
+    "parents": [
+      6,
+      7
+    ],
+    "uses": [
+      "sin(x+y)",
+      "sin(x-y)"
+    ],
+    "result": "cos(x)-cos(y)",
+    "tex": "cos(x) - cos(y) = -2\\cdot sin\\left(\\dfrac{x+y}{2}\\right)\\cdot sin\\left(\\dfrac{x-y}{2}\\right)",
+    "query": "cos(x) - cos(y) = -2 * sin((x+y)/2) * sin((x-y)/2)"
+  },
+  {
+    "id": 22,
+    "parents": [
+      9,
+      10
+    ],
+    "uses": [
+      "sin(x+y)",
+      "cos(x-y)"
+    ],
+    "result": "sin(x)+sin(y)",
+    "tex": "sin(x) + sin(y) = 2\\cdot sin\\left(\\dfrac{x+y}{2}\\right)\\cdot cos\\left(\\dfrac{x-y}{2}\\right)",
+    "query": "sin(x) + sin(y) = 2 * sin((x+y)/2) * cos((x-y)/2)"
+  },
+  {
+    "id": 23,
+    "parents": [
+      9,
+      10
+    ],
+    "uses": [
+      "cos(x+y)",
+      "sin(x-y)"
+    ],
+    "result": "sin(x)-sin(y)",
+    "tex": "sin(x) - sin(y) = 2\\cdot cos\\left(\\dfrac{x+y}{2}\\right)\\cdot sin\\left(\\dfrac{x-y}{2}\\right)",
+    "query": "sin(x) - sin(y) = 2 * cos((x+y)/2) * sin((x-y)/2)"
+  },
+  {
+    "id": 24,
+    "parents": [
+      6,
+      7
+    ],
+    "uses": [
+      "cos(x+y)",
+      "cos(x-y)"
+    ],
+    "result": "sin(x)*sin(y)",
+    "tex": "sin(x) \\cdot sin(y) = -\\dfrac12 \\left( cos(x+y) - cos(x-y) \\right)",
+    "query": "sin(x) * sin(y) = -(cos(x+y)-cos(x-y))/2"
+  },
+  {
+    "id": 27,
+    "parents": [
+      6,
+      7
+    ],
+    "uses": [
+      "cos(x+y)",
+      "cos(x-y)"
+    ],
+    "result": "cos(x)*cos(y)",
+    "tex": "cos(x) \\cdot cos(y) = \\dfrac12 \\left(cos(x+y)+cos(x-y) \\right)",
+    "query": "cos(x) * cos(y) = (cos(x+y) + cos(x-y))/2"
+  },
+  {
+    "id": 25,
+    "parents": [
+      9,
+      10
+    ],
+    "uses": [
+      "sin(x+y)",
+      "sin(x-y)"
+    ],
+    "result": "sin(x)*cos(y)",
+    "tex": "sin(x) \\cdot cos(y) = \\dfrac12 \\left(sin(x+y) + sin(x-y) \\right)",
+    "query": "sin(x) * cos(y) = (sin(x+y) + sin(x-y))/2"
+  },
+  {
+    "id": 26,
+    "parents": [
+      9,
+      10
+    ],
+    "uses": [
+      "sin(x+y)",
+      "sin(x-y)"
+    ],
+    "result": "cos(x)*sin(y)",
+    "tex": "cos(x) \\cdot sin(y) = \\dfrac12 \\left(sin(x+y) - sin(x-y)) \\right)",
+    "query": "cos(x) * sin(y) = (sin(x+y) - sin(x-y))/2"
+  },
+  {
+    "id": 28,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "cos(x+y+z)",
+    "tex": "cos(x+y+z) = cos(x) \\cdot cos(y) \\cdot cos(z) - cos(x) \\cdot sin(y) \\cdot sin(z) - sin(x) \\cdot cos(y) \\cdot sin(z) - sin(x) \\cdot sin(y) \\cdot cos(z)",
+    "query": "cos(x+y+z) = cos(x) * cos(y) * cos(z) - cos(x) * sin(y) * sin(z) - sin(x) * cos(y) * sin(z) - sin(x) * sin(y) * cos(z)"
+  },
+  {
+    "id": 29,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "sin(x+y+z)",
+    "tex": "sin(x+y+z) = cos(x) \\cdot cos(y) \\cdot sin(z) + cos(x) \\cdot sin(y) \\cdot cos(z) + cos(x) \\cdot cos(y) \\cdot sin(z) - sin(x) \\cdot sin(y) \\cdot sin(z)",
+    "query": "sin(x+y+z) = cos(x) * cos(y) * sin(z) + cos(x) * sin(y) * cos(z) + cos(x) * cos(y) * sin(z) - sin(x) * sin(y) * sin(z)"
+  },
+  {
+    "id": 30,
+    "parents": [],
+    "uses": [
+      "cos(-x)"
+    ],
+    "result": "cos(x)",
+    "tex": "cos(-x) = cos(x)",
+    "query": "cos(-x) = cos(x)"
+  },
+  {
+    "id": 31,
+    "parents": [],
+    "uses": [
+      "sin(-x)"
+    ],
+    "result": "sin(x)",
+    "tex": "-sin(x) = sin(-x)",
+    "query": "-sin(x) = sin(-x)"
+  },
+  {
+    "id": 32,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "cos(.pi/2-x)"
+    ],
+    "result": "sin(x)",
+    "tex": "cos\\left(\\dfrac{\\pi}{2} - x\\right) = sin(x)",
+    "query": "cos(π/2 - x) = sin(x)"
+  },
+  {
+    "id": 33,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(.pi/2-x)"
+    ],
+    "result": "cos(x)",
+    "tex": "sin\\left(\\dfrac{\\pi}{2} - x\\right) = cos(x)",
+    "query": "sin(π/2 - x) = cos(x)"
+  },
+  {
+    "id": 34,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x+.pi/2)"
+    ],
+    "result": "cos(x)",
+    "tex": "sin\\left( x + \\dfrac{\\pi}{2} \\right) = cos(x)",
+    "query": "sin(x + π/2) = cos(x)"
+  },
+  {
+    "id": 35,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x+.pi)"
+    ],
+    "result": "sin(x)",
+    "tex": "sin\\left( x + \\pi \\right) = -sin(x)",
+    "query": "sin(x + π) = -sin(x)"
+  },
+  {
+    "id": 36,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x+3.pi/2)"
+    ],
+    "result": "cos(x)",
+    "tex": "sin\\left( x + \\dfrac{3\\pi}{2} \\right) = -cos(x)",
+    "query": "sin(x + 3π/2) = -cos(x)"
+  },
+  {
+    "id": 37,
+    "parents": [
+      9
+    ],
+    "uses": [
+      "sin(x+2.pi)"
+    ],
+    "result": "sin(x)",
+    "tex": "sin\\left( x + 2\\pi \\right) = sin(x)",
+    "query": "sin(x + 2π) = sin(x)"
+  },
+  {
+    "id": 38,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "cos(x+.pi/2)"
+    ],
+    "result": "sin(x)",
+    "tex": "cos\\left( x + \\dfrac{\\pi}{2} \\right) = -sin(x)",
+    "query": "cos(x + π/2) = -sin(x)"
+  },
+  {
+    "id": 39,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "cos(x+.pi)"
+    ],
+    "result": "cos(x)",
+    "tex": "cos\\left( x + \\pi \\right) = -cos(x)",
+    "query": "cos(x + π) = -cos(x)"
+  },
+  {
+    "id": 40,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "cos(x+3.pi/2)"
+    ],
+    "result": "sin(x)",
+    "tex": "cos\\left( x + \\dfrac{3\\pi}{2} \\right) = sin(x)",
+    "query": "cos(x + 3π/2) = sin(x)"
+  },
+  {
+    "id": 41,
+    "parents": [
+      6
+    ],
+    "uses": [
+      "cos(x+2.pi)"
+    ],
+    "result": "cos(x)",
+    "tex": "cos\\left( x + 2\\pi \\right) = cos(x)",
+    "query": "cos(x + 2π) = cos(x)"
+  },
+  {
+    "id": 42,
+    "parents": [],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "tan(x)",
+    "tex": "tan(x) = \\dfrac{sin(x)}{cos(x)}",
+    "query": "tan(x) = sin(x)/cos(x)"
+  },
+  {
+    "id": 43,
+    "parents": [],
+    "uses": [
+      "sin(x)",
+      "cos(x)"
+    ],
+    "result": "cot(x)",
+    "tex": "cot(x) = \\dfrac{cos(x)}{sin(x)}",
+    "query": "cot(x) = cos(x)/sin(x)"
+  },
+  {
+    "id": 44,
+    "parents": [
+      16,
+      17,
+      42
+    ],
+    "uses": [
+      "cos(x)"
+    ],
+    "result": "tan(x/2)",
+    "tex": "tan\\left( \\dfrac{x}{2} \\right) = \\pm \\sqrt{\\dfrac{1-cos(x)}{1+cos(x)}}",
+    "query": "tan(x/2) = +- sqrt((1-cos(x))/(1+cos(x)))"
+  },
+  {
+    "id": 45,
+    "parents": [
+      16,
+      17,
+      43
+    ],
+    "uses": [
+      "cos(x)"
+    ],
+    "result": "cot(x/2)",
+    "tex": "cot\\left( \\dfrac{x}{2} \\right) = \\pm \\sqrt{\\dfrac{1+cos(x)}{1-cos(x)}}",
+    "query": "cot(x/2) = +- sqrt((1+cos(x))/(1-cos(x)))"
+  },
+  {
+    "id": 46,
+    "parents": [
+      42,
+      30,
+      31
+    ],
+    "uses": [
+      "tan(-x)"
+    ],
+    "result": "tan(x)",
+    "tex": "tan(-x) = -tan(x)",
+    "query": "tan(-x) = -tan(x)"
+  },
+  {
+    "id": 47,
+    "parents": [
+      43,
+      30,
+      31
+    ],
+    "uses": [
+      "cot(-x)"
+    ],
+    "result": "cot(x)",
+    "tex": "cot(-x) = -cot(x)",
+    "query": "cot(-x) = -cot(x)"
+  },
+  {
+    "id": 48,
+    "parents": [
+      1,
+      43
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "cot^2(x)",
+    "tex": "cot^2(x) = \\dfrac{1}{sin^2(x)} - 1",
+    "query": "cot^2(x) = 1/sin^2(x) - 1"
+  },
+  {
+    "id": 49,
+    "parents": [
+      48
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^2(x)"
+    ],
+    "result": "cot(x)",
+    "tex": "cot(x) = \\pm\\sqrt{\\dfrac{1}{sin^2(x)} - 1}",
+    "query": "cot(x) = +-sqrt(1/sin^2(x) - 1)"
+  },
+  {
+    "id": 50,
+    "parents": [
+      48
+    ],
+    "uses": [
+      "cot(x)",
+      "cot^2(x)"
+    ],
+    "result": "sin^2(x)",
+    "tex": "sin^2(x) = \\dfrac{1}{cot^2(x) + 1}",
+    "query": "sin^2(x) = 1/(cot^2(x) + 1)"
+  },
+  {
+    "id": 51,
+    "parents": [
+      50
+    ],
+    "uses": [
+      "cot(x)",
+      "cot^2(x)"
+    ],
+    "result": "sin(x)",
+    "tex": "sin(x) =\\pm\\dfrac{1}{\\sqrt{cot^2(x) + 1}}",
+    "query": "sin(x) = +-1/sqrt(cot^2(x) + 1)"
+  },
+  {
+    "id": 52,
+    "parents": [
+      1,
+      42
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)"
+    ],
+    "result": "tan^2(x)",
+    "tex": "tan^2(x) = \\dfrac{1}{cos^2(x)} - 1",
+    "query": "tan^2(x) = 1/cos^2(x) - 1"
+  },
+  {
+    "id": 53,
+    "parents": [
+      52
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^2(x)"
+    ],
+    "result": "tan(x)",
+    "tex": "tan(x) = \\pm\\sqrt{\\dfrac{1}{cos^2(x)} - 1}",
+    "query": "tan(x) = +-sqrt(1/cos^2(x) - 1)"
+  },
+  {
+    "id": 54,
+    "parents": [
+      52
+    ],
+    "uses": [
+      "tan(x)",
+      "tan^2(x)"
+    ],
+    "result": "cos^2(x)",
+    "tex": "cos^2(x) = \\dfrac{1}{tan^2(x) + 1}",
+    "query": "cos^2(x) = 1/(tan^2(x) + 1)"
+  },
+  {
+    "id": 55,
+    "parents": [
+      54
+    ],
+    "uses": [
+      "tan(x)",
+      "tan^2(x)"
+    ],
+    "result": "cos(x)",
+    "tex": "cos(x) =\\pm\\dfrac{1}{\\sqrt{tan^2(x) + 1}}",
+    "query": "cos(x) = +-1/sqrt(tan^2(x) + 1)"
+  },
+  {
+    "id": 56,
+    "parents": [
+      1,
+      6
+    ],
+    "uses": [
+      "cos(x)",
+      "cos^3(x)"
+    ],
+    "result": "cos(3x)",
+    "tex": "cos(x) = 4\\cdot cos^3(x) - 3\\cdot cos(x)",
+    "query": "cos(x) = 4 * cos^3(x) - 3 * cos(x)"
+  },
+  {
+    "id": 57,
+    "parents": [
+      1,
+      9
+    ],
+    "uses": [
+      "sin(x)",
+      "sin^3(x)"
+    ],
+    "result": "sin(3x)",
+    "tex": "sin(3x) = 3\\cdot sin(x) - 4\\cdot sin^3(x)",
+    "query": "sin(3x) = 3 * sin(x) - 4 * sin^3(x)"
+  },
+  {
+    "id": 58,
+    "parents": [
+      42,
+      56,
+      57
+    ],
+    "uses": [
+      "tan(x)",
+      "tan^2(x)",
+      "tan^3(x)"
+    ],
+    "result": "tan(3x)",
+    "tex": "tan(3x) = \\dfrac{3\\cdot tan(x) - tan^3(x)}{1 - 3 \\cdot tan^2(x)}",
+    "query": "tan(3x) = (3 * tan(x) - tan^3(x)) / (1 - 3 * tan^2(x))"
+  },
+  {
+    "id": 73,
+    "parents": [
+      42,
+      56,
+      57
+    ],
+    "uses": [
+      "cot(x)",
+      "cot^2(x)",
+      "cot^3(x)"
+    ],
+    "result": "cot(3x)",
+    "tex": "cot(3x) = \\dfrac{3\\cdot cot(x) - cot^3(x)}{1 - 3 \\cdot cot^2(x)}",
+    "query": "cot(3x) = (3 * cot(x) - cot^3(x)) / (1 - 3 * cot^2(x))"
+  },
+  {
+    "id": 59,
+    "parents": [
+      42,
+      6,
+      9
+    ],
+    "uses": [
+      "tan(x)"
+    ],
+    "result": "tan(x+y)",
+    "tex": "tan(x + y) = \\dfrac{tan(x) + tan(y)}{1 - tan(x)\\cdot tan(y)}",
+    "query": "tan(x + y) = (tan(x) + tan(y)) / (1 - tan(x) * tan(y))"
+  },
+  {
+    "id": 60,
+    "parents": [
+      43,
+      6,
+      9
+    ],
+    "uses": [
+      "cot(x)"
+    ],
+    "result": "cot(x+y)",
+    "tex": "cot(x + y) = \\dfrac{cot(x)\\cdot cot(y) - 1}{cot(x) + cot(y)}",
+    "query": "cot(x + y) = (cot(x) * cot(y) - 1) / (cot(x) + cot(y))"
+  },
+  {
+    "id": 61,
+    "parents": [
+      42,
+      7,
+      10
+    ],
+    "uses": [
+      "tan(x)"
+    ],
+    "result": "tan(x-y)",
+    "tex": "tan(x - y) = \\dfrac{tan(x) - tan(y)}{1 + tan(x)\\cdot tan(y)}",
+    "query": "tan(x - y) = (tan(x) - tan(y)) / (1 + tan(x) * tan(y))"
+  },
+  {
+    "id": 62,
+    "parents": [
+      43,
+      7,
+      10
+    ],
+    "uses": [
+      "cot(x)"
+    ],
+    "result": "cot(x-y)",
+    "tex": "cot(x - y) = -\\dfrac{cot(x)\\cdot cot(y) + 1}{cot(x) - cot(y)}",
+    "query": "cot(x - y) = -(cot(x) * cot(y) + 1) / (cot(x) - cot(y))"
+  },
+  {
+    "id": 63,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(x)",
+      "tan^2(x)"
+    ],
+    "result": "tan(2x)",
+    "tex": "tan(2x) = \\dfrac{2\\cdot tan(x)}{1 - tan^2(x)}",
+    "query": "tan(2x) = (2 * tan(x))/(1 - tan^2(x))"
+  },
+  {
+    "id": 64,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(x)",
+      "cot(x)"
+    ],
+    "result": "tan(2x)",
+    "tex": "tan(2x) = \\dfrac{2}{cot(x) - tan(x)}",
+    "query": "tan(2x) = 2/(cot(x) - tan(x))"
+  },
+  {
+    "id": 65,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "cot(x)",
+      "cot^2(x)"
+    ],
+    "result": "cot(2x)",
+    "tex": "cot(2x) = -\\dfrac{1 - cot^2(x)}{2\\cdot cot(x)}",
+    "query": "cot(2x) = -(1 - cot^2(x))/(2 * cot(x))"
+  },
+  {
+    "id": 66,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(x)",
+      "cot(x)"
+    ],
+    "result": "cot(2x)",
+    "tex": "cot(2x) = \\dfrac{cot(x) - tan(x)}{2}",
+    "query": "cot(2x) = (cot(x) - tan(x))/2"
+  },
+  {
+    "id": 67,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(.pi2/-x)"
+    ],
+    "result": "cot(x)",
+    "tex": "tan\\left( \\dfrac{\\pi}{2} - x \\right) = cot(x)",
+    "query": "tan(π/2 - x) = cot(x)"
+  },
+  {
+    "id": 67,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "cot(.pi2/-x)"
+    ],
+    "result": "tan(x)",
+    "tex": "cot\\left( \\dfrac{\\pi}{2} - x \\right) = tan(x)",
+    "query": "cot(π/2 - x) = tan(x)"
+  },
+  {
+    "id": 71,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(x+.pi/2)"
+    ],
+    "result": "cot(x)",
+    "tex": "tan\\left( x + \\dfrac{\\pi}{2} \\right) = -cot(x)",
+    "query": "tan(x + π/2) = -cot(x)"
+  },
+  {
+    "id": 72,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "cot(x+.pi/2)"
+    ],
+    "result": "tan(x)",
+    "tex": "cot\\left( x + \\dfrac{\\pi}{2} \\right) = -tan(x)",
+    "query": "cot(x + π/2) = -tan(x)"
+  },
+  {
+    "id": 69,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "tan(x+.pi)"
+    ],
+    "result": "cot(x)",
+    "tex": "tan\\left( x + \\pi \\right) = cot(x)",
+    "query": "tan(x + π) = cot(x)"
+  },
+  {
+    "id": 70,
+    "parents": [
+      59
+    ],
+    "uses": [
+      "cot(x+.pi)"
+    ],
+    "result": "tan(x)",
+    "tex": "cot\\left( x\\pi \\right) = tan(x)",
+    "query": "cot(x + π) = tan(x)"
+  }
+]
