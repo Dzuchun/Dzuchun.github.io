@@ -1,49 +1,57 @@
-let svg = document.getElementById("svg");
+const svg = document.getElementById("svg");
+const PI = Math.PI;
+const PIx2 = Math.PI * 2;
+
+const x0 = 95 / 2.0;
+const y0 = 95 / 2.0;
+const r0 = 35;
 
 // #region State fields
 
 // ANGLE
 // Toggles
-var showAnglePointer;
-var showAngleGuidingLines;
-var showAngleLabels;
-var showPointerLabel;
-var labelsAreRad;
-var currentAngle;
-var literalCurrentAngleRadians;
-var literalCurrentAngleDegree;
-var currentGuideline;
+let showAnglePointer;
+let showDefaultGuidingLines;
+let showAngleLabels;
+let showPointerLabel;
+let labelsAreRad;
+let currentAngle;
+let literalCurrentAngleRadians;
+let literalCurrentAngleDegree;
+let currentGuideline;
 // I want
-var angleWantIsRadians;
-var angleWantLiteral;
-var angleWantIsPi;
-var angleWantIsPiSmashed;
+let angleWantIsRadians;
+let angleWantLiteral;
+let angleWantIsPi;
+let angleWantIsPiSmashed;
 // Utils
-var angleUtilOverwind;
-var angleUtilXMirror;
-var angleUtilYMirror;
+let angleUtilOverwind;
+let angleUtilXMirror;
+let angleUtilYMirror;
 
 // FUNCTIONS
 // Toggles
-var functionsShowSin;
-var functionsShowCos;
-var functionsShowTan;
-var functionsShowLabels;
+let functionsShowDynamicGuidingLines;
+let functionsShowSin;
+let functionsShowCos;
+let functionsShowTan;
+let functionsShowLabels;
+let functionsSuppressExpressions;
 
 // Current
-var functionsCurrentName;
+let functionsCurrentName;
 
 // Areas
-var functionsAreasData;
-var functionsAreasEqualsLiteral;
-var functionsAreasMoreLiteral;
-var functionsAreasLessLiteral;
+let functionsAreasData;
+let functionsAreasEqualsLiteral;
+let functionsAreasMoreLiteral;
+let functionsAreasLessLiteral;
 
 // FORMULAE
-var formulaeQuery;
-var formulaeCurrentShown;
-var formulaeCurrentId;
-var formulaeCurrentType;
+let formulaeQuery;
+let formulaeCurrentShown;
+let formulaeCurrentId;
+let formulaeCurrentType;
 
 // #endregion
 
@@ -69,7 +77,7 @@ function defaultAngleState() {
 
 function resetAngleFields() {
   showAnglePointer = true;
-  showAngleGuidingLines = false;
+  showDefaultGuidingLines = false;
   showAngleLabels = false;
   showPointerLabel = false;
   labelsAreRad = false;
@@ -99,6 +107,7 @@ const anglePointerLabelToggle = document.getElementById(
 const angleDegradToggle = document.getElementById("angle-degrad-toggle");
 
 const angleWantRadiansToggle = document.getElementById("angle-iwant-degrad");
+const angleWantInterpret = document.getElementById("functions-interpreted-as");
 const angleWantInput = document.getElementById("angle-iwant-input");
 const angleWantPiToggle = document.getElementById("angle-iwant-pi");
 
@@ -107,7 +116,7 @@ const angleMirrorXToggle = document.getElementById("angle-mirror-x");
 const angleMirrorYToggle = document.getElementById("angle-mirror-y");
 function resetAngleControls() {
   anglePointerToggle.checked = showAnglePointer;
-  angleGuidelinesToggle.checked = showAngleGuidingLines;
+  angleGuidelinesToggle.checked = showDefaultGuidingLines;
   angleLabelsToggle.checked = showAngleLabels;
   anglePointerLabelToggle.checked = showPointerLabel;
   angleDegradToggle.checked = labelsAreRad;
@@ -162,7 +171,7 @@ function transformRadians(literal, winds) {
   return res;
 }
 
-const snapRadius = 0.05;
+const snapRadius = 0.05; // in radians
 function updateAnglePointer() {
   // #region vibility
   let v = showAnglePointer ? "visible" : "hidden";
@@ -181,52 +190,50 @@ function updateAnglePointer() {
   }
 
   if (showAnglePointer) {
-    if (showAngleGuidingLines) {
-      // #region snapping
-      let pureAngle = currentAngle % PIx2;
-      if (pureAngle < 0) pureAngle += PIx2;
-      let winds = Math.floor(currentAngle / PIx2);
-      let snapAngle;
+    // #region snapping
+    let pureAngle = currentAngle % PIx2;
+    if (pureAngle > PI) pureAngle -= PIx2;
+    if (pureAngle < -PI) pureAngle += PIx2;
+    if (pureAngle < 0) pureAngle += PIx2;
+    let winds = Math.floor(currentAngle / PIx2);
+    let snapAngle;
+    let minDist = snapRadius;
+    let gdl = null;
+    let isDefault;
+    if (functionsShowDynamicGuidingLines) {
       for (i in dynamicGuidelines) {
-        if (Math.abs(dynamicGuidelines[i].value - pureAngle) < snapRadius) {
-          snapAngle = dynamicGuidelines[i].value;
-          currentAngle = winds * PIx2 + snapAngle;
-          literalCurrentAngleDegree = Number(
-            dynamicGuidelines[i].litDeg + 360 * winds
-          ).toFixed(1);
-          literalCurrentAngleRadians =
-            dynamicGuidelines[i].litRad +
-            (winds !== 0 ? ` ${winds > 0 ? `+${2 * winds}` : 2 * winds}π` : "");
-          currentGuideline = dynamicGuidelines[i];
-          break;
+        if (Math.abs(dynamicGuidelines[i].value - pureAngle) < minDist) {
+          gdl = dynamicGuidelines[i];
+          minDist = Math.abs(gdl.value - pureAngle);
+          isDefault = false;
         }
       }
-      if (!snapAngle && showAngleLabels) {
-        for (i in defaultGuidelines) {
-          if (Math.abs(defaultGuidelines[i].value - pureAngle) < snapRadius) {
-            snapAngle = defaultGuidelines[i].value;
-            currentAngle = winds * PIx2 + snapAngle;
-            literalCurrentAngleDegree =
-              Number(defaultGuidelines[i].litDeg) + 360 * winds;
-            literalCurrentAngleRadians = transformRadians(
-              defaultGuidelines[i].litRad,
-              winds
-            );
-            currentGuideline = defaultGuidelines[i];
-            break;
-          }
+    }
+    if (showAngleLabels && showDefaultGuidingLines) {
+      pureAngle = currentAngle % PIx2;
+      if (pureAngle < 0) pureAngle += PIx2;
+      for (i in defaultGuidelines) {
+        if (Math.abs(defaultGuidelines[i].value - pureAngle) < minDist) {
+          gdl = defaultGuidelines[i];
+          minDist = Math.abs(gdl.value - pureAngle);
+          isDefault = true;
         }
-      }
-      if (typeof snapAngle === "undefined") {
-        literalCurrentAngleDegree = null;
-        literalCurrentAngleRadians = null;
-        currentGuideline = null;
       }
       // #endregion
-    } else {
-      literalCurrentAngleDegree = null;
-      literalCurrentAngleRadians = null;
-      currentGuideline = null;
+    }
+    currentGuideline = gdl;
+    if (gdl) {
+      snapAngle = gdl.value;
+      currentAngle = winds * PIx2 + snapAngle;
+      if (isDefault) {
+        literalCurrentAngleDegree = Number(gdl.litDeg) + 360 * winds;
+        literalCurrentAngleRadians = transformRadians(gdl.litRad, winds);
+      } else {
+        literalCurrentAngleDegree = Number(gdl.litDeg + 360 * winds).toFixed(1);
+        literalCurrentAngleRadians =
+          gdl.litRad +
+          (winds !== 0 ? ` ${winds > 0 ? `+${2 * winds}` : 2 * winds}π` : "");
+      }
     }
     pointerPoint.style.rotate = -currentAngle + "rad";
     pointerLine.style.rotate = -currentAngle + "rad";
@@ -252,7 +259,7 @@ function updateAnglePointer() {
 }
 
 function updateAngleGuidingLines() {
-  let v = showAngleGuidingLines && showAngleLabels ? "visible" : "hidden";
+  let v = showDefaultGuidingLines && showAngleLabels ? "visible" : "hidden";
   for (i in lines) {
     lines[i].setAttribute("visibility", v);
   }
@@ -293,11 +300,11 @@ function updateAngleLabels() {
       pointerLabel.innerHTML = currentAngleDegree.innerHTML;
     }
     pointerLabel.style.transform = `translate(${
-      x0 + 0.75 * r0 * Math.cos(currentAngle)
-    }px, ${y0 - 0.75 * r0 * Math.sin(currentAngle)}px)`;
+      x0 + pointerLabelPosition * r0 * Math.cos(currentAngle)
+    }px, ${y0 - pointerLabelPosition * r0 * Math.sin(currentAngle)}px)`;
     pointerLabelBg.style.transform = `translate(${
-      x0 + 0.75 * r0 * Math.cos(currentAngle)
-    }px, ${y0 - 0.75 * r0 * Math.sin(currentAngle)}px)`;
+      x0 + pointerLabelPosition * r0 * Math.cos(currentAngle)
+    }px, ${y0 - pointerLabelPosition * r0 * Math.sin(currentAngle)}px)`;
   }
 }
 
@@ -307,12 +314,12 @@ function updateAngleCurrent() {
   currentAngleDegree.innerHTML = `${
     literalCurrentAngleDegree !== null
       ? literalCurrentAngleDegree
-      : ((180 / pi) * currentAngle).toFixed(1)
+      : ((180 / PI) * currentAngle).toFixed(1)
   }°`;
   currentAngleRadian.innerHTML = `${
     literalCurrentAngleRadians !== null
       ? literalCurrentAngleRadians
-      : (currentAngle / pi).toFixed(2) + "π"
+      : (currentAngle / PI).toFixed(2) + "π"
   }`;
 }
 
@@ -321,25 +328,30 @@ function updateAngleWant() {
 
   angleWantPiToggle.checked = angleWantIsPi;
 
-  angleWantPiToggle.parentNode.style.color = angleWantPiToggle.checked
-    ? "green"
-    : "red";
-  angleWantPiToggle.parentNode.style.borderColor = angleWantIsPiSmashed
-    ? "black"
-    : "grey";
+  angleWantPiToggle.parentNode.parentNode.classList[
+    angleWantPiToggle.checked ? "add" : "remove"
+  ]("pi-selected");
+  angleWantPiToggle.parentNode.parentNode.classList[
+    angleWantIsPiSmashed ? "add" : "remove"
+  ]("pi-smashed");
+
+  interpretUpdate();
 }
 
 function updateAngleMirrors() {
   let v;
-  v = angleUtilXMirror ? "visible" : "hidden";
+  v = angleUtilXMirror && showAnglePointer ? "visible" : "hidden";
   mirrorXLine.setAttribute("visibility", v);
   mirrorXPoint.setAttribute("visibility", v);
 
-  v = angleUtilYMirror ? "visible" : "hidden";
+  v = angleUtilYMirror && showAnglePointer ? "visible" : "hidden";
   mirrorYLine.setAttribute("visibility", v);
   mirrorYPoint.setAttribute("visibility", v);
 
-  v = angleUtilXMirror && angleUtilYMirror ? "visible" : "hidden";
+  v =
+    angleUtilXMirror && angleUtilYMirror && showAnglePointer
+      ? "visible"
+      : "hidden";
   mirrorXYLine.setAttribute("visibility", v);
   mirrorXYPoint.setAttribute("visibility", v);
 
@@ -349,12 +361,12 @@ function updateAngleMirrors() {
     mirrorXPoint.style.rotate = -rotation + "rad";
   }
   if (angleUtilYMirror) {
-    mirrorYLine.style.rotate = pi - rotation + "rad";
-    mirrorYPoint.style.rotate = pi - rotation + "rad";
+    mirrorYLine.style.rotate = PI - rotation + "rad";
+    mirrorYPoint.style.rotate = PI - rotation + "rad";
   }
   if (angleUtilXMirror && angleUtilYMirror) {
-    mirrorXYLine.style.rotate = rotation - pi + "rad";
-    mirrorXYPoint.style.rotate = rotation - pi + "rad";
+    mirrorXYLine.style.rotate = rotation - PI + "rad";
+    mirrorXYPoint.style.rotate = rotation - PI + "rad";
   }
 }
 
@@ -368,12 +380,14 @@ function defaultFunctionsState() {
 }
 
 function resetFunctionFields() {
+  functionsShowDynamicGuidingLines = false;
   functionsShowSin = false;
   functionsShowCos = false;
   functionsShowTan = false;
   functionsShowLabels = false;
+  functionsSuppressExpressions = false;
 
-  functionsCurrentName = null;
+  functionsCurrentName = "sin";
 
   functionsAreasEqualsLiteral = null;
   functionsAreasMoreLiteral = null;
@@ -386,18 +400,33 @@ function resetFunctionFields() {
     [null, null, null, null],
   ];
 
-  for (let i in colorsList) {
-    colorsList[i].used = false;
+  for (let i in colorList) {
+    colorList[i].used = false;
   }
 
   dynamicGuidelines = [];
+  if (dynamicGuidelineDashlines) {
+    dynamicGuidelineDashlines.forEach((dl) => svg.removeChild(dl.line));
+  }
+  dynamicGuidelineDashlines = [];
+
+  if (dynamicGuidelineLines) {
+    dynamicGuidelineLines.forEach((dl) => svg.removeChild(dl.line));
+  }
+  dynamicGuidelineLines = [];
 }
 
+const functionsShowDynamicGuidelinesToggle = document.getElementById(
+  "functions-show-dynamic-guidelines"
+);
 const functionsShowSinToggle = document.getElementById("functions-show-sin");
 const functionsShowCosToggle = document.getElementById("functions-show-cos");
 const functionsShowTanToggle = document.getElementById("functions-show-tan");
 const functionsShowLabelsToggle = document.getElementById(
   "functions-show-labels"
+);
+const functionsSuppressExpressionsToggle = document.getElementById(
+  "functions-suppress-expressions"
 );
 
 const functionsCurrentNameSelect = document.getElementById(
@@ -411,6 +440,9 @@ const functionsCurrentFunctionRad = document.getElementById(
 );
 const functionsCurrentFunctionValue = document.getElementById(
   "functions-current-function-val"
+);
+const functionsCurrentFunctionValue2 = document.getElementById(
+  "functions-current-function-val2"
 );
 
 const functionsAreasEqualsInput = document.getElementById(
@@ -469,18 +501,23 @@ const functionsAreasLessButton = document.getElementById(
 );
 
 function resetFunctionsControls() {
+  functionsShowDynamicGuidelinesToggle.checked =
+    functionsShowDynamicGuidingLines;
   functionsShowSinToggle.checked = functionsShowSin;
   functionsShowCosToggle.checked = functionsShowCos;
   functionsShowTanToggle.checked = functionsShowTan;
   functionsShowLabelsToggle.checked = functionsShowLabels;
+  functionsSuppressExpressionsToggle.checked = functionsSuppressExpressions;
 
   functionsCurrentNameSelect.display_function = functionsCurrentNameSelect;
   functionsCurrentFunctionDeg.innerHTML = "";
   functionsCurrentFunctionRad.innerHTML = "";
   functionsCurrentFunctionValue.innerHTML = "";
+  functionsCurrentFunctionValue2.innerHTML = "";
 
-  var functionRadios = document.getElementsByName("display_function");
-  for (let i in functionRadios) functionRadios[i].checked = false;
+  let functionRadios = document.getElementsByName("display_function");
+  for (let i in functionRadios)
+    functionRadios[i].checked = functionRadios[i].value == functionsCurrentName;
 
   functionsAreasEqualsInput.value = functionsAreasEqualsLiteral;
   functionsAreasMoreInput.value = functionsAreasMoreLiteral;
@@ -488,7 +525,7 @@ function resetFunctionsControls() {
 
   for (let i in functionsAreasTableCells) {
     for (let j in functionsAreasTableCells[i]) {
-      functionsAreasTableCells[i][j].style.backgroundColor = "white";
+      functionsAreasTableCells[i][j].style.backgroundColor = "transparent";
       functionsAreasTableCells[i][j].innerHTML = "";
     }
   }
@@ -499,11 +536,7 @@ function resetFunctionsControls() {
     }
   }
 
-  functionsAreasPositiveButton.innerHTML = "Positive";
-  functionsAreasNegativeButton.innerHTML = "Negative";
-  functionsAreasEqualsButton.innerHTML = "Equals";
-  functionsAreasMoreButton.innerHTML = "More";
-  functionsAreasLessButton.innerHTML = "Less";
+  updateFunctionsAreas(functionsCurrentName);
 }
 
 function updateFunctionsState() {
@@ -511,6 +544,7 @@ function updateFunctionsState() {
   updateFunctionsLabels();
   updateFunctionsCurrent();
   updateFunctionsAreas();
+  updateFunctionsSelectorLabels();
 }
 
 function updateFunctionsLines() {
@@ -565,7 +599,7 @@ function updateFunctionsLabels() {
     let v;
     if (functionsShowSin) {
       v = Math.sin(currentAngle).toFixed(3);
-      if (currentGuideline !== null) {
+      if (!functionsSuppressExpressions && currentGuideline !== null) {
         v = currentGuideline.sin;
       }
       functionsSinLabelBg.setAttribute("visibility", "visible");
@@ -586,7 +620,7 @@ function updateFunctionsLabels() {
 
     if (functionsShowCos) {
       v = Math.cos(currentAngle).toFixed(3);
-      if (currentGuideline !== null) {
+      if (!functionsSuppressExpressions && currentGuideline !== null) {
         v = currentGuideline.cos;
       }
       functionsCosLabelBg.setAttribute("visibility", "visible");
@@ -616,7 +650,7 @@ function updateFunctionsLabels() {
       } else {
         v = v.toFixed(3);
       }
-      if (currentGuideline !== null) {
+      if (!functionsSuppressExpressions && currentGuideline !== null) {
         v = currentGuideline.tan;
       }
       functionsTanLabelBg1.innerHTML = v;
@@ -642,7 +676,7 @@ function updateFunctionsLabels() {
       } else {
         v = v.toFixed(3);
       }
-      if (currentGuideline !== null) {
+      if (!functionsSuppressExpressions && currentGuideline !== null) {
         v = currentGuideline.cot;
       }
       functionscTanLabelBg1.innerHTML = v;
@@ -702,24 +736,21 @@ function updateFunctionsCurrent() {
     functionsCurrentFunctionRad.innerHTML = "";
     functionsCurrentFunctionValue.innerHTML = "";
   } else {
-    var val = func(currentAngle);
+    let val = func(currentAngle);
     if (Math.abs(val) > 1000) {
-      val = katexNormalRender("\\pm\\infty");
+      val = renderLatex("\\pm\\infty");
     } else {
       val = val.toFixed(3);
     }
     functionsCurrentFunctionDeg.innerHTML = `${functionsCurrentName}(${currentAngleDegree.innerHTML})`;
     functionsCurrentFunctionRad.innerHTML = `${functionsCurrentName}(${currentAngleRadian.innerHTML})`;
-    functionsCurrentFunctionValue.innerHTML = `=${val}`;
-    if (currentGuideline && Math.abs(val) <= 1000) {
-      functionsCurrentFunctionValue.innerHTML =
-        (currentGuideline[functionsCurrentName + "_tex"]
-          ? `=${katexNormalRender(
-              currentGuideline[functionsCurrentName + "_tex"]
-            )}`
-          : "=" + currentGuideline[functionsCurrentName]) +
-        functionsCurrentFunctionValue.innerHTML;
-    }
+    functionsCurrentFunctionValue.innerHTML = `${val}`;
+    functionsCurrentFunctionValue2.innerHTML =
+      currentGuideline && Math.abs(val) <= 1000
+        ? currentGuideline[functionsCurrentName + "_tex"]
+          ? `=${renderLatex(currentGuideline[functionsCurrentName + "_tex"])}`
+          : "=" + currentGuideline[functionsCurrentName]
+        : "";
   }
 }
 
@@ -746,12 +777,29 @@ function updateFunctionsAreas(name) {
     functionsAreasMoreButton.innerHTML = `${name} > `;
     functionsAreasLessButton.innerHTML = `${name} < `;
   }
+
+  // #region Guidelines visibility
+
+  let v = functionsShowDynamicGuidingLines ? "visible" : "hidden";
+  dynamicGuidelineLines.forEach((l) => l.line.setAttribute("visibility", v));
+
+  // #endregion
 }
 
 function updateFunctionAreasLiterals() {
   functionsAreasEqualsLiteral = functionsAreasEqualsInput.value;
   functionsAreasMoreLiteral = functionsAreasMoreInput.value;
   functionsAreasLessLiteral = functionsAreasLessInput.value;
+}
+
+function updateFunctionsSelectorLabels() {
+  Array.from(document.querySelectorAll(".functions-selectors > label")).forEach(
+    (label) => {
+      label.classList[
+        label.textContent === functionsCurrentName ? "add" : "remove"
+      ]("function-selector-active");
+    }
+  );
 }
 
 // #endregion
@@ -779,7 +827,7 @@ function resetFormulaeControls() {
   if (formulaeCurrentType) {
     formulaeResultName.innerHTML = `${formulaeCurrentType.prefix} ${
       formulaeCurrentType.id
-        ? katexNormalRender(
+        ? renderLatex(
             formulaeBase.find((f) => f.id == formulaeCurrentType.id).tex
           )
         : formulaeQuery
@@ -810,8 +858,8 @@ function resetFormulaeControls() {
 function generateState() {
   let state = {
     showAnglePointer: showAnglePointer, // bit
-    showAngleGuidingLines: showAngleGuidingLines, // bit
     showAngleLabels: showAngleLabels, // bit
+    showDefaultGuidingLines: showDefaultGuidingLines, // bit
     showPointerLabel: showPointerLabel, // bit
     labelsAreRad: labelsAreRad, // bit
     currentAngle: currentAngle, // float64
@@ -826,10 +874,12 @@ function generateState() {
     angleUtilXMirror: angleUtilXMirror, // bit
     angleUtilYMirror: angleUtilYMirror, // bit
 
+    functionsShowDynamicGuidingLines: functionsShowDynamicGuidingLines, // bit
     functionsShowSin: functionsShowSin, // bit
     functionsShowCos: functionsShowCos, // bit
     functionsShowTan: functionsShowTan, // bit
     functionsShowLabels: functionsShowLabels, // bit
+    functionsSuppressExpressions: functionsSuppressExpressions, //bit
     functionsCurrentName: functionsCurrentName, // 2bits, in fact
     functionsAreasData: functionsAreasData, // at most 16bytes (don't think gonna need more than 16 colors) + 16strings
 
@@ -838,7 +888,8 @@ function generateState() {
     formulaeCurrentShown: formulaeCurrentShown, // bytearray
     formulaeCurrentType: formulaeCurrentType, // 2bits + byte
   };
-  return JSON.stringify(state);
+  let res = JSON.stringify(state, null, "");
+  return res;
   //return btoa(JSON.stringify(state));
 }
 
@@ -849,25 +900,25 @@ function compactState(state) {
   // Yeah, i'm going to go through entire hassle of bytecoding and decoding program state just so that statestring would be less cumbersome (AS IT MUST BE!)
   // but not now...
   let bytes = parseInt(
-    (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
+    (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
       (labelsAreRad ? "1" : "0") +
       (showAngleLabels ? "1" : "0") +
-      (showAngleGuidingLines ? "1" : "0") +
+      (showDefaultGuidingLines ? "1" : "0") +
       (showAnglePointer ? "1" : "0"),
     2
   );
@@ -881,7 +932,7 @@ function loadState(state) {
   // #region Setting fields
   resetAngleFields();
   showAnglePointer = res.showAnglePointer;
-  showAngleGuidingLines = res.showAngleGuidingLines;
+  showDefaultGuidingLines = res.showDefaultGuidingLines;
   showAngleLabels = res.showAngleLabels;
   showPointerLabel = res.showPointerLabel;
   labelsAreRad = res.labelsAreRad;
@@ -898,10 +949,12 @@ function loadState(state) {
   angleUtilYMirror = res.angleUtilYMirror;
 
   resetFunctionFields();
+  functionsShowDynamicGuidingLines = res.functionsShowDynamicGuidingLines;
   functionsShowSin = res.functionsShowSin;
   functionsShowCos = res.functionsShowCos;
   functionsShowTan = res.functionsShowTan;
   functionsShowLabels = res.functionsShowLabels;
+  functionsSuppressExpressions = res.functionsSuppressExpressions;
   functionsCurrentName = res.functionsCurrentName;
   functionsAreasData = res.functionsAreasData;
 
@@ -933,10 +986,48 @@ function loadState(state) {
 
 // #endregion
 
+// #region Creating axes
+
+const axisExtend = 1.2;
+let xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+xAxis.setAttribute("x1", x0 - axisExtend * r0);
+xAxis.setAttribute("y1", y0);
+xAxis.setAttribute("x2", x0 + axisExtend * r0);
+xAxis.setAttribute("y2", y0);
+xAxis.setAttribute("marker-end", "url(#arrowhead)");
+xAxis.classList.add("svg-axes");
+svg.appendChild(xAxis);
+
+let xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+xLabel.classList.add("svg-axes");
+xLabel.setAttribute("dominant-baseline", "bottom");
+xLabel.setAttribute("text-anchor", "begin");
+xLabel.innerHTML = "X";
+xLabel.setAttribute("x", x0 + axisExtend * r0 + 1.5);
+xLabel.setAttribute("y", y0 - 1.5);
+svg.appendChild(xLabel);
+
+let yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+yAxis.setAttribute("x1", y0);
+yAxis.setAttribute("y1", x0 + axisExtend * r0);
+yAxis.setAttribute("x2", y0);
+yAxis.setAttribute("y2", x0 - axisExtend * r0);
+yAxis.setAttribute("marker-end", "url(#arrowhead)");
+yAxis.classList.add("svg-axes");
+svg.appendChild(yAxis);
+
+let yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+yLabel.classList.add("svg-axes");
+yLabel.setAttribute("dominant-baseline", "bottom");
+yLabel.setAttribute("text-anchor", "begin");
+yLabel.innerHTML = "Y";
+yLabel.setAttribute("x", y0 + 1.5);
+yLabel.setAttribute("y", x0 - axisExtend * r0 - 1.5);
+svg.appendChild(yLabel);
+
+// #endregion
+
 // #region Creating trig circle
-const x0 = 50;
-const y0 = 50;
-const r0 = 35;
 let trigCircle = document.createElementNS(
   "http://www.w3.org/2000/svg",
   "circle"
@@ -944,28 +1035,27 @@ let trigCircle = document.createElementNS(
 trigCircle.setAttribute("cx", x0);
 trigCircle.setAttribute("cy", y0);
 trigCircle.setAttribute("r", r0);
-trigCircle.setAttribute("fill", "white");
+trigCircle.setAttribute("fill", "transparent");
 svg.appendChild(trigCircle);
 
 // #endregion
 
 // #region Creating guidelines
 
-const pi = Math.PI;
 let lines = [];
 
-function createLineToAngle(alpha) {
+function createLineToAngle(alpha, b, e) {
   let res = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  res.setAttribute("x1", x0 + 0.95 * r0 * Math.cos(alpha));
-  res.setAttribute("y1", y0 - 0.95 * r0 * Math.sin(alpha));
-  res.setAttribute("x2", x0 + 1.05 * r0 * Math.cos(alpha));
-  res.setAttribute("y2", y0 - 1.05 * r0 * Math.sin(alpha));
-  res.setAttribute("stroke", "grey");
+  res.setAttribute("x1", x0 + b * r0 * Math.cos(alpha));
+  res.setAttribute("y1", y0 - b * r0 * Math.sin(alpha));
+  res.setAttribute("x2", x0 + e * r0 * Math.cos(alpha));
+  res.setAttribute("y2", y0 - e * r0 * Math.sin(alpha));
   return res;
 }
 
 function addLine(angle) {
-  let line = createLineToAngle(angle);
+  let line = createLineToAngle(angle, 0.95, 1.05);
+  line.classList.add("default-guideline-stroke");
   lines.push(line);
   svg.appendChild(line);
 }
@@ -1014,12 +1104,14 @@ const defaultFunctions = {
     -Math.sqrt(3),
   ],
 };
-let loadGuidelines = fetch("./default-guidelines.json").then(async (r) =>
+let loadGuidelines = fetch("./data/default-guidelines.json").then(async (r) =>
   r.json().then((res) => {
     defaultGuidelines = res;
   })
 );
 let dynamicGuidelines;
+let dynamicGuidelineLines;
+let dynamicGuidelineDashlines;
 
 function initGuidelines() {
   for (i in defaultGuidelines) {
@@ -1035,7 +1127,7 @@ let pointerLine = document.createElementNS(
   "line"
 );
 pointerLine.setAttribute("visibility", "hidden");
-pointerLine.setAttribute("stroke", "green");
+pointerLine.classList.add("pointer-color");
 pointerLine.setAttribute("x1", x0);
 pointerLine.setAttribute("y1", y0);
 pointerLine.setAttribute("x2", x0 + r0);
@@ -1049,7 +1141,8 @@ let pointerPoint = document.createElementNS(
 );
 pointerPoint.setAttribute("visibility", "hidden");
 pointerPoint.setAttribute("r", 0.5);
-pointerPoint.setAttribute("stroke", "green");
+pointerPoint.classList.add("pointer-color");
+pointerPoint.classList.add("fill-primary");
 pointerPoint.setAttribute("cx", x0 + r0);
 pointerPoint.setAttribute("cy", y0);
 pointerPoint.style.transformOrigin = "center";
@@ -1058,17 +1151,20 @@ svg.appendChild(pointerPoint);
 
 // #region Creating mirrors
 
+const mirrorOpacity = window
+  .getComputedStyle(document.documentElement)
+  .getPropertyValue("--mirror-opacity");
 let mirrorXLine = document.createElementNS(
   "http://www.w3.org/2000/svg",
   "line"
 );
 mirrorXLine.setAttribute("visibility", "hidden");
-mirrorXLine.setAttribute("stroke", "green");
+mirrorXLine.classList.add("pointer-color");
 mirrorXLine.setAttribute("x1", x0);
 mirrorXLine.setAttribute("y1", y0);
 mirrorXLine.setAttribute("x2", x0 + r0);
 mirrorXLine.setAttribute("y2", y0);
-mirrorXLine.setAttribute("opacity", 0.4);
+mirrorXLine.setAttribute("opacity", mirrorOpacity);
 mirrorXLine.style.transformOrigin = "center";
 svg.appendChild(mirrorXLine);
 let mirrorXPoint = document.createElementNS(
@@ -1077,10 +1173,11 @@ let mirrorXPoint = document.createElementNS(
 );
 mirrorXPoint.setAttribute("visibility", "hidden");
 mirrorXPoint.setAttribute("r", 0.5);
-mirrorXPoint.setAttribute("stroke", "green");
+mirrorXPoint.classList.add("pointer-color");
+mirrorXPoint.classList.add("fill-primary");
 mirrorXPoint.setAttribute("cx", x0 + r0);
 mirrorXPoint.setAttribute("cy", y0);
-mirrorXPoint.setAttribute("opacity", 0.4);
+mirrorXPoint.setAttribute("opacity", mirrorOpacity);
 mirrorXPoint.style.transformOrigin = "center";
 svg.appendChild(mirrorXPoint);
 
@@ -1089,12 +1186,12 @@ let mirrorYLine = document.createElementNS(
   "line"
 );
 mirrorYLine.setAttribute("visibility", "hidden");
-mirrorYLine.setAttribute("stroke", "green");
+mirrorYLine.classList.add("pointer-color");
 mirrorYLine.setAttribute("x1", x0);
 mirrorYLine.setAttribute("y1", y0);
 mirrorYLine.setAttribute("x2", x0 + r0);
 mirrorYLine.setAttribute("y2", y0);
-mirrorYLine.setAttribute("opacity", 0.4);
+mirrorYLine.setAttribute("opacity", mirrorOpacity);
 mirrorYLine.style.transformOrigin = "center";
 svg.appendChild(mirrorYLine);
 let mirrorYPoint = document.createElementNS(
@@ -1103,10 +1200,11 @@ let mirrorYPoint = document.createElementNS(
 );
 mirrorYPoint.setAttribute("visibility", "hidden");
 mirrorYPoint.setAttribute("r", 0.5);
-mirrorYPoint.setAttribute("stroke", "green");
+mirrorYPoint.classList.add("pointer-color");
+mirrorYPoint.classList.add("fill-primary");
 mirrorYPoint.setAttribute("cx", x0 + r0);
 mirrorYPoint.setAttribute("cy", y0);
-mirrorYPoint.setAttribute("opacity", 0.4);
+mirrorYPoint.setAttribute("opacity", mirrorOpacity);
 mirrorYPoint.style.transformOrigin = "center";
 svg.appendChild(mirrorYPoint);
 
@@ -1115,12 +1213,12 @@ let mirrorXYLine = document.createElementNS(
   "line"
 );
 mirrorXYLine.setAttribute("visibility", "hidden");
-mirrorXYLine.setAttribute("stroke", "green");
+mirrorXYLine.classList.add("pointer-color");
 mirrorXYLine.setAttribute("x1", x0);
 mirrorXYLine.setAttribute("y1", y0);
 mirrorXYLine.setAttribute("x2", x0 + r0);
 mirrorXYLine.setAttribute("y2", y0);
-mirrorXYLine.setAttribute("opacity", 0.125);
+mirrorXYLine.setAttribute("opacity", mirrorOpacity ** 2);
 mirrorXYLine.style.transformOrigin = "center";
 svg.appendChild(mirrorXYLine);
 
@@ -1130,23 +1228,23 @@ let mirrorXYPoint = document.createElementNS(
 );
 mirrorXYPoint.setAttribute("visibility", "hidden");
 mirrorXYPoint.setAttribute("r", 0.5);
-mirrorXYPoint.setAttribute("stroke", "green");
+mirrorXYPoint.classList.add("pointer-color");
+mirrorXYPoint.classList.add("fill-primary");
 mirrorXYPoint.setAttribute("cx", x0 + r0);
 mirrorXYPoint.setAttribute("cy", y0);
-mirrorXYPoint.setAttribute("opacity", 0.125);
+mirrorXYPoint.setAttribute("opacity", mirrorOpacity ** 2);
 mirrorXYPoint.style.transformOrigin = "center";
 svg.appendChild(mirrorYPoint);
 
 // #endregion
 
 // #region Creating circle arc
-const PIx2 = Math.PI * 2;
 const dr = r0 / 10;
 const radGrow = 0.05;
 const da = 0.05;
 let pointerArc = document.createElementNS("http://www.w3.org/2000/svg", "path");
 pointerArc.setAttribute("visibility", "hidden");
-pointerArc.setAttribute("stroke", "green");
+pointerArc.classList.add("pointer-color");
 pointerArc.setAttribute("stroke-width", "0.2");
 pointerArc.setAttribute("fill", "transparent");
 pointerArc.style.pointerEvents = "none";
@@ -1155,10 +1253,14 @@ svg.appendChild(pointerArc);
 
 // #region Creating sweep arc
 
+const sweepOpacity = window
+  .getComputedStyle(document.documentElement)
+  .getPropertyValue("--sweep-opacity");
+
 let sweepPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 sweepPath.setAttribute("visibility", "hidden");
-sweepPath.setAttribute("stroke", "green");
-sweepPath.setAttribute("opacity", "0.4");
+sweepPath.classList.add("pointer-color");
+sweepPath.setAttribute("opacity", sweepOpacity);
 sweepPath.setAttribute("stroke-width", "3");
 sweepPath.setAttribute("fill", "transparent");
 svg.appendChild(sweepPath);
@@ -1182,8 +1284,8 @@ function initGuidelineLabels() {
     } else {
       label.setAttribute("y", y0 - (r0 + 7) * Math.sin(gDA.value));
     }
-    label.setAttribute("visibility", "hidden");
-    label.setAttribute("class", "angle-label");
+    label.classList.add("angle-label");
+    label.classList.add("stroke-primary");
     label.setAttribute("dominant-baseline", "middle");
     label.setAttribute("text-anchor", "middle");
     label.setAttribute("visibility", "hidden");
@@ -1196,7 +1298,7 @@ function initGuidelineLabels() {
     labelPoint.setAttribute("cx", x0 + r0 * Math.cos(gDA.value));
     labelPoint.setAttribute("cy", y0 - r0 * Math.sin(gDA.value));
     labelPoint.setAttribute("r", 0.3);
-    labelPoint.setAttribute("fill", "black");
+    labelPoint.classList.add("fill-primary");
     labelPoint.setAttribute("visibility", "hidden");
     svg.appendChild(labelPoint);
 
@@ -1204,15 +1306,16 @@ function initGuidelineLabels() {
   }
 }
 
+const pointerLabelPosition = 0.2;
 let pointerLabelBg = document.createElementNS(
   "http://www.w3.org/2000/svg",
   "text"
 );
 pointerLabelBg.setAttribute("visibility", "hidden");
-pointerLabelBg.setAttribute("class", "angle-label");
+pointerLabelBg.classList.add("angle-label");
+pointerLabelBg.classList.add("label-bg");
 pointerLabelBg.setAttribute("dominant-baseline", "middle");
 pointerLabelBg.setAttribute("text-anchor", "middle");
-pointerLabelBg.setAttribute("class", "pointer-label-bg");
 svg.appendChild(pointerLabelBg);
 
 let pointerLabel = document.createElementNS(
@@ -1220,26 +1323,22 @@ let pointerLabel = document.createElementNS(
   "text"
 );
 pointerLabel.setAttribute("visibility", "hidden");
-pointerLabel.setAttribute("class", "angle-label");
+pointerLabel.classList.add("angle-label");
+pointerLabel.classList.add("pointer-color");
 pointerLabel.setAttribute("dominant-baseline", "middle");
 pointerLabel.setAttribute("text-anchor", "middle");
-pointerLabel.setAttribute("class", "pointer-label");
 svg.appendChild(pointerLabel);
 
 // #endregion
 
 // #region Creating functions lines
 
-//const functionsLinesDashPattern="0.5,0.5";
-const functionsLinesOpacity = 0.4;
 let functionsSinLine = document.createElementNS(
   "http://www.w3.org/2000/svg",
   "line"
 );
 functionsSinLine.setAttribute("visibility", "hidden");
-functionsSinLine.setAttribute("stroke", "blue");
-//functionsSinLine.setAttribute("stroke-dasharray", functionsLinesDashPattern);
-functionsSinLine.setAttribute("opacity", functionsLinesOpacity);
+functionsSinLine.classList.add("sin-line-color");
 functionsSinLine.style.transformOrigin = "center";
 functionsSinLine.setAttribute("x1", x0);
 functionsSinLine.setAttribute("y1", y0);
@@ -1252,9 +1351,7 @@ let functionsCosLine = document.createElementNS(
   "line"
 );
 functionsCosLine.setAttribute("visibility", "hidden");
-functionsCosLine.setAttribute("stroke", "red");
-//functionsCosLine.setAttribute("stroke-dasharray", functionsLinesDashPattern);
-functionsCosLine.setAttribute("opacity", functionsLinesOpacity);
+functionsCosLine.classList.add("cos-line-color");
 functionsCosLine.style.transformOrigin = "center";
 functionsCosLine.setAttribute("x1", x0);
 functionsCosLine.setAttribute("y1", y0);
@@ -1267,9 +1364,7 @@ let functionsTanLine = document.createElementNS(
   "line"
 );
 functionsTanLine.setAttribute("visibility", "hidden");
-functionsTanLine.setAttribute("stroke", "purple");
-//functionsTanLine.setAttribute("stroke-dasharray", functionsLinesDashPattern);
-functionsTanLine.setAttribute("opacity", functionsLinesOpacity);
+functionsTanLine.classList.add("tan-line-color");
 functionsTanLine.style.transformOrigin = "center";
 functionsTanLine.setAttribute("x1", x0 - 5 * r0);
 functionsTanLine.setAttribute("y1", y0);
@@ -1286,7 +1381,8 @@ let functionsSinLabelBg = document.createElementNS(
   "text"
 );
 functionsSinLabelBg.setAttribute("visibility", "hidden");
-functionsSinLabelBg.setAttribute("class", "functions-label-bg");
+functionsSinLabelBg.classList.add("functions-label");
+functionsSinLabelBg.classList.add("label-bg");
 functionsSinLabelBg.setAttribute("dominant-baseline", "middle");
 functionsSinLabelBg.setAttribute("text-anchor", "middle");
 functionsSinLabelBg.setAttribute("x", x0);
@@ -1297,7 +1393,8 @@ let functionsSinLabel = document.createElementNS(
   "text"
 );
 functionsSinLabel.setAttribute("visibility", "hidden");
-functionsSinLabel.setAttribute("class", "functions-label sin-label");
+functionsSinLabel.classList.add("functions-label");
+functionsSinLabel.classList.add("sin-line-color");
 functionsSinLabel.setAttribute("dominant-baseline", "middle");
 functionsSinLabel.setAttribute("text-anchor", "middle");
 functionsSinLabel.setAttribute("x", x0);
@@ -1309,7 +1406,8 @@ let functionsCosLabelBg = document.createElementNS(
   "text"
 );
 functionsCosLabelBg.setAttribute("visibility", "hidden");
-functionsCosLabelBg.setAttribute("class", "functions-label-bg");
+functionsCosLabelBg.classList.add("functions-label");
+functionsCosLabelBg.classList.add("label-bg");
 functionsCosLabelBg.setAttribute("dominant-baseline", "middle");
 functionsCosLabelBg.setAttribute("text-anchor", "middle");
 functionsCosLabelBg.setAttribute("x", x0);
@@ -1320,7 +1418,8 @@ let functionsCosLabel = document.createElementNS(
   "text"
 );
 functionsCosLabel.setAttribute("visibility", "hidden");
-functionsCosLabel.setAttribute("class", "functions-label cos-label");
+functionsCosLabel.classList.add("functions-label");
+functionsCosLabel.classList.add("cos-line-color");
 functionsCosLabel.setAttribute("dominant-baseline", "middle");
 functionsCosLabel.setAttribute("text-anchor", "middle");
 functionsCosLabel.setAttribute("x", x0);
@@ -1332,7 +1431,8 @@ let functionsTanLabelBg1 = document.createElementNS(
   "text"
 );
 functionsTanLabelBg1.setAttribute("visibility", "hidden");
-functionsTanLabelBg1.setAttribute("class", "functions-label-bg");
+functionsTanLabelBg1.classList.add("functions-label");
+functionsTanLabelBg1.classList.add("label-bg");
 functionsTanLabelBg1.setAttribute("dominant-baseline", "middle");
 functionsTanLabelBg1.setAttribute("text-anchor", "middle");
 functionsTanLabelBg1.setAttribute("x", x0);
@@ -1343,7 +1443,8 @@ let functionsTanLabel1 = document.createElementNS(
   "text"
 );
 functionsTanLabel1.setAttribute("visibility", "hidden");
-functionsTanLabel1.setAttribute("class", "functions-label tan-label");
+functionsTanLabel1.classList.add("functions-label");
+functionsTanLabel1.classList.add("tan-line-color");
 functionsTanLabel1.setAttribute("dominant-baseline", "middle");
 functionsTanLabel1.setAttribute("text-anchor", "middle");
 functionsTanLabel1.setAttribute("x", x0);
@@ -1355,7 +1456,8 @@ let functionsTanLabelBg2 = document.createElementNS(
   "text"
 );
 functionsTanLabelBg2.setAttribute("visibility", "hidden");
-functionsTanLabelBg2.setAttribute("class", "functions-label-bg");
+functionsTanLabelBg2.classList.add("functions-label");
+functionsTanLabelBg2.classList.add("label-bg");
 functionsTanLabelBg2.setAttribute("dominant-baseline", "middle");
 functionsTanLabelBg2.setAttribute("text-anchor", "middle");
 functionsTanLabelBg2.setAttribute("x", x0);
@@ -1366,7 +1468,8 @@ let functionsTanLabel2 = document.createElementNS(
   "text"
 );
 functionsTanLabel2.setAttribute("visibility", "hidden");
-functionsTanLabel2.setAttribute("class", "functions-label tan-label");
+functionsTanLabel2.classList.add("functions-label");
+functionsTanLabel2.classList.add("tan-line-color");
 functionsTanLabel2.setAttribute("dominant-baseline", "middle");
 functionsTanLabel2.setAttribute("text-anchor", "middle");
 functionsTanLabel2.setAttribute("x", x0);
@@ -1378,7 +1481,8 @@ let functionscTanLabelBg1 = document.createElementNS(
   "text"
 );
 functionscTanLabelBg1.setAttribute("visibility", "hidden");
-functionscTanLabelBg1.setAttribute("class", "functions-label-bg");
+functionscTanLabelBg1.classList.add("functions-label");
+functionscTanLabelBg1.classList.add("label-bg");
 functionscTanLabelBg1.setAttribute("dominant-baseline", "middle");
 functionscTanLabelBg1.setAttribute("text-anchor", "middle");
 functionscTanLabelBg1.setAttribute("x", x0);
@@ -1389,7 +1493,8 @@ let functionscTanLabel1 = document.createElementNS(
   "text"
 );
 functionscTanLabel1.setAttribute("visibility", "hidden");
-functionscTanLabel1.setAttribute("class", "functions-label tan-label");
+functionscTanLabel1.classList.add("functions-label");
+functionscTanLabel1.classList.add("tan-line-color");
 functionscTanLabel1.setAttribute("dominant-baseline", "middle");
 functionscTanLabel1.setAttribute("text-anchor", "middle");
 functionscTanLabel1.setAttribute("x", x0);
@@ -1401,7 +1506,8 @@ let functionscTanLabelBg2 = document.createElementNS(
   "text"
 );
 functionscTanLabelBg2.setAttribute("visibility", "hidden");
-functionscTanLabelBg2.setAttribute("class", "functions-label-bg");
+functionscTanLabelBg2.classList.add("functions-label");
+functionscTanLabelBg2.classList.add("label-bg");
 functionscTanLabelBg2.setAttribute("dominant-baseline", "middle");
 functionscTanLabelBg2.setAttribute("text-anchor", "middle");
 functionscTanLabelBg2.setAttribute("x", x0);
@@ -1412,7 +1518,8 @@ let functionscTanLabel2 = document.createElementNS(
   "text"
 );
 functionscTanLabel2.setAttribute("visibility", "hidden");
-functionscTanLabel2.setAttribute("class", "functions-label tan-label");
+functionscTanLabel2.classList.add("functions-label");
+functionscTanLabel2.classList.add("tan-line-color");
 functionscTanLabel2.setAttribute("dominant-baseline", "middle");
 functionscTanLabel2.setAttribute("text-anchor", "middle");
 functionscTanLabel2.setAttribute("x", x0);
@@ -1425,7 +1532,9 @@ svg.appendChild(functionscTanLabel2);
 
 const functionsAreasLinesNormal = 0.5;
 const functionsAreasLinesHighlight = 1.0;
-const functionsAreasNormal = 0.3;
+const functionsAreasLinesWidthNormal = 0.3;
+const functionsAreasLinesWidthHighlight = 1;
+const functionsAreasNormal = 0.15;
 const functionsAreasHighlight = 0.5;
 const functionsAreasOpacity = 0.6;
 const functionsSinEquals = document.createElementNS(
@@ -1433,7 +1542,6 @@ const functionsSinEquals = document.createElementNS(
   "line"
 );
 functionsSinEquals.setAttribute("visibility", "hidden");
-functionsSinEquals.setAttribute("stroke", "black");
 functionsSinEquals.setAttribute("opacity", functionsAreasLinesNormal);
 functionsSinEquals.style.transformOrigin = "center";
 functionsSinEquals.setAttribute("x1", x0 - 5 * r0);
@@ -1447,7 +1555,6 @@ const functionsCosEquals = document.createElementNS(
   "line"
 );
 functionsCosEquals.setAttribute("visibility", "hidden");
-functionsCosEquals.setAttribute("stroke", "black");
 functionsCosEquals.setAttribute("opacity", functionsAreasLinesNormal);
 functionsCosEquals.style.transformOrigin = "center";
 functionsCosEquals.setAttribute("x1", x0);
@@ -1461,7 +1568,6 @@ const functionsTanEquals = document.createElementNS(
   "line"
 );
 functionsTanEquals.setAttribute("visibility", "hidden");
-functionsTanEquals.setAttribute("stroke", "black");
 functionsTanEquals.setAttribute("opacity", functionsAreasLinesNormal);
 functionsTanEquals.style.transformOrigin = "center";
 functionsTanEquals.setAttribute("x1", x0 - 5 * r0);
@@ -1492,6 +1598,7 @@ functionsSinMore.setAttribute("visibility", "hidden");
 functionsSinMore.setAttribute("stroke", "transparent");
 functionsSinMore.setAttribute("fill", "black");
 functionsSinMore.setAttribute("opacity", functionsAreasNormal);
+functionsSinMore.classList.add("area-unstroked");
 functionsSinMore.style.transformOrigin = "center";
 functionsSinMore.setAttribute("x", x0 - 2.5 * r0);
 functionsSinMore.setAttribute("y", y0 - 5 * r0);
@@ -1507,6 +1614,7 @@ functionsCosMore.setAttribute("visibility", "hidden");
 functionsCosMore.setAttribute("stroke", "transparent");
 functionsCosMore.setAttribute("fill", "black");
 functionsCosMore.setAttribute("opacity", functionsAreasNormal);
+functionsCosMore.classList.add("area-unstroked");
 functionsCosMore.style.transformOrigin = "center";
 functionsCosMore.setAttribute("x", x0);
 functionsCosMore.setAttribute("y", y0 - 2.5 * r0);
@@ -1522,6 +1630,7 @@ functionsTanMore.setAttribute("visibility", "hidden");
 functionsTanMore.setAttribute("stroke", "transparent");
 functionsTanMore.setAttribute("fill", "black");
 functionsTanMore.setAttribute("opacity", functionsAreasNormal);
+functionsTanMore.classList.add("area-unstroked");
 functionsTanMore.style.transformOrigin = "center";
 functionsTanMore.setAttribute("fill-rule", "evenodd");
 svg.appendChild(functionsTanMore);
@@ -1534,6 +1643,7 @@ functionsCotMore.setAttribute("visibility", "hidden");
 functionsCotMore.setAttribute("stroke", "transparent");
 functionsCotMore.setAttribute("fill", "black");
 functionsCotMore.setAttribute("opacity", functionsAreasNormal);
+functionsCotMore.classList.add("area-unstroked");
 functionsCotMore.style.transformOrigin = "center";
 functionsCotMore.setAttribute("fill-rule", "evenodd");
 svg.appendChild(functionsCotMore);
@@ -1546,6 +1656,7 @@ functionsSinLess.setAttribute("visibility", "hidden");
 functionsSinLess.setAttribute("stroke", "transparent");
 functionsSinLess.setAttribute("fill", "black");
 functionsSinLess.setAttribute("opacity", functionsAreasNormal);
+functionsSinLess.classList.add("area-unstroked");
 functionsSinLess.style.transformOrigin = "center";
 functionsSinLess.setAttribute("x", x0 - 2.5 * r0);
 functionsSinLess.setAttribute("y", y0);
@@ -1561,6 +1672,7 @@ functionsCosLess.setAttribute("visibility", "hidden");
 functionsCosLess.setAttribute("stroke", "transparent");
 functionsCosLess.setAttribute("fill", "black");
 functionsCosLess.setAttribute("opacity", functionsAreasNormal);
+functionsCosLess.classList.add("area-unstroked");
 functionsCosLess.style.transformOrigin = "center";
 functionsCosLess.setAttribute("x", x0 - 5 * r0);
 functionsCosLess.setAttribute("y", y0 - 2.5 * r0);
@@ -1576,6 +1688,7 @@ functionsTanLess.setAttribute("visibility", "hidden");
 functionsTanLess.setAttribute("stroke", "transparent");
 functionsTanLess.setAttribute("fill", "black");
 functionsTanLess.setAttribute("opacity", functionsAreasNormal);
+functionsTanLess.classList.add("area-unstroked");
 functionsTanLess.style.transformOrigin = "center";
 functionsTanLess.setAttribute("fill-rule", "evenodd");
 svg.appendChild(functionsTanLess);
@@ -1588,6 +1701,7 @@ functionsCotLess.setAttribute("visibility", "hidden");
 functionsCotLess.setAttribute("stroke", "transparent");
 functionsCotLess.setAttribute("fill", "black");
 functionsCotLess.setAttribute("opacity", functionsAreasNormal);
+functionsCotLess.classList.add("area-unstroked");
 functionsCotLess.style.transformOrigin = "center";
 functionsCotLess.setAttribute("fill-rule", "evenodd");
 svg.appendChild(functionsCotLess);
@@ -1600,6 +1714,7 @@ functionsSinPositive.setAttribute("visibility", "hidden");
 functionsSinPositive.setAttribute("stroke", "transparent");
 functionsSinPositive.setAttribute("fill", "black");
 functionsSinPositive.setAttribute("opacity", functionsAreasNormal);
+functionsSinPositive.classList.add("area-unstroked");
 functionsSinPositive.style.transformOrigin = "center";
 functionsSinPositive.setAttribute("x", x0 - 2.5 * r0);
 functionsSinPositive.setAttribute("y", y0 - 5 * r0);
@@ -1615,6 +1730,7 @@ functionsCosPositive.setAttribute("visibility", "hidden");
 functionsCosPositive.setAttribute("stroke", "transparent");
 functionsCosPositive.setAttribute("fill", "black");
 functionsCosPositive.setAttribute("opacity", functionsAreasNormal);
+functionsCosPositive.classList.add("area-unstroked");
 functionsCosPositive.style.transformOrigin = "center";
 functionsCosPositive.setAttribute("x", x0);
 functionsCosPositive.setAttribute("y", y0 - 2.5 * r0);
@@ -1630,6 +1746,7 @@ functionsTanPositive.setAttribute("visibility", "hidden");
 functionsTanPositive.setAttribute("stroke", "transparent");
 functionsTanPositive.setAttribute("fill", "black");
 functionsTanPositive.setAttribute("opacity", functionsAreasNormal);
+functionsTanPositive.classList.add("area-unstroked");
 functionsTanPositive.style.transformOrigin = "center";
 functionsTanPositive.setAttribute("fill-rule", "evenodd");
 functionsTanPositive.setAttribute(
@@ -1648,6 +1765,7 @@ functionsCotPositive.setAttribute("visibility", "hidden");
 functionsCotPositive.setAttribute("stroke", "transparent");
 functionsCotPositive.setAttribute("fill", "black");
 functionsCotPositive.setAttribute("opacity", functionsAreasNormal);
+functionsCotPositive.classList.add("area-unstroked");
 functionsCotPositive.style.transformOrigin = "center";
 functionsCotPositive.setAttribute("fill-rule", "evenodd");
 functionsCotPositive.setAttribute(
@@ -1666,6 +1784,7 @@ functionsSinNegative.setAttribute("visibility", "hidden");
 functionsSinNegative.setAttribute("stroke", "transparent");
 functionsSinNegative.setAttribute("fill", "black");
 functionsSinNegative.setAttribute("opacity", functionsAreasNormal);
+functionsSinNegative.classList.add("area-unstroked");
 functionsSinNegative.style.transformOrigin = "center";
 functionsSinNegative.setAttribute("x", x0 - 2.5 * r0);
 functionsSinNegative.setAttribute("y", y0);
@@ -1681,6 +1800,7 @@ functionsCosNegative.setAttribute("visibility", "hidden");
 functionsCosNegative.setAttribute("stroke", "transparent");
 functionsCosNegative.setAttribute("fill", "black");
 functionsCosNegative.setAttribute("opacity", functionsAreasNormal);
+functionsCosNegative.classList.add("area-unstroked");
 functionsCosNegative.style.transformOrigin = "center";
 functionsCosNegative.setAttribute("x", x0 - 5 * r0);
 functionsCosNegative.setAttribute("y", y0 - 2.5 * r0);
@@ -1696,6 +1816,7 @@ functionsTanNegative.setAttribute("visibility", "hidden");
 functionsTanNegative.setAttribute("stroke", "transparent");
 functionsTanNegative.setAttribute("fill", "black");
 functionsTanNegative.setAttribute("opacity", functionsAreasNormal);
+functionsTanNegative.classList.add("area-unstroked");
 functionsTanNegative.style.transformOrigin = "center";
 functionsTanNegative.setAttribute("fill-rule", "evenodd");
 functionsTanNegative.setAttribute(
@@ -1714,6 +1835,7 @@ functionsCotNegative.setAttribute("visibility", "hidden");
 functionsCotNegative.setAttribute("stroke", "transparent");
 functionsCotNegative.setAttribute("fill", "black");
 functionsCotNegative.setAttribute("opacity", functionsAreasNormal);
+functionsCotNegative.classList.add("area-unstroked");
 functionsCotNegative.style.transformOrigin = "center";
 functionsCotNegative.setAttribute("fill-rule", "evenodd");
 functionsCotNegative.setAttribute(
@@ -1751,25 +1873,53 @@ const functionAreas = [
 // #region Loading formulae base
 
 let formulaeBase;
-let fomulaePromise = fetch("./formulae.json").then(async (f) =>
+let fomulaePromise = fetch("./data/formulae.json").then(async (f) =>
   f.json().then((r) => (formulaeBase = r))
 );
 
 // #endregion
 
 // #region Loading colors
+// source : http://www.backalleycoder.com/2011/03/20/link-tag-css-stylesheet-load-event/
+// this is a very clever solution. love it.
+const errorImg = document.createElement("img");
+errorImg.onerror = reloadColorList;
 
-let colorsList = [];
-let colorsListPromise = fetch("./colors.json").then(async (f) =>
-  f.json().then((r) => {
-    for (let i in r) {
-      colorsList.push({
-        color: r[i],
-        used: false,
-      });
+let colorList = [];
+function reloadColorList() {
+  colorList = [];
+  for (let i = 1; i <= 20; i++) {
+    colorList.push({
+      color: window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue(`--area-color${i}`),
+      used: false,
+    });
+  }
+  updateUsedColors();
+}
+function updateUsedColors() {
+  for (let ai in functionsAreasData) {
+    for (let fi in functionsAreasData[ai]) {
+      if (functionsAreasData[ai][fi]) {
+        let id = sypherId(ai, fi);
+        let c = colorList[functionsAreasData[ai][fi].color];
+        c.used = true;
+        dynamicGuidelineLines
+          .filter((dl) => dl.id == id)
+          .forEach((dl) => dl.line.setAttribute("stroke", c.color));
+        dynamicGuidelineDashlines
+          .filter((dl) => dl.id == id)
+          .forEach((dl) => dl.line.setAttribute("stroke", c.color));
+        functionAreas[ai][fi].setAttribute("stroke", c.color);
+        functionAreas[ai][fi].setAttribute("fill", c.color);
+        let cell = functionsAreasTableCells[ai][fi];
+        cell.style.background = c.color;
+        cell.style.color = "white";
+      }
     }
-  })
-);
+  }
+}
 
 // #endregion
 
@@ -1811,11 +1961,13 @@ function interact(point) {
     let windedAngle = -Number(pointerPoint.style.rotate.replace("rad", ""));
     let sign = Math.sign(windedAngle - angle);
 
-    while (Math.abs(windedAngle - angle) > pi) {
+    while (Math.abs(windedAngle - angle) > PI) {
       // animation rounding
       angle += sign * PIx2;
     }
     currentAngle = angle;
+    literalCurrentAngleDegree = null;
+    literalCurrentAngleRadians = null;
     updateState();
   }
 }
@@ -1841,27 +1993,33 @@ function interpretLiteral(literal) {
     return undefined;
   } else if (literal.length == 0) {
     return null;
-  } else if (literal.includes("/")) {
-    let parts = literal.split("/");
-    if (parts.length != 2) {
-      return undefined;
-    } else {
-      return Number(parts[0]) / Number(parts[1]);
-    }
   } else {
-    return Number(literal);
+    literal = literal.replace(",", ".");
+    if (literal.includes("/")) {
+      let parts = literal.split("/");
+      if (parts.length != 2) {
+        return undefined;
+      } else {
+        return Number(parts[0]) / Number(parts[1]);
+      }
+    } else {
+      return Number(literal);
+    }
   }
 }
 
 function interpretAngle() {
   let a = interpretLiteral(angleWantLiteral);
+  if (a != 0 && !a) {
+    return a;
+  }
 
   if (angleWantIsPi) {
-    a *= pi;
+    a *= PI;
   }
 
   if (!angleWantIsRadians) {
-    a *= pi / 180;
+    a *= PI / 180;
   }
 
   return a;
@@ -1893,30 +2051,50 @@ function getSweepPath(current, target) {
 function actionSetAngle() {
   updateAngleWant();
   let iWantInterpret = interpretAngle();
-  if (iWantInterpret != 0 && !iWantInterpret) {
+  if (
+    (iWantInterpret != 0 && !iWantInterpret) ||
+    !Number.isFinite(iWantInterpret)
+  ) {
     return;
   }
   currentAngle = iWantInterpret;
+  if (angleWantIsRadians) {
+    literalCurrentAngleRadians = angleWantLiteral + (angleWantIsPi ? "π" : "");
+    literalCurrentAngleDegree = null;
+  } else {
+    literalCurrentAngleRadians = null;
+    literalCurrentAngleDegree = angleWantLiteral + (angleWantIsPi ? "π" : "");
+  }
   updateState();
 }
 
 function actionAddAngle() {
   updateAngleWant();
   let iWantInterpret = interpretAngle();
-  if (iWantInterpret != 0 && !iWantInterpret) {
+  if (
+    (iWantInterpret != 0 && !iWantInterpret) ||
+    !Number.isFinite(iWantInterpret)
+  ) {
     return;
   }
   currentAngle += iWantInterpret;
+  literalCurrentAngleDegree = null;
+  literalCurrentAngleRadians = null;
   updateState();
 }
 
 function actionSubAngle() {
   updateAngleWant();
   let iWantInterpret = interpretAngle();
-  if (iWantInterpret != 0 && !iWantInterpret) {
+  if (
+    (iWantInterpret != 0 && !iWantInterpret) ||
+    !Number.isFinite(iWantInterpret)
+  ) {
     return;
   }
   currentAngle -= iWantInterpret;
+  literalCurrentAngleDegree = null;
+  literalCurrentAngleRadians = null;
   updateState();
 }
 
@@ -1924,11 +2102,15 @@ let processId = null;
 function actionSweepAngle() {
   updateAngleWant();
   let iWantInterpret = interpretAngle();
-  if (iWantInterpret != 0 && !iWantInterpret) {
+  if (
+    (iWantInterpret != 0 && !iWantInterpret) ||
+    !Number.isFinite(iWantInterpret)
+  ) {
     return;
   }
   if (sweepPath.getAttribute("visibility") === "visible") {
     sweepPath.setAttribute("visibility", "hidden");
+    window.event.target.classList.remove("sweep-button-used");
     if (processId !== null) {
       clearInterval(processId);
       svg.classList.remove("no-transitions");
@@ -1939,8 +2121,11 @@ function actionSweepAngle() {
       let path = getSweepPath(currentAngle, iWantInterpret);
       sweepPath.setAttribute("d", "");
       sweepPath.setAttribute("visibility", "visible");
+      window.event.target.classList.add("sweep-button-used");
       let id = 0;
       svg.classList.add("no-transitions");
+      literalCurrentAngleDegree = null;
+      literalCurrentAngleRadians = null;
       processId = setInterval(() => {
         sweepPath.setAttribute("d", sweepPath.getAttribute("d") + path[id].p);
         currentAngle = path[id].a;
@@ -1950,6 +2135,13 @@ function actionSweepAngle() {
           svg.classList.remove("no-transitions");
           processId = null;
           currentAngle = iWantInterpret;
+          if (angleWantIsRadians) {
+            literalCurrentAngleRadians =
+              angleWantLiteral + (angleWantIsPi ? "π" : "");
+          } else {
+            literalCurrentAngleDegree =
+              angleWantLiteral + (angleWantIsPi ? "π" : "");
+          }
         }
         updateState();
       }, 20);
@@ -1960,38 +2152,21 @@ function actionSweepAngle() {
 const wolframQuery = "https://www.wolframalpha.com/input?i=";
 function actionFunctionAskWolfram() {
   let angle = currentAngle;
-  if (currentGuideline) {
-    angle = currentGuideline.litRad;
-  }
   if (functionsCurrentFunctionRad.innerHTML.length > 0) {
-    window.open(wolframQuery + `${functionsCurrentName}(${angle})`);
+    let qr = `${functionsCurrentName}(${angle})`;
+    if (
+      currentGuideline ||
+      literalCurrentAngleDegree ||
+      literalCurrentAngleRadians
+    )
+      qr = functionsCurrentFunctionRad.innerHTML;
+    qr = qr.replace("+", "%2B");
+    window.open(wolframQuery + qr);
   }
 }
 
 function functionsAreaLoad(ai, fi, data) {
-  let an =
-    ai == 0
-      ? "E"
-      : ai == 1
-      ? "P"
-      : ai == 2
-      ? "N"
-      : ai == 3
-      ? "M"
-      : ai == 4
-      ? "L"
-      : null;
-  let fn =
-    fi == 0
-      ? "sin"
-      : fi == 1
-      ? "cos"
-      : fi == 2
-      ? "tan"
-      : fi == 3
-      ? "cot"
-      : null;
-  functionsAreaAdd(`${an}-${fn}`, data.literal);
+  functionsAreaAdd(sypherId(ai, fi), data.literal);
 }
 
 function functionsAreaAdd(id, literal) {
@@ -2008,9 +2183,15 @@ function functionsAreaAdd(id, literal) {
       return;
     }
   }
+
   let c = desypherId(id);
   if (c.fi == -1 || c.ai == -1) {
     // id is invalid
+    return;
+  }
+
+  if (literal === null && c.ai != 1 && c.ai != 2) {
+    // literal is required for non-(positive, negative) areas
     return;
   }
 
@@ -2019,20 +2200,21 @@ function functionsAreaAdd(id, literal) {
   if (functionsAreasData[c.ai][c.fi]) {
     // area for this type exists, reuse the color
     colorInd = functionsAreasData[c.ai][c.fi].color;
-    colorsList[colorInd].used = true;
+    colorList[colorInd].used = true;
   } else {
-    for (let i in colorsList) {
-      if (!colorsList[i].used) {
+    for (let i in colorList) {
+      if (!colorList[i].used) {
         colorInd = i;
-        colorsList[i].used = true;
+        colorList[i].used = true;
         break;
       }
     }
   }
-  let color = colorsList[colorInd].color;
+  let color = colorList[colorInd].color;
 
   let cell = functionsAreasTableCells[c.ai][c.fi];
   cell.style.background = color;
+  cell.style.color = "white";
   if (literal !== null) {
     cell.innerHTML = literal;
   }
@@ -2056,15 +2238,38 @@ function functionsAreaAdd(id, literal) {
     }
   }
   dynamicGuidelines = dynamicGuidelines.filter((g) => g.id !== id);
+  dynamicGuidelineLines = dynamicGuidelineLines.filter((g) => {
+    if (g.id === id) {
+      svg.removeChild(g.line);
+      return false;
+    } else {
+      return true;
+    }
+  });
+  dynamicGuidelineDashlines = dynamicGuidelineDashlines.filter((g) => {
+    if (g.id === id) {
+      svg.removeChild(g.line);
+      return false;
+    } else {
+      return true;
+    }
+  });
+  let guidelinesPositions = [];
   switch (true) {
+    case c.at == "P":
+    case c.at == "N":
+      break;
     case c.fn == "sin":
       a.style.transform = `translate(0px, ${-r0 * input}px)`;
       if (Math.abs(input) < 1 && createGuides) {
         dynamicGuidelines.push({
           id: id,
-          value: Math.asin(input),
-          litRad: `asin(${literal})`,
-          litDeg: (Math.asin(input) / pi) * 180,
+          value: input > 0 ? Math.asin(input) : Math.asin(input) + PIx2,
+          litRad: input > 0 ? `asin(${literal})` : `asin(${literal})+2π`,
+          litDeg:
+            input > 0
+              ? (Math.asin(input) / PI) * 180
+              : (Math.asin(input) / PI) * 180 + 360,
           sin: literal,
           cos: `√(1 - (${literal})^2)`,
           cos_tex: `\\sqrt{1 - (${literal})^2}`,
@@ -2075,9 +2280,9 @@ function functionsAreaAdd(id, literal) {
         });
         dynamicGuidelines.push({
           id: id,
-          value: pi - Math.asin(input),
+          value: PI - Math.asin(input),
           litRad: `π-asin(${literal})`,
-          litDeg: pi - (Math.asin(input) / pi) * 180,
+          litDeg: 180 - (Math.asin(input) / PI) * 180,
           sin: literal,
           cos: `-√(1 - (${literal})^2)`,
           cos_tex: `-\\sqrt{1 - (${literal})^2}`,
@@ -2086,6 +2291,8 @@ function functionsAreaAdd(id, literal) {
           cot: `-√(1 - (${literal})^2)/${literal}`,
           cot_tex: `-\\dfrac{\\sqrt{1 - (${literal})^2}}{${literal}}`,
         });
+        guidelinesPositions.push(Math.asin(input));
+        guidelinesPositions.push(PI - Math.asin(input));
       }
       break;
     case c.fn == "cos":
@@ -2095,7 +2302,7 @@ function functionsAreaAdd(id, literal) {
           id: id,
           value: Math.acos(input),
           litRad: `acos(${literal})`,
-          litDeg: (Math.acos(input) / pi) * 180,
+          litDeg: (Math.acos(input) / PI) * 180,
           sin: `√(1 - (${literal})^2)`,
           sin_tex: `\\sqrt{1 - (${literal})^2}`,
           cos: literal,
@@ -2106,9 +2313,9 @@ function functionsAreaAdd(id, literal) {
         });
         dynamicGuidelines.push({
           id: id,
-          value: -Math.acos(input),
-          litRad: `-acos(${literal})`,
-          litDeg: (-Math.acos(input) / pi) * 180,
+          value: PIx2 - Math.acos(input),
+          litRad: `2π-acos(${literal})`,
+          litDeg: (2 - Math.acos(input) / PI) * 180,
           sin: `-√(1 - (${literal})^2)`,
           sin_tex: `-\\sqrt{1 - (${literal})^2}`,
           cos: literal,
@@ -2117,6 +2324,8 @@ function functionsAreaAdd(id, literal) {
           cot: `-${literal}/√(1 - (${literal})^2)`,
           cot_tex: `-\\dfrac{${literal}}{\\sqrt{1 - (${literal})^2}}`,
         });
+        guidelinesPositions.push(Math.acos(input));
+        guidelinesPositions.push(-Math.acos(input));
       }
       break;
     case c.fn == "tan":
@@ -2144,9 +2353,12 @@ function functionsAreaAdd(id, literal) {
       if (createGuides) {
         dynamicGuidelines.push({
           id: id,
-          value: Math.atan(input),
-          litRad: `atan(${literal})`,
-          litDeg: (Math.atan(input) / pi) * 180,
+          value: input > 0 ? Math.atan(input) : Math.atan(input) + PIx2,
+          litRad: input > 0 ? `atan(${literal})` : `atan(${literal})+2π`,
+          litDeg:
+            input > 0
+              ? (Math.atan(input) / PI) * 180
+              : (Math.atan(input) / PI) * 180 + 360,
           sin: `${input < 0 ? "-" : ""}1/√(1 + 1/(${literal})^2)`,
           sin_tex: `${
             input < 0 ? "-" : ""
@@ -2159,9 +2371,9 @@ function functionsAreaAdd(id, literal) {
         });
         dynamicGuidelines.push({
           id: id,
-          value: Math.atan(input) + pi,
+          value: Math.atan(input) + PI,
           litRad: `atan(${literal})+π`,
-          litDeg: (Math.atan(input) / pi) * 180 + 180,
+          litDeg: (Math.atan(input) / PI) * 180 + 180,
           sin: `${input > 0 ? "-" : ""}1/√(1 + 1/(${literal})^2)`,
           sin_tex: `${
             input > 0 ? "-" : ""
@@ -2172,6 +2384,8 @@ function functionsAreaAdd(id, literal) {
           cot: `1/(${literal})`,
           cot_tex: `\\dfrac{1}{${literal}}`,
         });
+        guidelinesPositions.push(Math.atan(input));
+        guidelinesPositions.push(Math.atan(input) + PI);
       }
       break;
     case c.fn == "cot":
@@ -2199,9 +2413,9 @@ function functionsAreaAdd(id, literal) {
       if (createGuides) {
         dynamicGuidelines.push({
           id: id,
-          value: Math.atan(1.0 / input),
+          value: acot(input),
           litRad: `acot(${literal})`,
-          litDeg: (Math.atan(1.0 / input) / pi) * 180,
+          litDeg: (acot(input) / PI) * 180,
           sin: `1/√(1 + (${literal})^2)`,
           sin_tex: `\\dfrac{1}{\\sqrt{1 + (${literal})^2}}`,
           cos: `${input < 0 ? "-" : ""}1/√(1 + 1/(${literal})^2)`,
@@ -2214,9 +2428,9 @@ function functionsAreaAdd(id, literal) {
         });
         dynamicGuidelines.push({
           id: id,
-          value: Math.atan(1.0 / input) - pi,
-          litRad: `acot(${literal})-π`,
-          litDeg: (Math.atan(1.0 / input) / pi) * 180 - 180,
+          value: acot(input) + PI,
+          litRad: `acot(${literal})+π`,
+          litDeg: (acot(input) / PI) * 180 + 180,
           sin: `-1/√(1 + (${literal})^2)`,
           sin_tex: `-\\dfrac{1}{\\sqrt{1 + (${literal})^2}}`,
           cos: `${input > 0 ? "-" : ""}1/√(1 + 1/(${literal})^2)`,
@@ -2227,14 +2441,42 @@ function functionsAreaAdd(id, literal) {
           tan_tex: `\\dfrac{1}{${literal}}`,
           cot: literal,
         });
+        guidelinesPositions.push(acot(input));
+        guidelinesPositions.push(acot(input) - PI);
       }
       break;
-    case c.at == "P":
-    case c.at == "N":
     default:
   }
+
+  guidelinesPositions.forEach((p) => {
+    let l = createLineToAngle(p, 0.95, 1.05);
+    l.setAttribute("stroke", color);
+    svg.appendChild(l);
+    dynamicGuidelineLines.push({
+      id: id,
+      line: l,
+    });
+
+    l = createLineToAngle(p, 0, 1);
+    l.setAttribute("stroke", color);
+    l.setAttribute("stroke-dasharray", "1 1");
+    l.setAttribute("opacity", functionsAreasLinesNormal);
+    svg.appendChild(l);
+    dynamicGuidelineDashlines.push({
+      id: id,
+      line: l,
+    });
+  });
+  moveSVG();
 }
 
+function acot(x) {
+  let res = Math.atan(1.0 / x);
+  if (res < 0) {
+    res += PI;
+  }
+  return res;
+}
 
 // TODO FREE THIS!!
 function actionFunctionEquals() {
@@ -2296,6 +2538,24 @@ function desypherId(id) {
   };
 }
 
+function sypherId(ai, fi) {
+  return `${
+    ai == 0
+      ? "E"
+      : ai == 1
+      ? "P"
+      : ai == 2
+      ? "N"
+      : ai == 3
+      ? "M"
+      : ai == 4
+      ? "L"
+      : null
+  }-${
+    fi == 0 ? "sin" : fi == 1 ? "cos" : fi == 2 ? "tan" : fi == 3 ? "cot" : null
+  }`;
+}
+
 function actionFunctionsRemoveArea(id) {
   let c = desypherId(id);
   if (c.ai == -1 || c.fi == -1 || !functionsAreasData[c.ai][c.fi]) {
@@ -2303,28 +2563,62 @@ function actionFunctionsRemoveArea(id) {
     return;
   }
 
-  colorsList[functionsAreasData[c.ai][c.fi].color].used = false;
+  colorList[functionsAreasData[c.ai][c.fi].color].used = false;
   functionsAreasData[c.ai][c.fi] = null;
   functionAreas[c.ai][c.fi].setAttribute("visibility", "hidden");
-  functionsAreasTableCells[c.ai][c.fi].style.backgroundColor = "white";
+  functionsAreasTableCells[c.ai][c.fi].style.backgroundColor = "transparent";
   functionsAreasTableCells[c.ai][c.fi].innerHTML = "";
   dynamicGuidelines = dynamicGuidelines.filter((g) => g.id !== id);
+  dynamicGuidelineLines = dynamicGuidelineLines.filter((g) => {
+    if (g.id == id) {
+      svg.removeChild(g.line);
+      return false;
+    } else {
+      return true;
+    }
+  });
+  dynamicGuidelineDashlines = dynamicGuidelineDashlines.filter((g) => {
+    if (g.id == id) {
+      svg.removeChild(g.line);
+      return false;
+    } else {
+      return true;
+    }
+  });
+
+  updateState();
 }
 
 function actionFunctionsHighlightArea(id) {
   let c = desypherId(id);
-  functionAreas[c.ai][c.fi].setAttribute(
-    "opacity",
-    c.at == "E" ? functionsAreasLinesHighlight : functionsAreasHighlight
-  );
+  if (c.at == "E") {
+    functionAreas[c.ai][c.fi].setAttribute(
+      "opacity",
+      functionsAreasLinesHighlight
+    );
+    functionAreas[c.ai][c.fi].setAttribute(
+      "stroke-width",
+      `${functionsAreasLinesWidthHighlight}px`
+    );
+  } else {
+    functionAreas[c.ai][c.fi].setAttribute("opacity", functionsAreasHighlight);
+  }
 }
 
 function actionFunctionsDehighlightArea(id) {
   let c = desypherId(id);
-  functionAreas[c.ai][c.fi].setAttribute(
-    "opacity",
-    c.at == "E" ? functionsAreasLinesNormal : functionsAreasNormal
-  );
+  if (c.at == "E") {
+    functionAreas[c.ai][c.fi].setAttribute(
+      "opacity",
+      functionsAreasLinesNormal
+    );
+    functionAreas[c.ai][c.fi].setAttribute(
+      "stroke-width",
+      `${functionsAreasLinesWidthNormal}px`
+    );
+  } else {
+    functionAreas[c.ai][c.fi].setAttribute("opacity", functionsAreasNormal);
+  }
 }
 
 function actionFormulaeAskWolfram() {
@@ -2333,11 +2627,24 @@ function actionFormulaeAskWolfram() {
   }
 }
 
+function transformFormulaeQuery(input) {
+  input = input.replace(" ", "");
+  input = input.replace(",", ".");
+  input = input.replace("²", "^2");
+  input = input.replace("π", ".pi");
+  return input;
+}
+
+const formulaeGetButton = document.getElementById("formulae-get-button");
 function actionFormulaeGet() {
-  let input = formulaeQuery.replace(" ", "");
+  let input = transformFormulaeQuery(formulaeQuery);
   let result = formulaeBase.filter((formula) => formula.result === input);
-  formulaeResultName.innerHTML = "Get " + katexNormalRender(input);
-  formulaeDisplayList(result);
+  formulaeResultName.innerHTML = "Get " + renderLatex(input);
+  formulaeDisplayList(
+    result,
+    formulaeGetButton,
+    "No ways to get expression found"
+  );
 
   formulaeCurrentShown = result.map((f) => f.id);
   formulaeCurrentType = {
@@ -2345,6 +2652,7 @@ function actionFormulaeGet() {
   };
 }
 
+const formulaeUseButton = document.getElementById("formulae-use-button");
 function actionFormulaeUse() {
   let result;
   if (formulaeCurrentId || formulaeCurrentId == 0) {
@@ -2353,8 +2661,8 @@ function actionFormulaeUse() {
     result = formulaeBase.filter((formula) =>
       formula.parents.includes(Number(formulaeCurrentId))
     );
-    formulaeResultName.innerHTML = "Use " + katexNormalRender(selected.tex);
-    formulaeDisplayList(result);
+    formulaeResultName.innerHTML = "Use " + renderLatex(selected.tex);
+    formulaeDisplayList(result, formulaeUseButton, "This formula is not used");
 
     formulaeCurrentType = {
       prefix: "Use",
@@ -2362,10 +2670,14 @@ function actionFormulaeUse() {
     };
   } else {
     // get uses for expression
-    let input = formulaeQuery.replace(" ", "");
+    let input = transformFormulaeQuery(formulaeQuery);
     result = formulaeBase.filter((formula) => formula.uses.includes(input));
-    formulaeResultName.innerHTML = "Use " + katexNormalRender(input);
-    formulaeDisplayList(result);
+    formulaeResultName.innerHTML = "Use " + renderLatex(input);
+    formulaeDisplayList(
+      result,
+      formulaeUseButton,
+      "No uses for expression found"
+    );
 
     formulaeCurrentType = {
       prefix: "Use",
@@ -2375,27 +2687,24 @@ function actionFormulaeUse() {
   formulaeCurrentShown = result.map((f) => f.id);
 }
 
+const formulaeFindButton = document.getElementById("formulae-find-button");
 function actionFormulaeParents() {
   if (!formulaeCurrentId && formulaeCurrentId != 0) {
-    console.log(
-      "Must select formula to find parents, id = " + formulaeCurrentId
-    );
+    animateError(formulaeFindButton, "Select a formula");
     return;
   }
   // Arrays.find would not copy/reference parents:[] field. So, I'm forced to do it this way:
   let selected = formulaeGetSelected();
-  if (selected.parents.length == 0) {
-    console.log("Selected node has no parents");
-    console.log(selected);
-    return;
-  }
-  formulaeResultName.innerHTML =
-    "Parents of " + katexNormalRender(selected.tex);
+  formulaeResultName.innerHTML = "Parents of " + renderLatex(selected.tex);
 
   let result = formulaeBase.filter((formula) =>
     selected.parents.includes(formula.id)
   );
-  formulaeDisplayList(result);
+  formulaeDisplayList(
+    result,
+    formulaeFindButton,
+    "No parents for this formula"
+  );
 
   formulaeCurrentShown = result.map((f) => f.id);
   formulaeCurrentType = {
@@ -2413,29 +2722,124 @@ function formulaeGetSelected() {
   }
 }
 
-function formulaeDisplayList(list) {
+function formulaeDisplayList(
+  list,
+  t = null,
+  errorMessage = "No formulae found",
+  successMessage = "Done"
+) {
   formulaeResult.innerHTML = "";
   for (let i in list) {
-    formulaeResult.innerHTML += `<label><input type="radio" name="formulae_selected" onclick="formulaeCurrentId=event.target.value" value="${
+    formulaeResult.innerHTML += `<label><input type="radio" name="formulae_selected" onclick="formulaeCurrentId=event.target.value; updateFormulaeResultsStyles()" value="${
       list[i].id
-    }">${katexNormalRender(list[i].tex)}</label>${
+    }">${renderLatex(list[i].tex)} ${
       list[i].wikiref
         ? `<a target="_blank" class="wikiref" href="${list[i].wikiref}">wiki</a>`
         : ""
-    }<br>`;
+    }</label>`;
   }
-  if (formulaeResult.innerHTML.length == 0) {
-    formulaeResult.innerHTML = "No matching formulae was found";
+  if (t) {
+    if (formulaeResult.innerHTML.length == 0) {
+      animateError(t, errorMessage);
+    } else {
+      animateCopy(t, successMessage, 400);
+    }
   }
 }
 
-function katexNormalRender(str) {
-  return katex.renderToString(`\\mathrm{${str}}`);
+function updateFormulaeResultsStyles() {
+  formulaeResult.childNodes.forEach((c) => {
+    let v = c.getElementsByTagName("input")[0]?.value;
+    if (v) {
+      c.classList[v === formulaeCurrentId ? "add" : "remove"](
+        "formulae-highlight"
+      );
+    }
+  });
+}
+
+function renderLatex(str) {
+  return katex.renderToString(`\\mathrm\{${str}\}`, {
+    output: "htmlAndMathml",
+  });
 }
 
 function formulaeDeselectList() {
   let fls = document.getElementsByName("formulae_selected");
   for (let i in fls) fls[i].checked = false;
+}
+
+function actionCopyState(t) {
+  document.getElementById("share-generate").innerHTML = generateState();
+  navigator.clipboard.writeText(
+    document.getElementById("share-generate").innerHTML
+  );
+  animateCopy(t, "State copied!");
+}
+
+const urlForState =
+  "https://dzuchun.github.io/interactive-trigonometry/interactive-trigonometry.html?state=";
+function actionCopyUrl(t) {
+  document.getElementById("share-generate").innerHTML = generateState();
+  navigator.clipboard.writeText(
+    urlForState + document.getElementById("share-generate").innerHTML
+  );
+  animateCopy(t, "Url copied!");
+}
+
+const copyAttributeName = "____real-text-copy";
+function animateCopy(t, message, duration = 1000) {
+  let s = false;
+  t.classList.add("clipboard-active");
+  if (!t.getAttribute(copyAttributeName)) {
+    t.setAttribute(copyAttributeName, t.textContent);
+    s = true;
+  }
+  t.innerText = message;
+  setTimeout(() => {
+    t.classList.remove("clipboard-active");
+    if (t.getAttribute(copyAttributeName)) {
+      t.textContent = t.getAttribute(copyAttributeName);
+    }
+    if (s) {
+      t.setAttribute(copyAttributeName, "");
+    }
+  }, duration);
+}
+
+function actionLoadState() {
+  let d = document.getElementById("share-load");
+  let t = document.getElementById("button-share-load");
+  try {
+    loadState(d.value);
+  } catch (error) {
+    animateError(t);
+    animateError(d);
+  }
+}
+
+const errorAttributeName = "____real-text-error";
+function animateError(t, message = null) {
+  let s = false;
+  t.classList.add("state-error");
+  if (message) {
+    if (!t.getAttribute(errorAttributeName)) {
+      t.setAttribute(errorAttributeName, t.textContent);
+      s = true;
+    }
+    t.innerText = message;
+  }
+  setTimeout(() => {
+    t.classList.remove("state-error");
+    if (message) {
+      if (t.getAttribute(errorAttributeName)) {
+        t.textContent = t.getAttribute(errorAttributeName);
+      }
+      if (s) {
+        t.setAttribute(errorAttributeName, "");
+      }
+    }
+  }, 1000);
 }
 
 // #endregion
@@ -2462,8 +2866,8 @@ const allowedKeys = [
 ];
 // #endregion
 function fractionInput() {
-  var e = window.event;
-  var key = e.which;
+  let e = window.event;
+  let key = e.which;
   if (key == spaceKey) {
     e.preventDefault();
     e.target.value += "/";
@@ -2475,13 +2879,41 @@ function fractionInput() {
   */
 }
 
+function fancyRound(number, pl = 3) {
+  return Number(number.toFixed(pl)).toString();
+}
+
+function interpretUpdate() {
+  let l = angleWantInput.value;
+  let r;
+  if (!l) {
+    r = "";
+  } else {
+    r = interpretLiteral(l);
+    if (r === undefined || r === null || Number.isNaN(r)) {
+      r = "Bad input";
+    } else {
+      if (angleWantIsPi && !angleWantIsRadians) {
+        r *= PI;
+      }
+
+      r = fancyRound(r);
+      if (angleWantIsPi && angleWantIsRadians) {
+        r += "π";
+      }
+      r += " ";
+      r += angleWantIsRadians ? "radian" : "degree";
+    }
+  }
+
+  angleWantInterpret.innerText = r;
+}
+
 // #region Query params
 
-const urlForState =
-  "https://dzuchun.github.io/interactive-trigonometry/interactive-trigonometry.html?state=";
-var queryParams;
+let queryParams;
 (window.onpopstate = function () {
-  var match,
+  let match,
     pl = /\+/g, // Regex for replacing addition symbol with a space
     search = /([^&=]+)=?([^&]*)/g,
     decode = function (s) {
@@ -2497,20 +2929,124 @@ var queryParams;
 // #endregion
 
 function moveSVG() {
+  svg.insertBefore(functionsSinLine, null);
+  svg.insertBefore(functionsCosLine, null);
+  svg.insertBefore(functionsTanLine, null);
+
+  svg.insertBefore(trigCircle, null);
   svg.insertBefore(pointerLine, null);
   svg.insertBefore(pointerPoint, null);
   svg.insertBefore(pointerArc, null);
+  svg.insertBefore(sweepPath, null);
+
+  svg.insertBefore(functionsSinLabelBg, null);
+  svg.insertBefore(functionsSinLabel, null);
+  svg.insertBefore(functionsCosLabelBg, null);
+  svg.insertBefore(functionsCosLabel, null);
+  svg.insertBefore(functionsTanLabelBg1, null);
+  svg.insertBefore(functionsTanLabel1, null);
+  svg.insertBefore(functionsTanLabelBg2, null);
+  svg.insertBefore(functionsTanLabel2, null);
+  svg.insertBefore(functionscTanLabelBg1, null);
+  svg.insertBefore(functionscTanLabel1, null);
+  svg.insertBefore(functionscTanLabelBg2, null);
+  svg.insertBefore(functionscTanLabel2, null);
+
   svg.insertBefore(pointerLabelBg, null);
   svg.insertBefore(pointerLabel, null);
 }
 
-Promise.all([loadGuidelines, fomulaePromise, colorsListPromise]).then(() => {
+// #region CSS patches
+
+function patchTabs() {
+  let w = screen.orientation.type.startsWith("portrait");
+  Array.from(document.getElementsByClassName("settings-tab")).forEach((t) => {
+    t.classList[w ? "add" : "remove"]("thin");
+    t.classList[!w ? "add" : "remove"]("wide");
+  });
+  document.getElementsByTagName("main")[0].style.flexDirection = w
+    ? "column"
+    : "row";
+}
+
+window.addEventListener("resize", patchTabs);
+
+// #endregion
+
+function assignTableEvents() {
+  let table = document.getElementById("active-areas-table").firstElementChild;
+  for (let r of table.childNodes) {
+    if (r.nodeName === "TR") {
+      for (let c of r.childNodes) {
+        if (c.nodeName == "TD" && c.id) {
+          c.onmouseleave = () => actionFunctionsDehighlightArea(c.id);
+          c.onmouseenter = () => actionFunctionsHighlightArea(c.id);
+          c.onclick = () => actionFunctionsRemoveArea(c.id);
+        }
+      }
+    }
+  }
+}
+
+const wolframButtonImage = `<img src="https://www.wolframalpha.com/_next/static/images/favicon_1zbE9hjk.ico" height="100%" alt="wolframalpha logo" />`;
+function generateWolframButtons() {
+  Array.from(document.querySelectorAll("button.wolfram")).forEach((b) => {
+    b.innerHTML = wolframButtonImage;
+  });
+}
+
+// #region Themes
+
+const themeLink = document.getElementById("theme-link");
+const themesList = ["light", "dark"];
+const selectTheme = document.getElementById("select-theme");
+function loadThemes() {
+  let res = "";
+  themesList.forEach((t) => (res += `<option value=${t}>${t}</option>`));
+  selectTheme.innerHTML = res;
+  updateTheme();
+}
+
+function updateTheme() {
+  themeLink.href = `./themes/${selectTheme.value}/styles.css`;
+}
+
+// #endregion
+
+// #region Colors
+
+const colorsLink = document.getElementById("area-colors");
+const colorsList = ["default", "fiery"];
+const selectColors = document.getElementById("select-colors");
+function loadColors() {
+  let res = "";
+  colorsList.forEach((t) => (res += `<option value=${t}>${t}</option>`));
+  selectColors.innerHTML = res;
+  selectColors.value = "default";
+  updateColors();
+}
+
+function updateColors() {
+  let l = `./area-colors/${selectColors.value}.css`;
+  colorsLink.href = l;
+  errorImg.src = l;
+}
+
+// #endregion
+
+Promise.all([loadGuidelines, fomulaePromise]).then(() => {
+  loadThemes();
+  loadColors();
   initGuidelines();
   initGuidelineLabels();
   moveSVG();
   defaultAngleState();
   defaultFunctionsState();
   defaultFormulaeState();
+  reloadColorList();
+  patchTabs();
+  assignTableEvents();
+  generateWolframButtons();
   updateState();
 
   if (queryParams["state"]) {

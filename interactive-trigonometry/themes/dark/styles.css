@@ -1,0 +1,289 @@
+:root {
+  --background-color: rgb(9, 9, 9);
+  --foreground-color: rgba(239, 239, 239, 0.392);
+  --focus-bgcolor: rgb(143, 143, 143);
+  --focus-fgcolor: rgb(51, 51, 51);
+  --highlight-bgcolor: rgba(163, 163, 163, 0.194);
+  --highlight-fgcolor: white;
+  --reset-color: red;
+  --reset-background: rgba(255, 0, 0, 0.299);
+
+  background-color: var(--background-color);
+}
+
+.pointer-color {
+  stroke: rgb(0, 213, 0);
+}
+
+.sin-line-color {
+  stroke: rgb(44, 44, 255);
+}
+
+.cos-line-color {
+  stroke: rgb(255, 46, 46);
+}
+
+.tan-line-color {
+  stroke: rgb(207, 48, 255);
+}
+
+.wikiref {
+  color: rgb(0, 213, 0);
+}
+
+* {
+  color: var(--highlight-fgcolor);
+  border-radius: 2px;
+}
+
+input,
+button,
+#active-areas-table {
+  background-color: var(--highlight-bgcolor);
+  outline-style: none;
+  border-color: var(--focus-bgcolor);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+}
+
+button:hover {
+  background-color: var(--highlight-bgcolor);
+  border-color: var(--focus-bgcolor);
+  outline-style: none;
+  border-width: 2px;
+  border-style: groove;
+}
+
+input[type="text"] {
+  padding: 2px;
+  border-width: 1px;
+  border-color: transparent;
+}
+
+input[type="text"]:focus {
+  outline-color: var(--focus-bgcolor);
+  background-color: var(--focus-bgcolor);
+  color: var(--focus-fgcolor);
+
+  border-color: var(--highlight-fgcolor);
+}
+
+header:hover {
+  background-color: var(--foreground-color);
+  border-color: var(--focus-fgcolor);
+}
+
+#header-details-image {
+  content: url("./assets/details-icon.svg");
+}
+
+footer,
+footer * {
+  background-color: var(--background-color);
+  color: rgb(35, 35, 35);
+}
+
+footer:hover,
+footer:hover *{
+  color: var(--highlight-fgcolor);
+}
+
+.little-border {
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--foreground-color);
+  width: fit-content;
+  align-self: center;
+  padding: 3px;
+}
+
+.little-border-right {
+  border-width: 1px;
+  border-right-style: solid;
+  border-right-color: var(--foreground-color);
+  height: 90%;
+  align-self: center;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+div.delimiter {
+  border-width: 1px;
+  border-right-style: solid;
+  border-right-color: var(--foreground-color);
+  height: 90%;
+  align-self: center;
+}
+
+.category {
+  border-color: var(--foreground-color);
+  background-color: var(--highlight-bgcolor);
+}
+
+.category-header {
+  border-color: var(--highlight-bgcolor);
+}
+
+.resetter {
+  background-image: url(./assets/reset-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  padding: 2px;
+}
+
+.resetter::before {
+  background: var(--reset-color);
+}
+
+.resetter:hover:active {
+  border-color: var(--reset-color);
+  transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.resetter:active::before {
+  transition: all 0.05s;
+}
+
+.resetter:hover {
+  border-color: var(--reset-color);
+}
+
+.resetter:hover:active::before {
+  opacity: 0.2;
+  transition: all 0s;
+}
+
+.label-bg {
+  stroke: var(--background-color);
+}
+
+.default-guideline-stroke {
+  stroke: rgb(63, 63, 63);
+}
+
+.fill-primary {
+  fill: var(--highlight-fgcolor);
+}
+
+.stroke-primary {
+  stroke: var(--highlight-fgcolor);
+}
+
+/* I want pi styles */
+
+#i-want-input-wrapper {
+  padding: 0;
+  border-width: 1px;
+  border-color: transparent;
+}
+
+#i-want-input-wrapper:focus-within {
+  border-color: var(--highlight-fgcolor);
+}
+
+#i-want-input-wrapper:focus-within > #angle-iwant-pi-wrapper {
+  background-color: var(--focus-bgcolor);
+}
+
+#i-want-input-wrapper.pi-smashed:focus-within > #angle-iwant-pi-wrapper {
+  background-color: var(--highlight-bgcolor);
+}
+
+#i-want-input-wrapper > * {
+  border-color: var(--highlight-bgcolor);
+}
+
+/* Multiplier not active */
+#i-want-input-wrapper > #angle-iwant-pi-wrapper {
+  color: var(--foreground-color);
+  background-color: var(--highlight-bgcolor);
+}
+
+/* Multiplier active */
+#i-want-input-wrapper.pi-selected > #angle-iwant-pi-wrapper {
+  color: var(--highlight-fgcolor);
+}
+
+/* Multiplier smashed */
+#i-want-input-wrapper.pi-smashed > #angle-iwant-pi-wrapper {
+  background-color: transparent;
+}
+
+#svg,
+.katex * {
+  stroke: var(--highlight-fgcolor) !important;
+}
+
+/* Tab styles */
+.settings-tabbar > label {
+  border-color: var(--highlight-fgcolor);
+}
+
+.settings-tabbar > [id^="tab"]:checked + label {
+  color: var(--focus-fgcolor);
+  background-color: var(--focus-bgcolor);
+  border-color: var(--highlight-fgcolor);
+}
+
+/* Switches */
+
+.toggler-wrapper > input:checked + .toggler-slider.bool-toggle {
+  background-color: var(--focus-bgcolor); /* Active slider */
+  color: var(--focus-fgcolor);
+  border-color: var(--highlight-fgcolor);
+}
+
+.toggler-slider {
+  background-color: var(--focus-fgcolor); /* Inactive slider */
+  color: var(--highlight-fgcolor);
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.toggler-knob {
+  background-color: var(--focus-bgcolor); /* Knob color */
+}
+
+/* Function selectors style */
+.functions-selectors > label.function-selector-active {
+  border-color: var(--highlight-fgcolor);
+  background-color: var(--focus-bgcolor);
+  color: var(--focus-fgcolor);
+}
+
+button.sweep-button-used {
+  border-color: var(--highlight-fgcolor);
+  background-color: var(--focus-bgcolor);
+  color: var(--focus-fgcolor);
+}
+
+.svg-axes,
+.svg-axes *,
+marker * {
+  stroke: var(--foreground-color);
+  fill: var(--foreground-color);
+}
+
+.clipboard-active {
+  border-color: var(--highlight-fgcolor) !important;
+  background-color: var(--focus-bgcolor) !important;
+  color: var(--focus-fgcolor);
+}
+
+.state-error {
+  border-color: var(--reset-color) !important;
+  background-color: var(--reset-background) !important;
+}
+
+#formulae-result > * {
+  border-bottom-color: var(--focus-fgcolor);
+}
+
+.formulae-highlight {
+  border-color: var(--highlight-fgcolor);
+  background-color: var(--focus-bgcolor);
+  color: var(--focus-fgcolor);
+}
