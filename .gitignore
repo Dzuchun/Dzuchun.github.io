@@ -5,3 +5,7 @@
 interactive-trigonometry/icon.html
 interactive-trigonometry/interactive-trigonometry.html
 interactive-trigonometry/favicon.svg
+
+
+learn/*.sh
+learn/tex/*
