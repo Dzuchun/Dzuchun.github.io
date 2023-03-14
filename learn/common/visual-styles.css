@@ -1,0 +1,32 @@
+:root {
+  background-color: grey;
+}
+
+main {
+  background-color: white;
+  border: 3px black solid;
+  box-shadow: 0 4px 8px 1px black, 0 6px 20px 1px black;
+}
+
+figure {
+  margin: auto;
+  border: 1px black solid;
+  box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.373),
+    0 6px 20px 1px rgba(0, 0, 0, 0.356);
+}
+
+main a {
+  background-color: #dddddd;
+  padding: 4px;
+  border: 2px grey groove;
+}
+
+main a:active{
+  border-style: solid;
+}
+
+main a, main a::after {
+  color: black;
+  font-weight: 500;
+  white-space: pre-wrap;
+}
