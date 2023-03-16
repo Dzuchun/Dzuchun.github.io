@@ -21,11 +21,12 @@ main a {
   border: 2px grey groove;
 }
 
-main a:active{
+main a:active {
   border-style: solid;
 }
 
-main a, main a::after {
+main a,
+main a::after {
   color: black;
   font-weight: 500;
   white-space: pre-wrap;

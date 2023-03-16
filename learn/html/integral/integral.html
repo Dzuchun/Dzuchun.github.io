@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="" >
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Первісна. Інтеграл. Зміст і використання.</title>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/learn/common/general-styles.css">
+  <link rel="stylesheet" href="/learn/common/visual-styles.css">
+
+  <!-- Scripts -->
+  <script defer src="/learn/common/patchQquads.js"></script>
+  <script defer src="/learn/common/addReferences.js"></script>
+</head>
+
+<body>
+  <header id="title-block-header">
+    <nav>
+      (site navigation here)
+    </nav>
+  </header>
+  <main>
+    <h1 class="title">Первісна. Інтеграл. Зміст і використання.</h1>
+    <h1 class="unnumbered"
+    id="первісна.-невизначеий-інтеграл.">Первісна. Невизначеий
+    інтеграл.</h1>
+    <p> </p>
+    <p><p class="qquad"></p>
+    <p><strong>Первісна функції f</strong> - будь-яка функція F така, що
+    <span class="math inline">\(F&#39; =f\)</span><br />
+    Слід звернути увагу, що якщо <span class="math inline">\(F&#39; =
+    f\)</span>, то і <span class="math inline">\((F+1)&#39; =
+    f\)</span>, <span class="math inline">\((F+2)&#39; = f\)</span>,
+    <span class="math inline">\((F+37\pi)&#39; = f\)</span>, тощо. Можна
+    показати, що будь-яка первісна відрізняється від будь-якої іншої
+    первісної на сталий доданок.</p>
+    <p><p class="qquad"></p>
+    <p><strong>Невизначений інтеграл</strong> - операція, що ставить у
+    відповідність функції <span class="math inline">\(f\)</span> множину
+    її первісних <span class="math inline">\(\{F_i\}\)</span>.<br />
+    Позначення <span class="math display">\[\{F_i\} = \int f(x)
+    dx\]</span> є загальновживаним. <p class="qquad"></p>
+    <p>Легко перевірити наступні властивості невизначеного інтегралу:
+    <span class="math display">\[\int (f + g) = \int f + \int g\]</span>
+    <span class="math display">\[\int Cg = C \cdot \int g\]</span>
+    випливають напряму з властивостей похідної. На жаль, для добутку та
+    (особливо!) композиції функцій немає красивого виразу невизначеного
+    інтегралу. Тим не менш, далі буде обговорено методи їх відшукання у
+    таких ситуаціях. <p class="qquad"></p>
+    <p>Насправді, на цьому закінчуються властивості невизначеного
+    інтегралу. Вже тепер, має бути зрозуміло, що ця операція значно
+    складніша, ніж взяття похідної. Насправді, взяття похідної завжди
+    залишає нас у множині функцій, до яких ми звикли:</p>
+    <ul>
+    <li><p>степеневі функції <span
+    class="math inline">\(\left(x^3,\quad  \dfrac{1}{x},\quad
+    \sqrt[5]{x}\right)\)</span></p></li>
+    <li><p>показникові функції <span class="math inline">\(\left( 2^x,
+    \quad e^x, \quad \left(\frac12\right)^x \right)\)</span></p></li>
+    <li><p>логарифмічні функції <span class="math inline">\(\left(
+    log_2(x), \quad ln(x), \quad lg(x) \right)\)</span></p></li>
+    <li><p>тригонометричні функції <span class="math inline">\(\left(
+    sin(x),\quad tg(x) \right)\)</span></p></li>
+    <li><p>обернені тригонометричні функції <span
+    class="math inline">\(\left( arccos(x),\quad arcctg(x)
+    \right)\)</span></p></li>
+    <li><p>та їх довільні <em>скінченні</em> комбінації <span
+    class="math inline">\(\left( \dfrac{ln(x +
+    tg(4^{-x}))}{\sqrt[173]{5^x + cos(1/x)}} \right)\)</span></p></li>
+    </ul>
+    <p>Невизначений інтеграл не гарантує подібного. До прикладу, <span
+    class="math display">\[\int \frac{1}{ln(x)} dx = li(x) + C\]</span>
+    <span class="math display">\[\int e^{-x^2}dx = \frac{\sqrt{\pi}}{2}
+    erf(x) + C\]</span> <span class="math display">\[\int
+    \frac{sin(x)}{x}dx = Si(x) + C\]</span> Як можна бачити, результати
+    цих невизначених інтегралів містять у своєму записі донині невідомі
+    функції. Притому у таких позначеннях є необхідність, адже просто
+    <em>не існує способу їх виразити через інші відомі нам функції,
+    окрім як у вигляді невизначеного інтегралу</em>.</p>
+    <h1 class="unnumbered"
+    id="таблиця-невизначених-інтегралів-довідка">Таблиця невизначених
+    інтегралів (довідка)</h1>
+    <div class="center">
+    <table>
+    <thead>
+    <tr class="header">
+    <th style="text-align: center;"><span
+    class="math inline">\(f\)</span></th>
+    <th style="text-align: center;"><span class="math inline">\(\int
+    f\)</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td style="text-align: center;"><span class="math inline">\(x^n,
+    n\ne -1\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{x^{n+1}}{n+1}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{x}\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(ln|x|\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(a^x\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{a^x}{ln(a)}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(\sin(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-\cos(x)\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(\cos(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\sin(x)\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{\sqrt{1-x^2}}\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(arcsin(x)\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{1+x^2}\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(arctg(x)\)</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <p>Знову хочу звернути увагу на те, що рядків у цій таблиці значно
+    менше, ніж у відповідній таблиці з похідними. Але у якості
+    частовживаних наслідків до неї можна додати наступні рядки:</p>
+    <div class="center">
+    <table>
+    <thead>
+    <tr class="header">
+    <th style="text-align: center;"><span
+    class="math inline">\(f\)</span></th>
+    <th style="text-align: center;"><span class="math inline">\(\int
+    f\)</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(0\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(C\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(e^x\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(e^x\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(g&#39;(ax + b)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{a} g(ax + b)\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(tan(x)=tg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-ln(cos(x))\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(cot(x)=ctg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(ln(sin(x))\)</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <h1 class="unnumbered" id="вправи-невизначений-інтеграл">Вправи
+    (невизначений інтеграл)</h1>
+    <p>      <strong>1.1</strong> Знайдіть невизначений інтеграл <span
+    class="math inline">\(x^3 + 4x - \dfrac{1}{x^3}\)</span>.<br />
+    Розв’язок: <span class="math display">\[\int \left( x^3 + 4x -
+    \dfrac{1}{x^3} \right)dx =\]</span> <span
+    class="math display">\[=\underbracket{\int  x^3 dx}_{\dfrac{x^4}{4}}
+    + 4 \underbracket{\int x dx}_{\dfrac{x^2}{2}} - \underbracket{\int
+    x^{-3} dx}_{\dfrac{x^{-2}}{-2}} =\]</span> <span
+    class="math display">\[= \frac{x^4}{4} + 2x^2 + \frac{1}{2x^2} +
+    C\]</span></p>
+    <p>Зверну увагу, що за будь-якого значення <span
+    class="math inline">\(C\)</span> утвориться правильна первісна
+    початкової функції. Зазвичай значення <span
+    class="math inline">\(C\)</span> лишається невизначеним, тобто
+    будь-яким, але так буває не завжди: <p class="qquad"></p>
+    <p><strong>1.2</strong> Знайдіть первісну функції <span
+    class="math inline">\(f(x) = sin(x) + 2\)</span>, що проходить через
+    точку <span class="math inline">\(A(\pi, 2)\)</span>.<br />
+    Знайдемо невизначений інтеграл: <span class="math display">\[F(x)
+    =\int (sin(x) + 2) dx =\]</span> <span class="math display">\[=\int
+    sin(x) dx + 2 \int dx =\]</span> <span
+    class="math display">\[=-cos(x)  + 2x + C = F(x)\]</span> Умова
+    проходження через точку <span class="math inline">\(A\)</span>:
+    <span class="math display">\[F(\pi) = 2\]</span> <span
+    class="math display">\[-\underbracket{cos(\pi)}_{-1} + 2\cdot \pi +
+    C = 2\]</span> <span class="math display">\[C = 1 - 2\cdot
+    \pi\]</span> Отже, <span class="math inline">\(F(x) = -cos(x)  + 2x
+    + 1 - 2\cdot \pi\)</span>. <p class="qquad"></p>
+    <p>Зверніть увагу на те, що одна-єдина відома точка первісної
+    дозволила однозначно її встановити. Також зверніть увагу на загальну
+    схему задачі: вам відома <span
+    class="math inline">\(f&#39;(x)\)</span> та <span
+    class="math inline">\(F(x_0)=y_0\)</span>. Завдання - знайти <span
+    class="math inline">\(F(x)\)</span>. <p class="qquad"></p>
+    <p><strong>Наступні вправи направлені на пояснення поширених методів
+    виконання інтегрування.</strong> <p class="qquad"></p>
+    <p><strong>1.3 “заміна”.</strong> На прикладах розв’язування рівнянь
+    ви могли переконатись, що правильно проведена зміна змінної може
+    перевести задачу з класу “неможлива” у клас “очевидна”. Ціна такого
+    - навичка бачити, яку саме заміну слід провести.<br />
+    На жаль, ця навичка не з таких, яку можна пояснити у двох словах,
+    але її розвиток не вимагає нічого, окрім практики. <p class="qquad"></p>
+    <p>Знайдемо невизначений інтеграл функції <span
+    class="math inline">\(f(x) = tg(x) =
+    \dfrac{sin(x)}{cos(x)}\)</span>. Маємо у чисельнику та знаменнику
+    дробу такі функції, що можна отримати одна з одної, взявши похідну.
+    Подібна конструкція спостерігається, якщо взяти похідну від <span
+    class="math inline">\(ln(f(x))\)</span>: <span
+    class="math display">\[(ln(f(x)))&#39; = ln&#39;(f(x)) \cdot
+    f&#39;(x) = \frac{f&#39;(x)}{f(x)}\]</span> Отже, якщо припустити,
+    що <span class="math inline">\(f(x) = cos(x)\)</span>, то <span
+    class="math inline">\(f&#39;(x) = -sin(x)\)</span>. В нашій ситуації
+    все абсолютно так само, лиш перед сінусом згори не вистачає мінуса.
+    Тож можна його додати, приписавши ще один спереду результату: <span
+    class="math inline">\(\int tg(x) dx = -ln(cos(x)) + C\)</span>.
+    Справді, <span class="math display">\[(-ln(cos(x)))&#39; =
+    -\underbracket{ln&#39;(cos(x))}_{\dfrac{1}{cos(x)}}\cdot
+    \underbracket{cos&#39;(x)}_{-sin(x)} =\]</span> <span
+    class="math display">\[=\frac{sin(x)}{cos(x)} = tg(x)\]</span>
+    <p class="qquad"></p>
+    <p><strong>1.4 “інтегрування частинами”.</strong> Цей прийом вимагає
+    вдало ввести дві нові функції, але зазвичай їх обрати досить
+    легко.<br />
+    Відомо, що <span class="math inline">\((fg)&#39; = f&#39;g +
+    fg&#39;\)</span>. Тоді, <span class="math inline">\(fg = \int
+    f&#39;g + \int fg&#39;\)</span>, або ж <span
+    class="math inline">\(\int f&#39;g = fg - \int fg&#39;\)</span>.
+    Отримана формула дозволяє робити наступне:</p>
+    <ul>
+    <li><p>Розбити нашу функцію на два множники <span
+    class="math inline">\(f&#39;\)</span> та <span
+    class="math inline">\(g\)</span>.</p></li>
+    <li><p>Після цього нам доведеться проінтегрувати множник <span
+    class="math inline">\(f&#39;\)</span>, але від <span
+    class="math inline">\(g\)</span> достатньо буде взяти
+    похідну.</p></li>
+    <li><p>Записати відповідь за формулою.</p></li>
+    </ul>
+    <p>Зазвичай його використовують, коли функція складається з двох
+    частин, одну з яких легко проінтегрувати, а іншу - інтегрувати
+    важко, але похідну взяти можна. До прикладу: <span
+    class="math display">\[\int ln(x) dx = \int
+    \underbracket{1}_{f&#39;}\cdot \underbracket{ln(x)}_{g} dx
+    =\]</span> <span class="math display">\[= \underbracket{x}_{f} \cdot
+    \underbracket{ln(x)}_{g} - \int
+    \underbracket{x}_{f}\underbracket{\frac{1}{x}}_{g&#39;}dx =\]</span>
+    <span class="math display">\[= x\cdot ln(x) - \int dx = x\cdot
+    (ln(x) - 1) + C\]</span></p>
+    <p>      <strong>1.4(2).</strong> Знайти невизначений інтеграл
+    функції <span class="math inline">\(f(x) = x \cdot
+    sin(x)\)</span><br />
+    <span class="math display">\[\int \underbracket{x}_{f}\cdot
+    \underbracket{sin(x)}_{g&#39;} dx =\]</span> <span
+    class="math display">\[= \underbracket{x}_{f}\cdot
+    \underbracket{(-cos(x))}_{g} - \int \underbracket{1}_{f&#39;}\cdot
+    \underbracket{(-cos(x))}_{g} dx =\]</span> <span
+    class="math display">\[=-x\cdot cos(x) + \underbracket{\int cos(x)
+    dx}_{sin(x)}=\]</span> <span class="math display">\[=-x\cdot cos(x)
+    + sin(x) + C\]</span></p>
+    <h1 class="unnumbered"
+    id="формула-ньютона-лейбніца.-визначений-інтеграл-та-його-геометричний-зміст.">Формула
+    Ньютона-Лейбніца. Визначений інтеграл та його геометричний
+    зміст.</h1>
+    <p>, введена нами операція не має жодної користі та змісту, окрім як
+    “а давайте подивимось, що буде”. Проте, вона все ж має зміст,
+    притому дуже корисний. Зверніть увагу на наступну задачу: <p class="qquad"></p>
+    <p><br />
+    </p>
+    <figure id="fig:g1">
+    <img src="assets/g1.png" />
+    <figcaption> Незвичайна фігура</figcaption>
+    </figure>
+    <p>Якщо у вас і вийде виконати це завдання якимось способом, то він
+    точно буде важчий, аніж наступний: <span class="math display">\[S =
+    \int\limits_0^1 x^2 dx = \frac{x^3}{3} \biggm\vert_0^1 =
+    \frac13\]</span> Виявляється, відшування площі подібних фігур є
+    тривіальним, якщо у вас вийшло знайти первісну кривої, що обмежує її
+    зверху (тут це <span class="math inline">\(y=x^2\)</span>).
+    <p class="qquad"></p>
+    <p>У розв’язку використано такі позначення, як <span
+    class="math inline">\(F(x)\biggm\vert_a^b\)</span> та <span
+    class="math inline">\(\int\limits_a^b f(x) dx\)</span>. Перше є
+    просто скороченням для різниці: <span class="math display">\[F(x)
+    \biggm\vert_a^b = F(b) - F(a)\]</span> Другий запис називають
+    <strong>визначеним інтегралом</strong>, і насправді, саме він задає
+    площу нашої фігури: <span class="math display">\[S = \int\limits_a^b
+    f(x) dx\]</span> Під час розв’язку задачі нами також було
+    використано наступну рівність: <span
+    class="math display">\[\int\limits_a^b f(x) dx = F(x)
+    \biggm\vert_a^b\]</span> Яка насправді є дуже потужною - вона по
+    суті пов’язує <em>площу фігури</em> та <em>різницю двох чисел</em>,
+    що є дуже незвичайним зв’язком. Як і все у математиці, вона не
+    з’явилась нізвідки. Насправді, це <strong>теорема
+    Ньютона-Лейбніца</strong> також відома, як <strong>фундаментальна
+    теорема математичного аналізу</strong>. І такі гучні назви не є
+    безпідставними - сподіваюсь, що до кінця цієї сторінки буде
+    зрозуміло, чому. <p class="qquad"></p>
+    <p>Отже, для фігур подібних до розглянутої справедливва наступна
+    формула:<br />
+    </p>
+    <figure id="fig:g2">
+    <img src="assets/g2.png" />
+    <figcaption> Формула для площі криволінійної трапеції</figcaption>
+    </figure>
+    <p>Такі фігури називають криволінійними трапеціями, адже вони, як і
+    звичайні трапеції мають дві паралельні сторони (<span
+    class="math inline">\(x = a\)</span> та <span
+    class="math inline">\(x = b\)</span>), і лиш їх бокові сторони не
+    обов’язково є прямими. Але це не заважає використати цю формулу до
+    звичайної трапеції:</p>
+    <figure id="fig:g3">
+    <img src="assets/g3.png" />
+    <figcaption> Звичайна трапеція, намальована як
+    криволінійна</figcaption>
+    </figure>
+    <p>Щоб знайти її площу, для початку знайдемо функцію <span
+    class="math inline">\(f(x)\)</span>. Відомо, що це пряма, тож <span
+    class="math inline">\(f(x) = k\cdot x + p\)</span>. Також відомо, що
+    <span class="math inline">\(f(x_1) = a\)</span> та <span
+    class="math inline">\(f(x_2) = b\)</span>. Тепер можна скористатись
+    відповідною формулою, і одразу отримати <span
+    class="math inline">\(f(x) = \dfrac{b-a}{x_2 - x_1} x+ \dfrac{a x_2
+    - b x_1}{x_2 - x_1}\)</span>, або ж записати систему рівнянь <span
+    class="math display">\[\begin{cases}
+         k \cdot x_1 + p = a\\
+         k \cdot x_2 + p = b
+        \end{cases}\]</span></p>
+    <p>і, розв’язавши її, отримати такий же результат. <p class="qquad"></p>
+    <p>Знайдемо первісну нашої функції. Маємо: <span
+    class="math display">\[\int f(x) dx=\]</span> <span
+    class="math display">\[=\int \left(\frac{b-a}{x_2 - x_1} x+ \frac{a
+    x_2 - b x_1}{x_2 - x_1}\right) dx=\]</span> Незважаючи на купу
+    різних літер, під час знаходження первісної маємо дивитись тільки на
+    <span class="math inline">\(x\)</span>. Всі інші можна вважати
+    конкретними сталими числами і виносити за інтеграл: <span
+    class="math display">\[= \frac{b-a}{x_2 - x_1} \cdot
+    \underbracket{\int xdx}_{x^2/2}+ \frac{a x_2 - b x_1}{x_2 -
+    x_1}\cdot \underbracket{\int  dx}_x=\]</span> <span
+    class="math display">\[= \frac{b-a}{2(x_2 - x_1)} \cdot x^2
+    +  \frac{a x_2 - b x_1}{x_2 - x_1}\cdot x + C\]</span> Хоча
+    результат наразі і виглядає страшнувато, обіцяю що зовсім скоро це
+    виправиться. Для того що порахувати площу, треба пісдтавити межі:
+    <span class="math display">\[S = F(x) \biggm\vert_{x_1}^{x_2}
+    =\]</span> <span class="math display">\[= \frac{b-a}{2(x_2 - x_1)}
+    \cdot x_2^2 +  \frac{a x_2 - b x_1}{x_2 - x_1}\cdot x_2 + C
+    -\]</span> <span class="math display">\[- \frac{b-a}{2(x_2 - x_1)}
+    \cdot x_1^2 -  \frac{a x_2 - b x_1}{x_2 - x_1}\cdot x_1 - C
+    =\]</span> Зверніть увагу, що за будь-якого значення константи <span
+    class="math inline">\(C\)</span>, вона скоротиться. Під час
+    рахування визначенного інтегралу так відбувається завжди, тож у
+    цьому випадку її зазвичай навіть не згадують. <p class="qquad"></p>
+    <p>Маємо: <span class="math display">\[= \frac{b-a}{2(x_2 - x_1)}
+    (x_2^2 - x_1^2) +\]</span> <span class="math display">\[+\frac{a x_2
+    - b x_1}{x_2 - x_1}\cdot (x_2- x_1)=\]</span> <span
+    class="math display">\[= \frac{b-a}{2} (x_2 + x_1) + a x_2 - b
+    x_1=\]</span> <span class="math display">\[= \frac{bx_2 + bx_1 -
+    ax_2 - ax_1 + 2ax_2 - 2bx_1}{2} =\]</span> <span
+    class="math display">\[= \frac{bx_2 - bx_1  - ax_1+ ax_2}{2}
+    =\]</span> <span class="math display">\[=\frac{a + b}{2} \cdot
+    \underbracket{(x_2 - x_1)}_h = S\]</span> Якщо пригадати, що <span
+    class="math inline">\(x_2 - x_1= h\)</span> - висота трапеції, а
+    <span class="math inline">\(\dfrac{a+b}{2}\)</span> - півсумма основ
+    - довжина середньої лінії, то переконаємось, що отриманий результат
+    цілком співпадає з геометричним. Таким чином, нами було отримано
+    геометричну формулу за допомогою інтегрування. <p class="qquad"></p>
+    <p><strong>2.1</strong> Отримайте формулу для площі трикутника
+    спобом, описаним вище. <p class="qquad"></p>
+    <p><strong>2.2</strong> Порахуйте площу під однією другою графіка
+    <span class="math inline">\(y = sin(x)\)</span>.<br />
+    <span class="math inline">\(sin(0) = 0\)</span>. Наступний раз сінус
+    набуває такого значення за <span class="math inline">\(x =
+    \pi\)</span>. Отже, нам необхідно порахувати <span
+    class="math display">\[S = \int\limits_0^{\pi} sin(x) dx =\]</span>
+    Первісною сінуса є <span class="math inline">\(-cos(x)\)</span>.
+    Отже, <span class="math display">\[= -cos(x) \biggm\vert_0^{\pi} =
+    -cos(\pi) + cos(0)  = 2\]</span> Таким чином, площа зображеної
+    фігури рівна точно 2. Що насправді абсолютно дивовижно, зважаючи на
+    таку її складну і нетривіальну форму!</p>
+    <figure id="fig:g4">
+    <img src="assets/g4.png" />
+    <figcaption> Одна “дуга” сінусоїди. Має площу 2</figcaption>
+    </figure>
+    <p><p class="qquad"></p>
+    <p>До цього моменту ми розглядали лише фігури, що повністю лежать
+    над віссю <span class="math inline">\(Ox\)</span>. Справа в тому, що
+    для функції, що лежить під нею або перетинає її, розрахунок площі є
+    дещо складнішим. До прикладу, якщо функція повністю лежить під віссю
+    <span class="math inline">\(Ox\)</span>, значення інтегралу буде
+    від’ємним. Тим не менш, модуль цього значення все ще буде рівним
+    площі фігури:<br />
+    </p>
+    <figure id="fig:g5">
+    <img src="assets/g5.png" />
+    <figcaption> Криволінійна трапеція під віссю <span
+    class="math inline">\(Ox\)</span></figcaption>
+    </figure>
+    <p>Якщо фігура перетинає вісь <span
+    class="math inline">\(Ox\)</span>, для розрахунку її площі є два
+    варіанти:</p>
+    <ul>
+    <li><p>Використовувати у викладках замість <span
+    class="math inline">\(y = f(x)\)</span> функцію <span
+    class="math inline">\(y = |f(x)|\)</span> (зазвичай
+    складніше).</p></li>
+    <li><p>Розбивати фігуру на декілька частин, кожна з яких лежить по
+    один бік від осі <span class="math inline">\(Ox\)</span>, і
+    розрахувати їх площі окремо. Після чого скласти отримані результати,
+    щоб отримати загальну площу (доволі довго, але не складно).</p></li>
+    </ul>
+    <p>      Зверну увагу, що можливість знайти площу під графіком
+    <strong>дозволяє розраховувати площі будь-яких фігур</strong>. До
+    прикладу: <p class="qquad"></p>
+    <p><strong>2.3</strong> Знайдіть площу фігури, що обмежена
+    графіками:</p>
+    <figure id="fig:g6">
+    <img src="assets/g6.png" />
+    <figcaption> Дуже довільна фігура</figcaption>
+    </figure>
+    <p><br />
+    Цю площу можна знайти, якщо від площі під червоним графіком відняти
+    площу під синім графіком. Тобто, для розрахунку цієї площі достатньо
+    відняти значення відповідних визначених інтегралів: <span
+    class="math display">\[S = \int\limits_0^1 (2 - x^2) dx -
+    \int\limits_0^1 x^{\frac13} dx =\]</span> <span
+    class="math display">\[=\left(2x -
+    \frac{x^3}{3}\right)\biggm\vert_0^1 - \left( \frac{3}{4}
+    x^{\frac43}\right)\biggm\vert_0^1 =\]</span> <span
+    class="math display">\[=2 - \frac13 - \frac34 =
+    \frac{11}{24}\]</span> Цікава річ полягає в тому, що наші розрахунки
+    дали би правильний результат навіть тоді, коли наші графіки частково
+    або повністю під віссю <span class="math inline">\(Ox\)</span>:</p>
+    <figure id="fig:g7">
+    <img src="assets/g7.png" />
+    <figcaption> Дуже довільна фігура під віссю <span
+    class="math inline">\(Ox\)</span></figcaption>
+    </figure>
+    <p><br />
+    <span class="math display">\[S = \int\limits_0^1 (- x^2) dx -
+    \int\limits_0^1 \left(x^{\frac13}  - 2\right) dx =\]</span> <span
+    class="math display">\[=\left(-\frac{x^3}{3}\right)\biggm\vert_0^1 -
+    \left( \frac{3}{4} x^{\frac43} - 2x\right)\biggm\vert_0^1 =\]</span>
+    <span class="math display">\[=- \frac13 - \frac34 + 2 =
+    \frac{11}{24}\]</span> Тобто у випадку такої задачі, нам в принципі
+    <strong>байдуже де саме знаходиться вісь Ox</strong>, нам скоріше
+    важливо, що <strong>червона крива знаходиться над синьою</strong>, і
+    саме це є аналогом обмеження функції віссю <span
+    class="math inline">\(Ox\)</span> - якби криві перетинались,
+    алгоритм був би такий самий, як за перетину функцією осі <span
+    class="math inline">\(Ox\)</span>.</p>
+    <h1 class="unnumbered" id="розраховуємо-довжину">Розраховуємо
+    довжину</h1>
+    <p><p class="qquad"></p>
+    <p>За допомогою визначеного інтегралу можна знайти не лише площу,
+    але й, наприклад, довжину кривої: <p class="qquad"></p>
+    <p><strong>2.4</strong> Знайдіть довжину частини графіку функції
+    <span class="math inline">\(f(x) = \dfrac23 x^{3/2}\)</span> між
+    <span class="math inline">\(x=1\)</span> та <span
+    class="math inline">\(x=3\)</span>.<br />
+    </p>
+    <figure id="fig:g8">
+    <img src="assets/g8.png" />
+    <figcaption> Графік <span class="math inline">\(y = \frac 23
+    x^{3/2}\)</span> та його частина, довжину якої треба
+    знайти</figcaption>
+    </figure>
+    <p>Така задача також є стандартною, і для неї також є формула.
+    Щоправда, її доведення дещо довге, тож поки що його опустимо.<br />
+    Для того, щоб знайти довжину кривої <span class="math inline">\(y =
+    f(x)\)</span> від <span class="math inline">\(x=a\)</span> до <span
+    class="math inline">\(x=b\)</span>, достатньо порахувати наступний
+    визначений інтеграл: <span class="math display">\[L =
+    \int\limits_a^b \sqrt{1 + f&#39;(x)^2} dx\]</span> У нашому випадку
+    маємо: <span class="math display">\[L = \int\limits_1^3 \sqrt{1
+    +\left(\left( \frac23 x^{3/2}\right)&#39;\right)^2} dx =\]</span>
+    <span class="math display">\[= \int\limits_1^3 \sqrt{1 +\left(
+    \sqrt{x} \right)^2} dx =\]</span> <span class="math display">\[=
+    \int\limits_1^3 \sqrt{1 +x} dx = \frac32 (1 + x)^{3/2}
+    \biggm\vert_1^3 =\]</span> <span class="math display">\[= \frac32 (
+    4^{3/2} - 2^{3/2} ) = \frac32 ( 8 - 2\sqrt{2} ) =\]</span> <span
+    class="math display">\[=3(4 - \sqrt{2}) \approx 7,75\]</span> Ви
+    можете спробувати обчислити довжини інших кривих, але насправді сама
+    конструкція <span class="math inline">\(\int \sqrt{1 +
+    f&#39;^2}\)</span> зазвичай є дуже складною для інтегрування. Тим не
+    менш, тепер ви можете записати вираз для довжини однієї дуги
+    сінусоїди: <span class="math display">\[L = \int\limits_0^{\pi}
+    \sqrt{1 + (sin(x)&#39;)^2} dx =\]</span> <span
+    class="math display">\[=\int\limits_0^{\pi} \sqrt{1 + cos^2(x)} dx
+    =\]</span> ... але не беріться його рахувати, бо швидко опинитесь
+    поза звичайними функціями: <span class="math display">\[= 2\sqrt{2}
+    E(1/2) = \frac{\pi^{3/2}}{\sqrt{2} \Gamma^2(3/4)} +
+    \sqrt{\frac{2}{\pi}}\Gamma^2(3/4)\]</span></p>
+    <a href="https://www.wolframalpha.com/input?i=integrate+sqrt%281%2Bcos%28x%29%5E2%29+from+0+to+pi" target="_blank">Щодо такого простіше  запитатись у спеціалізованої програми, що я власне і зробив.</a>
+    <p>Такий “жахливий” результат для довжини дуги сінусоїди ще більше
+    підкреслює дивовижніть того, що вона обмежує площу... 2 (що було
+    пораховано вище). <p class="qquad"></p>
+    <p><strong>2.5</strong> Знайдіть довжину кривої <span
+    class="math inline">\(y = \sqrt{1 - x^2}\)</span> на її області
+    визначення<br />
+    </p>
+    <figure id="fig:g9">
+    <img src="assets/g9.png" />
+    <figcaption> Графік <span
+    class="math inline">\(y=\sqrt{1-x^2}\)</span></figcaption>
+    </figure>
+    <p>Ви можете припустити, що ця фігура є просто півколом радіуса 1, і
+    будете праві. Тож, очікується довжина <span
+    class="math inline">\(\pi\)</span>. Справді, <span
+    class="math display">\[L = \int\limits_{-1}^{+1} \sqrt{1 + ((\sqrt{1
+    - x^2})&#39;)^2} dx=\]</span> <span
+    class="math display">\[=\int\limits_{-1}^{+1} \sqrt{1 +
+    \left(\frac{x}{\sqrt{1 - x^2}}\right)^2} dx=\]</span> <span
+    class="math display">\[=\int\limits_{-1}^{+1} \sqrt{\frac{1}{1-x^2}}
+    dx =\int\limits_{-1}^{+1} \frac{1}{\sqrt{1 - x^2}} dx =\]</span>
+    <span class="math display">\[= arcsin(x) \biggm\vert_{-1}^{+1} =
+    \underbracket{\frac{\pi}{2}}_{arcsin(1)} - \underbracket{\left(
+    -\frac{\pi}{2} \right)}_{arcsin(-1)} = \pi\]</span> Може здатись, що
+    таким чином можна означити <span class="math inline">\(\pi\)</span>.
+    На жаль, ні - під час обрахуваня значення <span
+    class="math inline">\(arcsin(\pm 1)\)</span> нами було використано
+    те, чим саме є <span class="math inline">\(\pi\)</span>. Тим не
+    менш, це не заважає дивуватись тому, що площа під ось цією
+    кривою:<br />
+    </p>
+    <figure id="fig:g10">
+    <img src="assets/g10.png" />
+    <figcaption> Графік <span class="math inline">\(y =
+    \frac{1}{\sqrt{1-x^2}}\)</span>, та його площа <span
+    class="math inline">\(\pi\)</span></figcaption>
+    </figure>
+    <p>дорівнює точно <span class="math inline">\(\pi\)</span> (цьому
+    факту відповідає взятий інтеграл, якщо його сприймати як вираз для
+    площі під графіком).</p>
+    <h1 class="unnumbered" id="рахуємо-обєм">Рахуємо об’єм</h1>
+    <p><p class="qquad"></p>
+    <p>Але і на довжинах застосування інтегралів не закінчуються. Ними
+    також можна рахувати і об’єм. Якщо площа перерізу фігури площиною
+    <span class="math inline">\(x = x_0\)</span> рівна <span
+    class="math inline">\(S(x_0)\)</span>, то її об’єм <span
+    class="math inline">\(V\)</span> між площинами <span
+    class="math inline">\(x=x_1\)</span> та <span
+    class="math inline">\(x = x_2\)</span> теж запишеться інтегралом:
+    <span class="math display">\[V = \int\limits_{x_1}^{x_2} S(x_0)
+    dx_0\]</span> До прикладу, якщо взяти прямокутний
+    паралелепіпед,<br />
+    </p>
+    <figure id="fig:g11">
+    <img src="assets/g11.png" />
+    <figcaption> Прямокутний паралелепіпед</figcaption>
+    </figure>
+    <p>Для нього <span class="math inline">\(S(x_0) = ab\)</span>.
+    Відповідно, між <span class="math inline">\(x_1\)</span> та <span
+    class="math inline">\(x_2\)</span> знаходитиметься об’єм <span
+    class="math display">\[V = \int\limits_{x_1}^{x_2} ab\cdot dx =
+    ab\cdot  \int\limits_{x_1}^{x_2} dx =\]</span> <span
+    class="math display">\[=ab\underbracket{(x_2 - x_1)}_c =
+    abc\]</span> При цьому ми, по суті, ніяк не використали, що мова йде
+    саме про прямокутний паралелепіпед. Результат інтегрування завжди
+    буде <span class="math inline">\(S_0 \cdot (x_2 - x_1)\)</span>,
+    якщо <span class="math inline">\(S(x_0) \equiv S_0\)</span>. Ця
+    формула насправді справедлива для будь-якого циліндру, в тому числі
+    для прямокутного циліндра та призм. <p class="qquad"></p>
+    <p><strong>2.6</strong> Знайдіть об’єм кулі радіуса <span
+    class="math inline">\(R\)</span><br />
+    Приймемо, що центр кулі знаходиться у початку координат:<br />
+    </p>
+    <figure id="fig:g12">
+    <img src="assets/g12.png" />
+    <figcaption> Куля та необіхідні побудови, аби знайти її
+    об’єм</figcaption>
+    </figure>
+    <p>Як видно з малюнку, <span class="math inline">\(S(x_0) = \pi
+    r^2(x_0)\)</span>, причому <span
+    class="math inline">\(r(x_0)\)</span> можна обчислити за теоремою
+    піфагора з позначеного прямокутного трикутника: <span
+    class="math display">\[r^2(x_0) = R^2 - x_0^2 \Rightarrow r(x_0) =
+    \sqrt{R^2 - x_0^2}\]</span> Отже, <span
+    class="math display">\[S(x_0) = \pi r^2(x_0) = \pi \cdot (R^2 -
+    x_0^2)\]</span> Щоб знайти об’єм кулі, достатньо проінтегрувати цей
+    вираз від <span class="math inline">\(-R\)</span> до <span
+    class="math inline">\(R\)</span>: <span class="math display">\[V =
+    \int\limits_{-R}^{+R} \pi \cdot (R^2 - x_0^2) dx_0=\]</span> <span
+    class="math display">\[=\pi R^2 \cdot \int\limits_{-R}^{+R} dx_0 -
+    \pi \cdot \int\limits_{-R}^{+R} x_0^2 dx_0 =\]</span> <span
+    class="math display">\[=\pi R^2 \cdot \underbracket{(R - (-R))}_{2R}
+    - \pi \cdot \underbracket{\left( \frac{R^3}{3} - \frac{(-R)^3}{3}
+    \right)}_{2R^3/3} =\]</span> <span class="math display">\[= \pi R^3
+    \cdot (2 - 2/3) = \frac43 \pi R^3\]</span> Таким чином ми отримали
+    ще одну загальновідому формулу з геометрії. <p class="qquad"></p>
+    <p><strong>2.7</strong> Знайдіть об’єм конуса з радіусом основи
+    <span class="math inline">\(R\)</span> та висотою <span
+    class="math inline">\(H\)</span>.</p>
+    <h1 class="unnumbered" id="фізичний-зміст-інтеграла">Фізичний зміст
+    інтеграла</h1>
+    <p>Зважаючи на те, що операція інтегрування є оберненою до операції
+    похідної, застосування інтегралів у фізиці знаходяться всюди. До
+    прикладу: <p class="qquad"></p>
+    <p><strong>3.1</strong> Швидкість автомобіля залежить від часу, як
+    <span class="math inline">\(v(\tau) = \dfrac{20}{\pi}\cdot
+    arctg(\tau)\)</span>. Де відносно початкового положення опиниться
+    автомобіль через час <span class="math inline">\(t\)</span>?<br />
+    Функція <span class="math inline">\(\dfrac{20}{\pi}\cdot
+    arctg(t)\)</span> може здатись дещо дивною, але насправді це просто
+    модель автомобіля, що починає швидко розганятись, але не може
+    розігнатись швидше за швидкість 10:<br />
+    </p>
+    <figure id="fig:g13">
+    <img src="assets/g13.png" />
+    <figcaption> Графік <span
+    class="math inline">\(v(\tau)\)</span></figcaption>
+    </figure>
+    <p>Для описаної задачі є стандартний хід розв’язку. Якщо величина
+    <span class="math inline">\(q(t)\)</span> мала значення <span
+    class="math inline">\(q_0\)</span> у момент часу <span
+    class="math inline">\(t_0\)</span>, то тоді у будь-який момент часу:
+    <span class="math display">\[q(t) = q_0 + \int\limits_{t_0}^{t}
+    q&#39;(\tau) d\tau\]</span> Якщо перенести <span
+    class="math inline">\(q_0\)</span> у ліву частину, стане ясно, що це
+    простий наслідок з теореми Ньютона-Лейбніца: <span
+    class="math display">\[q(t) - \underbracket{q_0}_{q(t_0)} =
+    \int\limits_{t_0}^{t} q&#39;(\tau) d\tau\]</span> У нашому випадку,
+    <span class="math inline">\(t_0 = 0\)</span>, тож <span
+    class="math display">\[x(t) - x_0 = \Delta x(t) = \int\limits_0^{T}
+    \frac{20}{\pi} arctg(x) dx=\]</span> <span
+    class="math display">\[=\frac{20}{\pi} \cdot \int\limits_0^{T}
+    arctg(x) dx\]</span> Знайдемо первісну <span
+    class="math inline">\(arctg(x)\)</span>. Для цього скористаємось
+    інтегруванням частинами: <span class="math display">\[\int
+    arctg(x)  dx = \int \underbracket{arctg(x)}_{u} \cdot
+    \underbracket{1}_{v&#39;}\cdot  dx =\]</span> <span
+    class="math display">\[\underbracket{arctg(x)}_{u} \cdot
+    \underbracket{x}_{v} -  \int \underbracket{\frac{1}{1+
+    x^2}}_{u&#39;} \cdot \underbracket{x}_{v}\cdot  dx\]</span> Перший
+    доданок можна лишити таким, яким він є. Для того, щоб виконати
+    інтегрування у другому додатку, слід зробити заміну <span
+    class="math inline">\(f(x) = 1+x^2\)</span>. Тоді, <span
+    class="math display">\[=arctg(x) \cdot x - \frac12 \int
+    \frac{f&#39;}{f} dx\]</span> <span class="math display">\[= arctg(x)
+    \cdot x - \frac12 ln(f(x)) + C =\]</span> <span
+    class="math display">\[= arctg(x) \cdot x - \frac12 ln(1 + x^2) + C
+    = x(t)\]</span> Тепер, для того щоб порахувати зміщення, достатньо
+    підставити знайдену первісну у формулу: <span
+    class="math display">\[\Delta x(t) =\]</span> <span
+    class="math display">\[=\frac{20}{\pi} \cdot \left(arctg(\tau) \cdot
+    \tau - \frac12 ln(1 + \tau^2) \right)\biggm\vert_0^t =\]</span>
+    <span class="math display">\[=\frac{20}{\pi}\left(arctg(t) \cdot t -
+    \frac12 ln(1 + t^2)\right) = \Delta x(t)\]</span></p>
+    <figure id="fig:g14">
+    <img src="assets/g14.png" />
+    <figcaption> Залежність Зміщення від часу для двох
+    машин</figcaption>
+    </figure>
+    <p>На графіку зображено <span class="math inline">\(x(t)\)</span>
+    для нашої задачі (ціла лінія), та для задачі, де машина зривається з
+    місця, одразу набираючи максимальну швидкість (пунктирна лінія).
+    Видно, що машина з нашої задачі дещо відстає від тієї, що
+    розганяється миттєво (що і очікувано!). <p class="qquad"></p>
+    <p>Окрім швидкості, формула для <span
+    class="math inline">\(q(t)\)</span> може бути застосована до
+    прискорення: <span class="math display">\[v(t) = v_0
+    +  \int\limits_0^{t} a(\tau) d\tau\]</span> Причому цей вираз можна
+    навіть підcтавити у формулу для координати: <span
+    class="math display">\[x(T)  = x_0 + \int\limits_0^T v(t) dt
+    =\]</span> <span class="math display">\[= x_0 + \int\limits_0^T
+    \left( v_0 +  \int\limits_0^{t} a(\tau) d\tau \right) dt =\]</span>
+    <span class="math display">\[= x_0 + v_0 \cdot T +
+    \int\limits_0^T  \int\limits_0^{t} a(\tau) d\tau  dt\]</span> Таким
+    чином, якщо є відомим початкове положення і швидкість тіла та
+    залежність прискорення від часу, можна розрахувати положення тіла у
+    будь-який момент часу. Саме тому фізичні закони зазвичай описують
+    прискорення, що відчуває об’єкт.<br />
+    До прикладу, поблизу поверхні Землі всі тіла відчувають прискорення
+    <span class="math inline">\(g\)</span>, направлене вниз. Тоді, для
+    висоти тіла над поверхнею Землі можна отримати вираз (<span
+    class="math inline">\(a(\tau) \equiv -g\)</span>): <span
+    class="math display">\[h(T) = h_0 + v_0 \cdot T +
+    \int\limits_0^T  \int\limits_0^{t} -g d\tau  dt =\]</span> <span
+    class="math display">\[=h_0 + v_0 \cdot T + \int\limits_0^T  -gt  dt
+    =\]</span> <span class="math display">\[=h_0 + v_0 \cdot T
+    -\frac{g}{2}T^2\]</span> Цю формулу ви також можете побачити на
+    уроках фізики. <p class="qquad"></p>
+    <p>Але застосування інтегралів у фізиці не обмежується цим. Часто
+    величина виявляється неперервно розподіленою по площині або у
+    просторі так, що нам відома лише певна її <strong>густина</strong>.
+    До прикладу, так зазвичай розподілені маса та електричний заряд.
+    Бувають і більш екстримальні випадки, як-от розподіл у просторі
+    імпульсу (потік води), або сили (сила Архімеда).<br />
+    Якщо одиниця довжини дрота має залежність маси від координати як
+    <span class="math inline">\(\tau(x)\)</span>, то його маса між
+    координатами <span class="math inline">\(a\)</span> та <span
+    class="math inline">\(b\)</span> обчислиться, як <span
+    class="math display">\[M = \int\limits_a^b \tau(x) dx\]</span> Якщо
+    ж нам відома не маса одиниці довжини, а наприклад, залежності площі
+    перерізу <span class="math inline">\(S(x)\)</span> та густини <span
+    class="math inline">\(\rho(x)\)</span>, матимемо наступну формулу:
+    <span class="math display">\[M = \int\limits_a^b S(x)\cdot \rho(x)
+    dx\]</span> Якщо ж дріт не є прямим, а вигинається за деякою кривою
+    <span class="math inline">\(y = f(x)\)</span>, маса буде рівною
+    <span class="math display">\[M = \int\limits_a^b S(x) \cdot \rho(x)
+    \cdot \sqrt{1 + f&#39;(x)^2} dx\]</span> І так далі.</p>
+    <h1 class="unnumbered"
+    id="просунуті-прийоми.-звязок-між-площею-поверхні-та-обємом.">Просунуті
+    прийоми. Зв’язок між площею поверхні та об’ємом.</h1>
+    <p>Розрахуємо площу круга. Для цього необхідно взяти інтеграл <span
+    class="math display">\[S = 2\int\limits_{-1}^{+1}\sqrt{1 - x^2}
+    dx\]</span> Яким би простим він не виглядав, його розрахунок доволі
+    затягнутий. Тому я пропоную використати наступний прийом:<br />
+    </p>
+    <figure id="fig:g17">
+    <img src="assets/g17.png" />
+    <figcaption> Прийом розбиття фігури на кільця</figcaption>
+    </figure>
+    <p>Розіб’ємо круг на купу тонких синіх кілець. Якщо ці кільця будуть
+    достатньо тонкі, ми зможемо їх “вигнути” у прямокутники без втрати
+    ними площі (так само як ми можемо легко згинати довгий тонкий дріт
+    на відміну від товстого дроту тієї ж маси). При цьому якщо кільце
+    знаходилось на відстані <span class="math inline">\(r\)</span> від
+    центру круга, його довжина буде рівна <span
+    class="math inline">\(q\pi r\)</span> (формула для довжини кола).
+    Після чого порахуємо площу кола, як площу “заштрихованої” червоним
+    фігури, тобто <span class="math display">\[S = \int\limits_0^{R}
+    l(r)dr = \int\limits_0^{R} 2\pi rdr =\]</span> <span
+    class="math display">\[= 2\pi \cdot \underbracket{\int\limits_0^R
+    rdr}_{R^2/2} = \pi R^2\]</span> Що також є відомою формулою з
+    геометрії. <p class="qquad"></p>
+    <p>З продемонстрованого прийому слідує, що за певних умов, площа
+    фігури є інтегралом її периметра, і навпаки: периметр можна знайти,
+    як похідну від площі. <p class="qquad"></p>
+    <p><strong>3.2</strong> Знайдіть париметр квадрата.<br />
+    Окей, це просто: <span class="math display">\[S = a^2 \Rightarrow p
+    = S&#39; = (a^2)&#39; = 2a\]</span> Отже, периметр квадарата рівний
+    <span class="math inline">\(2a\)</span>.<br />
+    Секунду... це ж неправда! Власне, для квадрату з параметризацією у
+    вигляді довжини сторони цей прийом не працює. А от якщо у якості
+    параметра брати половину довжини сторони, тобто <span
+    class="math inline">\(b = \dfrac{a}{2}\)</span>, відповідь буде
+    вірною: <span class="math display">\[S = a^2 = \left(2b\right)^2 =
+    4b^2\]</span> <span class="math display">\[p = S&#39; = (4b^2)&#39;
+    = 8b = 4a\]</span> Пояснення цьому можна подати у вигляді наступної
+    схеми:</p>
+    <figure id="fig:g18">
+    <img src="assets/g18.png" />
+    <figcaption> Демонстрація, чому параметризація у вигляді довжини
+    сторони не працює для квадарата</figcaption>
+    </figure>
+    <p><br />
+    Якщо порівняти кожну з них із схемою для круга, стає ясно, що за
+    параметризації <span class="math inline">\(a\)</span>, площа до
+    квадрату додається нерівномірно, тоді як за <span
+    class="math inline">\(b\)</span> - рівномірно. Строге формулювання
+    цієї умови потребує дещо просунутого розуміння концепту
+    диференціалу, тож поки що облишимо його. <p class="qquad"></p>
+    <p><strong>3.3</strong> Знайдіть площу поверхні сфери.<br />
+    Як було показано раніше, об’єм кулі рівний <span
+    class="math inline">\(V = \frac43 \pi R^3\)</span>. Тоді, <span
+    class="math display">\[S = V&#39; = (\frac43 \pi R^3)&#39; = 4\pi
+    R^2\]</span> Що збігається з геометричними відомостями.</p>
+    <h1 class="unnumbered"
+    id="просунуті-прийоми.-зміна-порядку.">Просунуті прийоми. Зміна
+    порядку.</h1>
+    <p><p class="qquad"></p>
+    <p>Наступний прийом дозволяє подивитися на інтеграл з іншого боку,
+    буквально. Повернемось до задачі про площу фігури на початку
+    статті:</p>
+    <figure id="fig:g1">
+    <img src="assets/g1.png" />
+    <figcaption> Все та ж незвичайна фігура</figcaption>
+    </figure>
+    <p><br />
+    Ніхто не забороняє нам сприймати цю задачу дещо інакше:</p>
+    <figure id="fig:g15">
+    <img src="assets/g15.png" />
+    <figcaption> Незвичайна фігура з іншої точки зору</figcaption>
+    </figure>
+    <p><br />
+    Тобто вважати, що наша фігура обмежена функціями <span
+    class="math inline">\(x = \sqrt{y}\)</span> та <span
+    class="math inline">\(x = 1\)</span>. Тоді, її площа розрахується як
+    <span class="math display">\[S = \int\limits_0^1 (1 - \sqrt{y})
+    dy=\]</span> <span class="math display">\[= \left(y - \frac23
+    y^{3/2} \right) \biggm\vert_0^1 =\]</span> <span
+    class="math display">\[= 1 - \frac23 = \frac13\]</span> Що співпадає
+    з результатом отриманим вище. <p class="qquad"></p>
+    <p><strong>3.4</strong> Знайдіть площу фігури, обмеженої
+    графіками:</p>
+    <figure id="fig:g16">
+    <img src="assets/g16.png" />
+    <figcaption> Дуже незвичайна фігура</figcaption>
+    </figure>
+    <p><br />
+    Формально задача напишеться, як <span class="math display">\[S
+    =\int\limits_0^1 \left[ln( x + \sqrt{x^2 + 1}) - 0 \right] dx
+    +\]</span> <span class="math display">\[+\int\limits_1^{+\infty}
+    \left[ln( x + \sqrt{x^2 + 1}  ) - ln( x + \sqrt{x^2 - 1} )\right]
+    dx\]</span> Два інтеграли тут необхідні, адже намальована фігура на
+    проміжку <span class="math inline">\(x\in[0; 1]\)</span> не може
+    бути описана, як така, що лежить між червоною і синьою лініями -
+    синьої лінії там просто нема. Таку задачу можна вирішити - для цього
+    достатньо помітити, що червона лінія це <span
+    class="math inline">\(y = arcsh(x)\)</span>, а синя - <span
+    class="math inline">\(y = arcch(x)\)</span>. Після чого скористатися
+    їх відомими первісними. Тим не менш, цього можна уникнути, якщо
+    змінити місцями <span class="math inline">\(x\)</span> та <span
+    class="math inline">\(y\)</span>. <p class="qquad"></p>
+    <p>Тоді, наша фігура завжди лежить <strong>під</strong> сильною
+    лінією та <strong>над</strong> червоною лінією. <span
+    class="math inline">\(y \in [0; +\infty)\)</span>. <p class="qquad"></p>
+    <p>Тепер треба для обох фігур виразити <span
+    class="math inline">\(x\)</span> через <span
+    class="math inline">\(y\)</span> (наразі навпаки). Маємо: <span
+    class="math display">\[y = ln(x + \sqrt{x^2 \pm 1})\]</span> <span
+    class="math display">\[e^y = x + \sqrt{x^2 \pm 1}\]</span> <span
+    class="math display">\[e^y - x = \sqrt{x^2 \pm 1}\]</span> <span
+    class="math display">\[(e^y - x)^2 = x^2 \pm 1\]</span> <span
+    class="math display">\[e^{2y} - 2e^yx + x^2 = x^2 \pm 1\]</span>
+    <span class="math display">\[e^{2y} - 2e^yx = \pm 1\]</span> <span
+    class="math display">\[e^{2y} \mp 1  = 2e^yx\]</span> <span
+    class="math display">\[x = \frac{e^y \mp e^{-y}}{2}\]</span> Отже,
+    після зміни місцями <span class="math inline">\(x\)</span> та <span
+    class="math inline">\(y\)</span>, задача запишеться так: <span
+    class="math display">\[S = \int\limits_0^{+\infty} \left(\frac{e^y +
+    e^{-y}}{2} - \frac{e^{y} - e^{-y}}{2} \right) dy =\]</span> Що після
+    елементарних скорочень перетворюється на <span
+    class="math display">\[= \int\limits_0^{+\infty} e^{-y} dy = -e^{-y}
+    \biggm\vert_0^{+\infty} =\]</span> <span class="math display">\[=
+    -\underbracket{e^{-\infty}}_0 + e^{0} = 1\]</span> Отже, площа нашої
+    фігури рівна точно 1.</p>
+    <h1 class="unnumbered"
+    id="просунуті-прийоми.-рівняння-для-інтегралу.">Просунуті прийоми.
+    Рівняння для інтегралу.</h1>
+    <p>Ще один цікавий прийом для знаходження значення інтегралу -
+    позначити його змінною, та спробувати скласти рівняння для неї. У
+    цієї операції є свої підводні камені, але поки що їх не
+    торкатимемось. <p class="qquad"></p>
+    <p><strong>3.5</strong> Обчисліть <span
+    class="math inline">\(\int\limits_0^{2\pi} e^{-\alpha x} \cdot
+    sin(\beta x) dx\)</span><br />
+    Нехай, <span class="math display">\[\int\limits_0^{2\pi} e^{-\alpha
+    x} \cdot sin(\beta x) dx = I\]</span> Тоді, двічі скориставшись
+    інтегруванням частинами, матимемо: <span class="math display">\[I =
+    -\frac{1}{\alpha} \underbracket{e^{-\alpha x} \cdot sin(\beta
+    x)\biggm\vert_0^{2\pi}}_{e^{-2\pi\alpha}\cdot sin(2\pi\beta)}
+    +\]</span> <span class="math display">\[+\frac{\beta}{\alpha}
+    \int\limits_0^{2\pi} e^{-\alpha x} \cdot cos(\beta x) dx=\]</span>
+    <span class="math display">\[= -\frac{1}{\alpha}
+    e^{-2\pi\alpha}\cdot sin(2\pi\beta) +\]</span> <span
+    class="math display">\[+\frac{\beta}{\alpha}
+    \left(  -\frac{1}{\alpha} \underbracket{e^{-\alpha x} \cdot
+    cos(\beta x) \biggm\vert_0^{2\pi}}_{e^{-2\pi\alpha}cos(2\pi\beta) -
+    1} - \frac{\beta}{\alpha} \underbracket{\int\limits_0^{2\pi}
+    e^{-\alpha x} \cdot sin(\beta x) dx}_{I} \right)\]</span> В
+    результаті, отримали наступне рівняння: <span
+    class="math display">\[I = -\frac{1}{\alpha} e^{-2\pi\alpha}\cdot
+    sin(2\pi\beta)   -\]</span> <span
+    class="math display">\[-\frac{\beta}{\alpha^2}
+    e^{-2\pi\alpha}cos(2\pi\beta) + \frac{\beta}{\alpha^2} -
+    \frac{\beta^2}{\alpha^2}I\]</span> Розв’язавши яке, маємо: <span
+    class="math display">\[I = \frac{\beta - \alpha\cdot e^{-2\pi\alpha}
+    sin(2\pi\beta) - \beta \cdot e^{-2\pi\alpha}
+    cos(2\pi\beta)}{\alpha^2 + \beta^2}\]</span> <span
+    class="math display">\[I = \frac{\beta}{\alpha^2 + \beta^2} -
+    e^{-2\pi\alpha} \cdot \frac{\alpha\cdot  sin(2\pi\beta) + \beta
+    \cdot cos(2\pi\beta)}{\alpha^2 + \beta^2}\]</span> Цікаво, що <span
+    class="math display">\[\int\limits_0^{+\infty} e^{-\alpha x} \cdot
+    sin(\beta x) dx = \frac{\beta}{\alpha^2 + \beta^2}\]</span> Тобто
+    перший доданок - результат інтгрування до нескінченності, а другий
+    доданок показує, наскільки наш інтеграл менший за нього. Насправді,
+    увесь вираз можна переписати, як <span class="math display">\[I =
+    sin(\varphi) - e^{-\alpha T} sin(\beta T + \varphi),\]</span> <span
+    class="math display">\[\varphi = arctg(\beta/\alpha), \quad T =
+    2\pi\]</span> Графічно наш результат відповідає приблизно такій
+    площі:</p>
+    <figure id="fig:g19">
+    <img src="assets/g19.png" />
+    <figcaption> Досить складна фігура. Тут <span
+    class="math inline">\(\alpha = 0.212\)</span>, <span
+    class="math inline">\(\beta = 0.764\)</span></figcaption>
+    </figure>
+  </main>
+  <footer>
+    Have a suggestion/want contact me? Here's my <a target="_blank" href="mailto:Infernodambik@gmail.com">email</a>
+    and <a target="_blank" href="tg:t.me/dzuchun">telegram</a>.<br>
+    &#9400dzuchun, all rights reversed (of course they are)
+  </footer>
+</body>
+
+</html>
