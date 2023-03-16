@@ -1,0 +1,107 @@
+/* TMP */
+nav {
+  display: none;
+}
+
+/* General content position */
+main,
+header,
+footer {
+  width: 95vw;
+  max-width: 1300px;
+  margin: 5px auto;
+  padding: 10px;
+}
+
+figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 500px;
+  max-width: 90%;
+  width: min-content;
+  padding: 5px 20px;
+  width: max-content;
+}
+
+img {
+  left: 50%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+}
+
+figcaption {
+  white-space: pre-wrap;
+  padding: 5px;
+  border: 1px rgba(128, 128, 128, 0.64) solid;
+}
+
+a,
+h1 {
+  margin: 5px;
+}
+
+/* Text alignment */
+h1,
+footer {
+  text-align: center;
+}
+
+/*Fonts */
+p {
+  font-size: medium;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: xx-large;
+  font-weight: 600;
+}
+
+h1.unnumbered {
+  font-size: x-large;
+  font-weight: 520;
+  text-decoration: underline;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX !important;
+}
+
+/* Tab spaces */
+p.qquad {
+  display: none;
+}
+
+/* Table borders */
+table {
+  width: min-content;
+  max-width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+  border-spacing: 5;
+  border: 2px solid black;
+  background-color: white;
+}
+
+table th {
+  padding: 3px 10px;
+  background-color: white;
+  border-top: none;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: #dddddd;
+}
+
+table td {
+  padding: 3px 10px;
+  border-top: none;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: none;
+  background-color: white;
+}

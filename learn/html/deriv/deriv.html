@@ -1,999 +1,872 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="" >
+
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Похідні. Зміст та використання похідних.</title>
-  <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-  </style>
-  <style>
-    body {
-      max-width: 60%;
-      min-width: 500px;
-    }
-    table {
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 24px;
-      border-spacing: 5;
-      border: 2px solid black;
-    }
-
-    table th {
-      padding: 3px 10px;
-      background-color: white;
-      border-top: none;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-bottom: 1px solid black;
-      background-color: #DDDDDD;
-    }
-
-    table td {
-      padding: 3px 10px;
-      border-top: none;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-top: 1px solid black;
-      border-bottom: none;
-    }
-  </style>
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/learn/common/general-styles.css">
+  <link rel="stylesheet" href="/learn/common/visual-styles.css">
+
+  <!-- Scripts -->
+  <script defer src="/learn/common/patchQquads.js"></script>
+  <script defer src="/learn/common/addReferences.js"></script>
 </head>
+
 <body>
-<header id="title-block-header">
-<h1 class="title">Похідні. Зміст та використання похідних.</h1>
-</header>
-<h1 class="unnumbered" id="section"></h1>
-<p>Для розглядання похідних слід проговорити наступну деталь:<br />
-<strong>Границя</strong> - позначається <span
-class="math inline">\(\lim_{h \rightarrow 0}\)</span>. Означає, що <span
-class="math inline">\(h\)</span>: дуже мале; настільки мале, наскільки
-ви захочете; не 0.<br />
-<strong>Операція похідної</strong> - функція, яка співставляє кожній
-числовій функції іншу числову функцію за наступним правилом:<br />
-<span class="math display">\[D : f(x) \mapsto f&#39;(x) =
-\lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \frac{df}{dx}\]</span>
-До операції похідної часто вживають термін “оператор”. Це робиться
-виключно для того, аби означення вище не надто сильно
-самоповторювалось.</p>
-<p>Означення вище ні про що не каже, адже не дає наочної картини того,
-що з себе представляє похідна. Для її усвідомлення пропоную наступні
-приклади:</p>
-<h1 class="unnumbered" id="узагальнені-приклади">Узагальнені
-приклади</h1>
-<p><strong>1.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = 1\)</span>.<br />
-За означенням, <span class="math display">\[f&#39;(x) =
-\lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0}
-\frac{1 - 1}{h} = \lim_{h\rightarrow 0} \frac{0}{h} = 0\]</span> Отже
-похідною є функція, тотожно рівна 0. Цікаво, а що як взяти <span
-class="math inline">\(f(x) = 2\)</span>?</p>
-<p><strong>1(2).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = 2\)</span>.<br />
-За означенням, <span class="math display">\[f&#39;(x) =
-\lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0}
-\frac{2 - 2}{h} = \lim_{h\rightarrow 0} \frac{0}{h} = 0\]</span> Отже
-знову виходить 0. Гадаю, тепер можна припустити, що 0 вийде для
-будь-якої функції, яка всюди має однакове значення:</p>
-<p><strong>1(3).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = C\)</span>.<br />
-За означенням, <span class="math display">\[f&#39;(x) =
-\lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0}
-\frac{C - C}{h} = \lim_{h\rightarrow 0} \frac{0}{h} = 0\]</span></p>
-<p><strong>Константа</strong> - функція або вираз, що завжди приймає
-одне і те ж значення.<br />
-<br />
-Похідна константи тотожно рівна 0. Коротко це можна записати, як <span
-class="math inline">\((C)&#39; \equiv 0\)</span>. Насправді, тотожна
-рівність похідної 0 не тільки є властивістю константи, але і може
-<strong>слугувати її ознакою</strong>.</p>
-<p><strong>2.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = x\)</span>.<br />
-За означенням, <span class="math display">\[f&#39;(x) =
-\lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0}
-\frac{(x+h) - x}{h} =\]</span> <span class="math display">\[=
-\lim_{h\rightarrow 0} \frac{h}{h} = 1\]</span> Отже, <span
-class="math inline">\((x)&#39; = 1\)</span>. Цікаво, а що як взяти <span
-class="math inline">\(x^2\)</span>?</p>
-<p><strong>2(2).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = x^2\)</span>.<br />
-Наступне доведення дещо складніше за попередні. Тим не менш, маємо:
-<span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{(x+h)^2 - x^2}{h}
-=\]</span> <span class="math display">\[= \lim_{h\rightarrow 0}
-\frac{x^2 + 2xh + h^2 - x^2}{h} = \lim_{h\rightarrow 0} \frac{2xh +
-h^2}{h} = \lim_{h\rightarrow 0} (2x + h)\]</span> Оскільки границя каже,
-що “<span class="math inline">\(h\)</span> настільки мале, наскільки ви
-захочете”, то <span class="math inline">\(h\)</span> можна сміло
-опустити, та написати відповідь <span class="math inline">\((x^2)&#39; =
-2x\)</span>.<br />
-Щоб краще розгледіти закономірність, пропоную розглянути <span
-class="math inline">\(f(x) = x^3\)</span>:</p>
-<p><strong>2(3).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = x^3\)</span>.<br />
-<span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{(x+h)^3 - x^3}{h}
-=\]</span> <span class="math display">\[= \lim_{h\rightarrow 0}
-\frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h} =\]</span> <span
-class="math display">\[= \lim_{h\rightarrow 0} \frac{3x^2h + 3xh^2 +
-h^3}{h} = \lim_{h\rightarrow 0} (3x^2 + \underbracket{3xh +
-h^2}_{\rightarrow 0})\]</span> Отже, <span
-class="math inline">\((x^3)&#39; = 3x^2\)</span>.<br />
-Нарешті, можна помітити закономірність: похідна від <span
-class="math inline">\(x\)</span> у деякому степені <span
-class="math inline">\(n\)</span> рівна <span
-class="math inline">\(x\)</span> в степені <span
-class="math inline">\(n-1\)</span> та помножений на <span
-class="math inline">\(n\)</span>: <span
-class="math display">\[(x^n)&#39; = nx^{n-1}\]</span> Без строгого
-доведення (адже останнє доволі складне та багатогранне), приймемо що
-аналогічне виконується для всіх <strong>дійсних</strong> <span
-class="math inline">\(n\)</span>.<br />
-За допомогою останньої властивості можна знайти наступні похідні:</p>
-<p><strong>3.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = \sqrt{x}\)</span>.<br />
-<span class="math display">\[(\sqrt{x})&#39; = (x^{\frac12})&#39; =
-\frac12 x^{\frac12 - 1} = \frac12 x^{-\frac12} =
-\frac{1}{2\sqrt{x}}\]</span> Отже, <span
-class="math inline">\((\sqrt{x})&#39; =
-\dfrac{1}{2\sqrt{x}}\)</span></p>
-<p><strong>3(2).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = \sqrt[n]{x}\)</span>.<br />
-<span class="math display">\[(\sqrt[n]{x})&#39; = (x^{\frac1n})&#39; =
-\frac1n x^{\frac1n - 1} = \frac1n x^{-\frac{n-1}{n}} =
-\frac{1}{n\sqrt[n]{x^{n-1}}}\]</span> Отже, <span
-class="math inline">\((\sqrt[n]{x})&#39; =
-\dfrac{1}{n\sqrt[n]{x^{n-1}}}\)</span><br />
-Загальновідомими вважаються наступні похідні:</p>
-<h1 class="unnumbered" id="таблиця-похідних-довідка">Таблиця похідних
-(довідка)</h1>
-<div class="center">
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span
-class="math inline">\(f(x)\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(f&#39;(x)\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(x^n\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(nx^{n-1}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(a^x\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\ln^*(a)
-a^x\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(\log_a
-(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac{1}{\ln^*(a)x}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(\sin(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\cos(x)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(\cos(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(-\sin(x)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(\tan(x) =
-tg(x)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\sec^2(x) =
-\dfrac{1}{\cos^2(x)}\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(\cot(x) =
-ctg(x)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(-\csc^2(x) =
--\dfrac{1}{\sin^2(x)}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(arcsin(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac{1}{\sqrt{1-x^2}}\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(arccos(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(-\dfrac{1}{\sqrt{1-x^2}}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(arctg(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac{1}{1+x^2}\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(arcctg(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(-\dfrac{1}{1+x^2}\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>У таблиці згадується дуже важлива функція - <strong>натуральний
-логарифм</strong> <span class="math inline">\(\ln(x)\)</span>.<br />
-Так позначається логарифм за основою <span
-class="math inline">\(e\approx 2.718281...\)</span>, яке зазвичай
-називають “число е”, або “число Ейлера (Ойлера)”.<br />
-Тобто, <span class="math inline">\(\ln = \log_e\)</span>.</p>
-<h1 class="unnumbered" id="узагальнені-властивості">Узагальнені
-властивості</h1>
-<p>Операція похідної має дуже цікаві властивості. Наведемо декілька з
-них:</p>
-<p><strong>4.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = 2\cdot g(x)\)</span>, <span
-class="math inline">\(g&#39;(x)\)</span> - відома.<br />
-<span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{2\cdot g(x+h) -
-2\cdot g(x)}{h} =\]</span> <span class="math display">\[=2\cdot
-\underbracket{\lim_{h\rightarrow 0} \frac{g(x+h) - g(x)}{h}}_{g&#39;(x)}
-=2\cdot g&#39;(x)\]</span> Отже, якщо функцію у всіх точках збільшити в
-два рази, то і її похідна зросте вдвічі. Двійка в цьому плані нічим не
-особлива:</p>
-<p><strong>4(2).</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = C\cdot g(x)\)</span>, <span
-class="math inline">\(g&#39;(x)\)</span> - відома.<br />
-<span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{C\cdot g(x+h) -
-C\cdot g(x)}{h} =\]</span> <span class="math display">\[=C\cdot
-\underbracket{\lim_{h\rightarrow 0} \frac{g(x+h) - g(x)}{h}}_{g&#39;(x)}
-=C\cdot g&#39;(x)\]</span> Коротко це можна записати, як <span
-class="math inline">\((C\cdot f(x))&#39; = C \cdot f&#39;(x)\)</span>.
-Та інтерпретувати, як дозвіл виносити <strong>сталий</strong> множник з
-похідної.</p>
-<p><strong>5.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = g(x) + l(x)\)</span>, <span
-class="math inline">\(g&#39;(x)\)</span> та <span
-class="math inline">\(l&#39;(x)\)</span> - відомі.<br />
-<span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} =\]</span> <span
-class="math display">\[=\lim_{h\rightarrow 0} \frac{g(x+h) + l(x+h) -
-g(x) - l(x)}{h} =\]</span> <span
-class="math display">\[=\lim_{h\rightarrow 0} \frac{\left[g(x+h)  -
-g(x)\right]+ \left[l(x+h) - l(x)\right]}{h} =\]</span> <span
-class="math display">\[=\lim_{h\rightarrow 0}
-\underbracket{\frac{g(x+h)  - g(x)}{h}}_{g&#39;(x)} +
-\underbracket{\frac{l(x+h) - l(x)}{h}}_{l&#39;(x)} = g&#39;(x) +
-l&#39;(x)\]</span> Отже <span class="math inline">\((f +g)&#39; = f&#39;
-+ g&#39;\)</span>, тобто похідна суми рівна сумі похідних. Це також
-можна інтерпретувати, як дозвіл розбивати функцію на доданки, знаходити
-похідну кожного з них та складати їх назад, або навпаки: об’єднувати
-сумму похідних під одним знаком похідної (<span
-class="math inline">\(f&#39; + g&#39; = (f +g)&#39;\)</span>).</p>
-<p>В останньому абзаці було використано запис функцій у вигляді просто
-їх імені, тобто не як <span class="math inline">\(f(x)\)</span>, а
-просто <span class="math inline">\(f\)</span>. Але при цьому не слід
-забувати, що кожна з них - не число, і навіть не числова змінна. Кожна з
-них - функція, тобто правило за яким з одних змінних можна отримати
-інші. Подібний рівень абстракції може спершу здатись незвичним, проте
-він <strong>значно</strong> спрощує записи.</p>
-<p><strong>6.</strong> Знайдіть <span
-class="math inline">\(f&#39;\)</span>, якщо <span
-class="math inline">\(f = g\cdot l\)</span>, <span
-class="math inline">\(g&#39;\)</span> та <span
-class="math inline">\(l&#39;\)</span> - відомі.<br />
-Як би не хотілось одразу написати у відповідь <span
-class="math inline">\(g&#39;\cdot l&#39;\)</span>, слід формально
-провести розрахунки:</p>
-<p><span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
-\frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{g(x+h)\cdot l(x+h)
-- g(x)\cdot l(x)}{h} =\]</span> <span class="math display">\[^{=
-\lim_{h\rightarrow 0} \frac{(g(x) + [g(x+h)-g(x)])\cdot (l(x) +
-[l(x+h)-l(x)]) - g(x)\cdot l(x)}{h} = }\]</span> <span
-class="math display">\[^{= \lim_{h\rightarrow 0} \frac{g(x)\cdot l(x) +
-(g(x+h)-g(x))\cdot l(x)+g(x)\cdot (l(x+h)-l(x))- g(x)\cdot l(x)}{h} =
-}\]</span> <span class="math display">\[= \lim_{h\rightarrow 0}
-l(x)\cdot \underbracket{\frac{g(x+h)-g(x)}{h}}_{g&#39;(x)} + g(x)\cdot
-\underbracket{\frac{l(x+h)-l(x)}{h}}_{l&#39;(x)} =\]</span> <span
-class="math display">\[=l(x)\cdot g&#39;(x) + g(x)\cdot
-l&#39;(x)\]</span> Тобто, <span class="math inline">\((fg)&#39; =
-f&#39;g + fg&#39;\)</span>. Це також можна інтерпретувати наступним
-чином: під час взяття похідної від добутку <span
-class="math inline">\(fg\)</span>, ми спочатку враховуємо внесок в неї
-тільки від функції <span class="math inline">\(f\)</span>, тобто <span
-class="math inline">\(gf&#39;\)</span> (при цьому <span
-class="math inline">\(g\)</span> вважаємо константою). Після цього
-враховуємо внесок від функції <span class="math inline">\(g\)</span>,
-тобто <span class="math inline">\(fg&#39;\)</span> (при цьому константою
-вважаємо <span class="math inline">\(f\)</span>). Щоб знайти похідну
-<span class="math inline">\(fg\)</span> нам слід додати ці два
-внески.<br />
-Також корисною на практиці є наступна формула:</p>
-<p><strong>6(2).</strong> Знайдіть <span
-class="math inline">\(f&#39;\)</span>, якщо <span
-class="math inline">\(f = \dfrac{g}{l}\)</span>, <span
-class="math inline">\(g&#39;\)</span> та <span
-class="math inline">\(l&#39;\)</span> - відомі.<br />
-Якою би схожою ця ситуація не здавалася, результат виходить кардинально
-інший: <span class="math display">\[\left (\frac{g}{l}\right)&#39;
-=\left (g \cdot \frac1l\right)&#39; = g&#39; \cdot \frac1l + g \cdot
-\left(\frac1l\right)&#39; =\]</span> <span
-class="math display">\[=g&#39; \cdot \frac1l + g \cdot
-\left(-\frac{1}{l^2}\right)= \frac{g&#39;l - gl&#39;}{l^2}\]</span>
-Красивого запису в отриманої формули немає, як і інтуїтивної
-інтерпретації. Єдине, що слід помітити - нерівноправість <span
-class="math inline">\(g\)</span> та <span
-class="math inline">\(l\)</span> у частці <span
-class="math inline">\(g/l\)</span> повела за собою нерівноправність у
-виразі для похідної частки.<br />
-Якщо тут відповідь не <span class="math inline">\(f&#39;g&#39;\)</span>,
-то тоді де вона може бути? Ось тут:</p>
-<p><strong>7.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f = g(l(x))\)</span>, <span
-class="math inline">\(g&#39;\)</span> та <span
-class="math inline">\(l&#39;\)</span> - відомі.<br />
-Це доведення зручно проводити у наступному символьному записі: <span
-class="math display">\[\frac{df}{dx} = \frac{dg}{dx} = \frac{dg\cdot
-dl}{dx \cdot dl} = \underbracket{\frac{dg}{dl}}_{g&#39;} \cdot
-\underbracket{\frac{dl}{dx}}_{l&#39;} = g&#39;\cdot l&#39;\]</span> Хоча
-наведені записи і не є математично строгими, вони неймовірно
-наочні.<br />
-<strong>Композиція</strong> - операція, що для двох функцій <span
-class="math inline">\(f(x)\)</span> та <span
-class="math inline">\(g(x)\)</span> повертає функцію <span
-class="math inline">\(f(g(x))\)</span>. Позначається <span
-class="math inline">\(f \circ g\)</span>.<br />
-Похідна композиції рівна добуткові похідних.<br />
-Розглянуті властивості похідних зібрано до таблиці:</p>
-<h1 class="unnumbered" id="властивості-похідної-довідка">Властивості
-похідної (довідка)</h1>
-<div class="center">
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span
-class="math inline">\(f(x)\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(f&#39;(x)\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(C\cdot
-g(x)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(C\cdot
-g&#39;(x)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(g(x) +
-l(x)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(g&#39;(x) +
-l&#39;(x)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(A\cdot g(x)
-+ B\cdot l(x)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(A\cdot
-g&#39;(x) + B\cdot l&#39;(x)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(g(x)\cdot
-l(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(g&#39;(x)\cdot l(x) + g(x)\cdot
-l&#39;(x)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac{g(x)}{l(x)}\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac{g&#39;(x)\cdot l(x) - g(x) \cdot
-l&#39;(x)}{l^2(x)}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(g(l(x))\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(g&#39;(l(x))\cdot l&#39;(x)\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 class="unnumbered" id="вправи-похідні">Вправи (похідні)</h1>
-<p><strong>8.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = 3 \cdot x^2 + 5\cdot x + 11\)</span><br />
-Розв’язок: <span class="math display">\[f&#39;(x) = (3 \cdot x^2 +
-5\cdot x + 11)&#39; =\]</span> <span class="math display">\[=3 \cdot
-\underbracket{(x^2)&#39;}_{2x} + 5\cdot \underbracket{(x)&#39;}_{1} +
-\underbracket{(11)&#39;}_{0} = 6\cdot x + 5\]</span></p>
-<p><strong>9.</strong> Знайдіть <span
-class="math inline">\(f&#39;(2)\)</span>, якщо <span
-class="math inline">\(f(x) = \dfrac{1}{10} x^5\)</span><br />
-Розв’язок: <span class="math display">\[f&#39;(x) = \left(\frac{1}{10}
-x^5 \right)&#39; =  \frac{1}{10} \underbracket{(x^5)&#39;}_{5x^4} =
-\frac12 x^4\]</span> <span class="math display">\[f&#39;(2) = \frac12
-\cdot 2^4 = 8\]</span></p>
-<p><strong>10.</strong> Розв’яжіть рівняння <span
-class="math inline">\(f&#39;(x) = 0\)</span>, якщо <span
-class="math inline">\(f(x) = x^3 - 5x\)</span><br />
-Розв’язок: <span class="math display">\[f&#39;(x) = (x^3 - 5x)&#39; =
-(x^3)&#39; - 5\cdot (x)&#39; = 3x^2 - 5\]</span> <span
-class="math display">\[f&#39;(x) = 0 \Rightarrow 3x^2 - 5 = 0
-\Rightarrow x = \pm \sqrt{\frac{5}{3}}\]</span></p>
-<p><strong>11.</strong> За яких умов <span
-class="math inline">\((a^x)&#39; = a^x\)</span>?<br />
-Розв’язок: <span class="math display">\[(a^x)&#39; = \ln(a) \cdot
-a^x\]</span> <span class="math display">\[(a^x)&#39; = a^x \Rightarrow
-\ln(a) \cdot a^x = a^x \Rightarrow\]</span> <span
-class="math display">\[\Rightarrow \ln(a) = 1 \Rightarrow a = e\]</span>
-Отже, за <span class="math inline">\(a=e\)</span>, тобто <span
-class="math inline">\((e^x)&#39; = e^x\)</span></p>
-<p><strong>12.</strong> Знайдіть <span
-class="math inline">\(f&#39;(x)\)</span>, якщо <span
-class="math inline">\(f(x) = \ln(x)\)</span><br />
-Розв’язок: <span class="math display">\[f&#39;(x) = (\ln(x))&#39; =
-(\log_e(x))&#39; = \frac{1}{\underbracket{\ln(e)}_{1} x} =
-\frac1x\]</span> Отже, <span class="math inline">\((\ln(x))&#39; =
-\dfrac1x\)</span><br />
-Останні два приклади використовуються настільки часто, що іноді їх
-включають до таблиці похідних:</p>
-<div class="center">
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span
-class="math inline">\(f(x)\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(f&#39;(x)\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span
-class="math inline">\(e^x\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(e^x\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span
-class="math inline">\(\ln(x)\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(\dfrac1x\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Тим не менш, корисно розуміти, як вони випливають з більш загальних
-фактів.</p>
-<h1 class="unnumbered" id="зміст-похідних-ч.-1">Зміст похідних (ч.
-1)</h1>
-<p>Похідна у позначенні <span
-class="math inline">\(\dfrac{df}{dx}\)</span> є часткою приростів
-<strong>значення функції</strong> та <strong>аргумента функції</strong>.
-Інакше кажучи, похідна показує <strong>у скільки разів швидше росте
-функція за свій аргумент</strong>.</p>
-<p>До прикладу, якщо функція є константою, вона не росте взагалі. Тобто,
-вона росте у <span class="math inline">\(0\)</span> разів швидше за свій
-аргумент - похідна рівна <span class="math inline">\(0\)</span>.</p>
-<p>Функція, що росте <em>вдвічі</em> швидше за свій аргумент - <span
-class="math inline">\(f(x) = 2\cdot x\)</span>. Відповідно, її похідна
-рівна <span class="math inline">\(2\)</span>.</p>
-<p>Функція також може спадати із ростом свого аргумента. Тоді, щоб
-описати відношення приросту функції та аргумента нам знадобиться
-від’ємне число. До прикладу, <span class="math inline">\(f(x) = -10\cdot
-x\)</span> спадає із ростом <span class="math inline">\(x\)</span>,
-притому робить це в <span class="math inline">\(10\)</span> разів
-швидше, ніж росте <span class="math inline">\(x\)</span>. В такому разі
-похідна рівна <span class="math inline">\(-10\)</span>.</p>
-<p>Нехай, машина рухається зі швидкістю <span
-class="math inline">\(v=10\)</span>м/с. Тоді, за кожну секунду вона
-долатиме відстань 10м. Отже, подолана відстань росте в 10 разів швидше
-за час. Формулою це можна записати, як <span class="math display">\[S =
-10\cdot t\]</span> Отже, якщо взяти похідну від <span
-class="math inline">\(S\)</span> за часом <span
-class="math inline">\(t\)</span>, тобто <span
-class="math inline">\(\dfrac{dS}{dt}\)</span>, ми якраз отримаємо 10,
-тобто швидкість з якою рухається машина.<br />
-Зрозуміло, що те саме справедливо для будь-якої швидкості <span
-class="math inline">\(v\)</span>: <span class="math display">\[S =
-v\cdot t \qquad \frac{dS}{dt} = v\]</span> Отже, <strong>швидкість
-машини (об’єкта) можна дізнатись, взявши похідну від шляху за
-часом.</strong><br />
-Ще одним класичним прикладом є розрахунок прибутку фінансової компанії.
-До прикладу, якщо припустити, що ваша компанія заробляє <span
-class="math inline">\(i = 5000\)</span>грн/день, то дохід росте у <span
-class="math inline">\(5000\)</span> разів швидше за кількість днів <span
-class="math inline">\(d\)</span>: <span class="math display">\[I =
-5000\cdot d\]</span> Відповідно, <span
-class="math inline">\(\dfrac{dI}{di} = 5000\)</span>.
-<strong>Прибутковість компанії можна дізнатись, взявши похідну
-загального її заробітку за часом.</strong></p>
-<p>Як можна бачити, описані вище дії можна проробити і без знання про
-похідні. Тоді, навіщо вони потрібні?<br />
-Справа в тому, що машина може змінити швидкість. І тоді формула <span
-class="math inline">\(S = v\cdot t\)</span> не працюватиме.<br />
-Компанія може випустити новий продукт, який збільшить її продажі вдвічі,
-або навпаки збанкротувати. І тоді формула <span class="math inline">\(I
-= i\cdot d\)</span> теж не згодиться.<br />
-Тим не менш, навіть у такій ситуації, вам може бути відома залежність
-шляху машини від часу <span class="math inline">\(S(t)\)</span>, або
-заробітку компанії від кількості днів <span
-class="math inline">\(I(d)\)</span>. І саме з допомогою похідної ви
-можете знайти швидкість <span class="math inline">\(v(t)\)</span> та
-прибуток <span class="math inline">\(i(d)\)</span>. До прикладу:</p>
-<p><strong>13.</strong> Відомо, що під час вільного вертикального
-падіння шлях тіла описується формулою <span class="math inline">\(S(t) =
-\dfrac{g}{2} t^2\)</span>. Знайдіть швидкість тіла у момент часу <span
-class="math inline">\(t = 5\)</span>с<br />
-Розв’язок: <span class="math display">\[v(t) = S&#39;(t) = \left(
-\frac{g}{2} t^2 \right)&#39; = \frac{g}{2}\cdot (t^2)&#39; = g\cdot
-t\]</span> <span class="math display">\[v(5) = g\cdot 5 \approx
-49\frac{m}{s}\]</span> Тобто, тіло набуде швидкості майже 50м/c (що
-доволі швидко).</p>
-<p><strong>13(2).</strong> Оцініть, з якої висоти необхідно впасти тілу,
-щоб подолати звуковий бар’єр <span class="math inline">\(v_s \approx
-334\frac{m}{s}\)</span>.<br />
-Ця задача дещо складніша за минулу. Тим не менш, аналогічно знаходимо
-<span class="math display">\[v(t) = g\cdot t\]</span> Нехай, звуковий
-бар’єр подолається за <span class="math inline">\(t_s\)</span> секунд.
-Тоді, <span class="math display">\[v(t_s) = v_s \Rightarrow g\cdot t_s =
-v_s \Rightarrow t_s = \frac{v_s}{g} \approx 34s\]</span> Отже, на
-подолання звукового бар’єру піде близько 34с. За цей час буде пройдено
-шлях <span class="math display">\[S(t_s) = \frac{g}{2} t_s^2 =
-\frac{g}{2} \left( \frac{v_s}{g} \right)^2 = \frac{v_s^2}{2g} \approx
-5600m\]</span> Отже, за вільного падіння тіло подолає звуковий бар’єр за
-5,6км польоту.<br />
-<strong>13(3).</strong> Тіло підкинули вертикально вгору за швидкістю
-<span class="math inline">\(v_0 = 2\frac{m}{s}\)</span>. Розрахувати
-час, через який тіло зупиниться у повітрі.<br />
-Розв’язок: за описаних умов висота тіла в момент часу <span
-class="math inline">\(t\)</span> визначатиметься за формулою: (джерело -
-фізика) <span class="math display">\[h(t) = v_0 \cdot t - \frac{g}{2}
-t^2\]</span> Тоді, швидкість <span class="math inline">\(v(t)\)</span>:
-<span class="math display">\[v(t) = h&#39;(t) = \left(v_0 \cdot t -
-\frac{g}{2} t^2 \right)&#39; = v_0 - g\cdot t\]</span> Відповідно, у
-момент зупинки: <span class="math display">\[v(t) = v_0 - g\cdot t = 0
-\Rightarrow t = \frac{v_0}{g} \approx 0.2s\]</span> Отже, через 0.2с
-тіло зупиниться у повітрі.</p>
-<h1 class="unnumbered" id="зміст-похідних-ч.-2">Зміст похідних (ч.
-2)</h1>
-<p>Інший зміст похідної відкриється нам, якщо розглянути графік функції
-<span class="math inline">\(f(x)\)</span>:</p>
-<figure id="fig:g1">
-<img src="g1.png" />
-<figcaption> Позначення <span class="math inline">\(dx\)</span> та <span
-class="math inline">\(df\)</span> на графіку функції <span
-class="math inline">\(f(x) = \dfrac{x}{3}\)</span></figcaption>
-</figure>
-<p>З позначеного прямокутного трикутника видно, що <span
-class="math inline">\(f&#39; = \dfrac{df}{dx} = tg(\alpha)\)</span>.
-Отже, похідна рівна тангенсу кута нахилу графіка.<br />
-Кут нахилу не завжди є однаковим для всього графіка - до прикладу:</p>
-<figure id="fig:g2">
-<img src="g2.png" />
-<figcaption> Демонстрація змінного кута нахилу на прикладі графіку
-функції <span class="math inline">\(f(x) = \dfrac{x^2}{3}\)</span>. На
-другій світлині кут, його тангенс і, відповідно, похідна -
-від’ємні.</figcaption>
-</figure>
-<p>Більше того, зміна положення будь-якої з синіх точок може вести за
-собою зміну кута нахилу:</p>
-<figure id="fig:g3">
-<img src="g3.png" />
-<figcaption> Демонстрація зміни кута <span
-class="math inline">\(\alpha\)</span> внаслідок руху однієї з
-точок</figcaption>
-</figure>
-<p>Останню проблему якраз вирішує запис <span
-class="math inline">\(\lim_{x \rightarrow 0}\)</span> у означенні
-похідної - він змушує нас розташувати точки якнайближче одна до
-одної:</p>
-<figure id="fig:g4">
-<img src="g4.png" />
-<figcaption> Демонстрація однозначності кута нахилу за близького
-розташування точок</figcaption>
-</figure>
-<p>Показану побудову ви також можете знати, як дотичну.<br />
-</p>
-<a href="https://www.geogebra.org/calculator/j6jncmxt" target="_blank">За бажання, можете поекспериментувати з показаними побудовами самостійно.</a>
-<p><strong>Геометричний зміст похідної</strong> - тангенс кута нахилу
-(кутовий коефіцієнт) дотичної до графіка <span
-class="math inline">\(f(x)\)</span> у точці <span
-class="math inline">\(x\)</span>.<br />
-<strong>Екстремум (локальний максимум/мінімум)</strong> - Точка графіка
-функції, де значення функції набуває найбільшого/найменшого значення
-серед точок поряд.<br />
-<br />
-Візуально такі точки відповідають “розвороту” графіка. До прикладу, у
-<span class="math inline">\(y=x^2\)</span> така точка знаходиться у
-початку координат.<br />
-Екстремуми мають корисну властивість: похідна функції за їх значення
-аргументу дорівнює 0.</p>
-<p><strong>14.</strong> Знайдіть точки, що відповідають екстремумам
-функції <span class="math inline">\(f(x) = x^3 - 12\cdot
-x\)</span><br />
-Розв’язок: екстремуми відповідають похідній, що рівна 0. Тоді, <span
-class="math display">\[f&#39;(x) = (x^3 - 12\cdot x)&#39; = 3x^2 -
-12\]</span> <span class="math display">\[f&#39;(x_e) = 0 \Rightarrow
-3x_e^2 - 12 = 0 \Rightarrow x_e^2 = 4\]</span> <span
-class="math display">\[x_e = \pm 2\]</span> Отже, <span
-class="math inline">\(f(x)\)</span> має екстремуми за <span
-class="math inline">\(x = \pm 2\)</span>. Тоді, <span
-class="math inline">\(f(x_e) = x_e^3 - 12\cdot x_e = \pm 2^3 \mp 12\cdot
-2 = \mp 16\)</span>.<br />
-Отже, екстремумами <span class="math inline">\(f(x)\)</span> є точки
-<span class="math inline">\((2, -16)\)</span> та <span
-class="math inline">\((-2, 16)\)</span>. Графічно це виглядає так:</p>
-<figure id="fig:g5">
-<img src="g5.png" />
-<figcaption> Демонстрація екстремумів функції <span
-class="math inline">\(f(x) = x^3 - 12\cdot x\)</span></figcaption>
-</figure>
-<p>Без використання похідних таку задачу вирішити неможливо. Слід
-наголосиит на тому, що щойно відбулось - нами було знайдено таке
-значення <span class="math inline">\(x\)</span>, що функція приймає
-максимальне/мінімальне значення. Інакше кажучи, апарат похідних можна
-застосовувати до будь-яких задач, які потребують максимізації значення
-виразу. Звичайно, у розглянутому випадку можна було б вгадати оптимальне
-значення <span class="math inline">\(x\)</span>, але вже у такій
-сутації:</p>
-<p><strong>14(2).</strong> Знайдіть точки, що відповідають екстремумам
-функції <span class="math inline">\(f(x) =
-\dfrac{2^x}{x^3}\)</span><br />
-</p>
-<figure id="fig:g6">
-<img src="g6.png" />
-<figcaption> Графік функції <span class="math inline">\(f(x) =
-\dfrac{2^x}{x^3}\)</span>. Очевидно, що мінімальне значення функції
-існує, але яке воно і якому значенню <span
-class="math inline">\(x\)</span> відповідає - незрозуміло.</figcaption>
-</figure>
-<p>вгадати потрібну точку буде дуже важко. Тим не менш, алгоритм
-розв’язку лишається без змін.<br />
-Розв’язок: екстремуми відповідають похідній, що рівна 0. Тоді, <span
-class="math display">\[f&#39;(x) = \left(\frac{2^x}{x^3}\right)&#39; =
-\frac{(2^x)&#39;\cdot x^3 - 2^x \cdot (x^3)&#39;}{(x^3)^2}=\]</span>
-<span class="math display">\[=\frac{\ln(2)\cdot 2^x\cdot x^3 - 2^x \cdot
-3\cdot x^2}{x^6} =\]</span> <span class="math display">\[=\frac{2^x
-\cdot (\ln(2)\cdot x - 3)}{x^4}\]</span> <span
-class="math display">\[f&#39;(x_e) = 0 \Rightarrow
-\underbracket{2^{x_e}}_{\ne 0} \cdot (\ln(2)\cdot x_e - 3) = 0
-\Rightarrow\]</span> <span class="math display">\[\Rightarrow
-\ln(2)\cdot x - 3 = 0 \Rightarrow x_e = \frac{3}{\ln(2)} \approx
-4.328...\]</span> Отже, <span class="math inline">\(f(x)\)</span> має
-екстремум за <span class="math inline">\(x = \dfrac{3}{\ln(2)}\)</span>.
-Тоді, <span class="math display">\[f(x_e) = \frac{2^{x_e}}{x_e^3} =
-\frac{2^{\frac{3}{\ln(2)}}}{\left(\frac{3}{\ln(2)}\right)^3} = \frac{e^3
-\cdot \ln^3(2)}{27} \approx 0.2477...\]</span> Отже, загадкова точка на
-графіку це <span class="math inline">\(\left( \dfrac{3}{\ln(2)};
-\dfrac{e^3 \cdot \ln^3(2)}{27} \right) \approx (4.328;
-0.2477)\)</span>.<br />
-Як використати такий потужний інструмент? Це вже прояв вашої творчості.
-Інший приклад використання похідних:</p>
-<p><strong>15.</strong> За допомогою геометричного змісту похідної
-довести, що дотична до кола перпендикулярна його радіусу, проведеному в
-ту ж точку.<br />
-</p>
-<figure id="fig:g7">
-<img src="g7.png" />
-<figcaption> Унаочнення факту, що доводиться</figcaption>
-</figure>
-<p>Для початку слід якимось чином представити коло у вигляді функції.
-Хоча все коло так представлене бути не може, тим не менш, одиничне
-півколо можна описати функцією <span class="math inline">\(f(x) =
-\sqrt{1-x^2}\)</span>:</p>
-<figure id="fig:g8">
-<img src="g8.png" />
-<figcaption> Графік функції <span class="math inline">\(f(x) =
-\sqrt{1-x^2}\)</span></figcaption>
-</figure>
-<p>Проведемо радіус до якоїсь точки півкола <span
-class="math inline">\(A\)</span>. Тоді, <span
-class="math inline">\(A\)</span> має координати <span
-class="math inline">\(A(x, \sqrt{1-x^2})\)</span>. Позначимо кут <span
-class="math inline">\(\alpha\)</span> між віссю абсцис та відрізком
-<span class="math inline">\(OA\)</span>.<br />
-Після цього, проведемо дотичну до півкола у точці <span
-class="math inline">\(A\)</span> та позначимо кут її нахилу <span
-class="math inline">\(\beta\)</span>. Всі побудови показані на
-малюнку:</p>
-<figure id="fig:g9">
-<img src="g9.png" />
-<figcaption> </figcaption>
-</figure>
-<p>Для доведення перпендикулярності радіуса та дотичної, достатньо
-показати, що <span class="math inline">\(\alpha + \beta =
-90\degree\)</span>.<br />
-<span class="math display">\[tg(\alpha) = \frac{y}{x} =
-\frac{\sqrt{1-x^2}}{x}\]</span> <span class="math display">\[tg(\beta) =
-f&#39;(x) = (\sqrt{1-x^2})&#39; =\]</span> <span
-class="math display">\[=\frac{(1-x^2)&#39;}{2\sqrt{1-x^2}}=
-\frac{-2\cdot x}{2\sqrt{1-x^2}} = -\frac{x}{\sqrt{1-x^2}}\]</span> Отже,
-<span class="math inline">\(tg(\alpha) \cdot tg(\beta) = -1\)</span>. Ви
-можете знати факт, що це означає перпендикулярність кута між <span
-class="math inline">\(\alpha\)</span> та <span
-class="math inline">\(\beta\)</span>, але пропоную це перевірити:</p>
-<p><span class="math display">\[tg(\alpha - \beta) = \frac{tg(\alpha) -
-tg(\beta)}{1 + tg(\alpha)\cdot tg(\beta)} =\]</span> <span
-class="math display">\[=\frac{\overbracket{\frac{\sqrt{1-x^2}}{x} +
-\frac{x}{\sqrt{1-x^2}}}^{\ne 0}}{\underbracket{1 + (-1)}_{= 0 }} = \pm
-\infty\]</span> Тангенс кута між дотичною та радіусом невизначений,
-тобто сам кут є прямим.<br />
-</p>
-<a href="https://www.geogebra.org/calculator/w98ryyw6" target="_blank">За потреби, можете самостійно переглянути побудови.</a>
-<p><strong>16.</strong> За відомої функції <span
-class="math inline">\(f(x)\)</span> побудувати пряму, дотичну до її
-графіка у точці <span class="math inline">\(x=x_0\)</span>.<br />
-Розв’язок: нехай, шукана пряма це <span class="math inline">\(y = a\cdot
-x  +b\)</span>.<br />
-Як було встановлено раніше, похідна визначає кутовий коефіцієнт
-дотичної. Отже, <span class="math inline">\(a =
-f&#39;(x_0)\)</span>.<br />
-Також шукана пряма має перетинати заданий графік при <span
-class="math inline">\(x=x_0\)</span>. Тобто, <span
-class="math inline">\(a\cdot x_0 + b = f(x_0)\)</span> <span
-class="math display">\[f&#39;(x_0)\cdot x_0 + b = f(x_0) \Rightarrow b =
-f(x_0) - f&#39;(x_0)\cdot x_0\]</span> Шукана пряма запишеться у
-вигляді: <span class="math inline">\(y = f&#39;(x_0)\cdot (x-x_0) +
-f(x_0)\)</span>.</p>
-<a href="https://www.geogebra.org/calculator/bdc2aydh" target="_blank">До цієї задачі також є ілюстрація, де ви можете задати власну довільну функцію f(x)</a>
-<h1 class="unnumbered" id="похідні.-вища-математика.">Похідні. Вища
-математика.</h1>
-<p>Завдання вище демонструють, що вміння працювати з похідними безумовно
-є корисним. Тим не менш, похідні у тому розумінні в якому вони подані
-вище є доволі обмеженими - вони мають працювати лише з числами. Але
-математика не зупиняється на числах.</p>
-<p>Що, як ваша функція залежить не від числа, а від точки у просторі? Що
-ж, тоді її можна сприймати, як функцію трьох змінних - координат
-згаданої точки. Якщо спробувати застосувати поняття похідної до такої
-функції, виникне проблема: яку зі змінних слід збільшувати? <span
-class="math display">\[f(x, y, z) \Rightarrow f&#39; = \frac{df}{dx}
-?\]</span> <span class="math display">\[f(x, y, z) \Rightarrow f&#39; =
-\frac{df}{dy} ?\]</span> <span class="math display">\[f(x, y, z)
-\Rightarrow f&#39; =\frac{df}{dz} ?\]</span></p>
-<p>Насправді, ви можете збільшувати кожну з них окремо, вважаючи інші
-сталими. Такі похідні називають частинними: <span
-class="math display">\[\frac{\partial f}{\partial x} = \lim_{h
-\rightarrow 0} \frac{f(x+h, y, z) - f(x, y, z)}{h}\]</span> <span
-class="math display">\[\frac{\partial f}{\partial y} = \lim_{h
-\rightarrow 0} \frac{f(x, y+h, z) - f(x, y, z)}{h}\]</span> <span
-class="math display">\[\frac{\partial f}{\partial z} = \lim_{h
-\rightarrow 0} \frac{f(x, y, z+h) - f(x, y, z)}{h}\]</span></p>
-<p>Кожна з них описує, як функція реагує на зміну тієї чи іншої змінної.
-Виявляється, що в такому разі зручно зібрати ці похідні в один вектор:
-<span class="math display">\[\left( \frac{\partial f}{\partial
-x};\frac{\partial f}{\partial y};\frac{\partial f}{\partial z} \right)
-=grad(f)= \vec \nabla f\]</span> Такий вектор називають градієнтом. Його
-напрям показує, куди слід рухатись, аби функція росла якнайшвидше. Якщо
-градієнт не показує нікуди, тобто рівний <span
-class="math inline">\((0;0;0)\)</span>, функція досягла екстремуму.</p>
-<p>Деякі функції можуть складатись з кількох компонент, тобто видавати
-результатом не число, а вектор. Прикладом такого є залежність положення
-об’єкта у просторі від часу: <span class="math display">\[\vec r(t) =
-\left( x(t); y(t); z(t) \right)\]</span> Як було показано вище,
-швидкість є похідною за часом від положення. Власне, те саме залишається
-вірним і для векторів: <span class="math display">\[(\vec r(t))&#39; =
-\left( \frac{dx}{dt};\frac{dy}{dt};\frac{dz}{dt} \right) = \left(
-v_x(t), v_y(t), v_z(t) \right) = \vec v\]</span></p>
-<p>Наостанок, згадаємо ситуацію, коли функція залежить від точки в
-просторі, та сама є вектором. Записати це можна так: <span
-class="math display">\[\vec f(\vec r) = \left( f_x(x, y, z); f_y(x, y,
-z); f_z(x, y, z) \right)\]</span> Така конструкція треба, наприклад, щоб
-описати течію води - у кожній точці вода тече у якусь сторону та з
-деякою швидкістю.<br />
-Якщо задатись питанням, що таке похідна від <span
-class="math inline">\(\vec f(\vec r)\)</span>, у вас буде всього 9
-варіантів: <span class="math display">\[\frac{\partial f_x}{\partial
-x},\quad \frac{\partial f_x}{\partial y},\quad \frac{\partial
-f_x}{\partial z},\quad \frac{\partial f_y}{\partial x},\quad
-\frac{\partial f_y}{\partial y},\quad \frac{\partial f_y}{\partial
-z},\quad \frac{\partial f_z}{\partial x},\quad \frac{\partial
-f_z}{\partial y},\quad \frac{\partial f_z}{\partial z}\]</span></p>
-<p>Хоча всі з них маюсь цілком конкретний зміст, окремо одне від одного
-вони не часто бувають корисні.<br />
-Натомість, у нагоді можуть стати наступні конструкції з цих 9ти
-елементів: <span class="math display">\[\frac{\partial f_x}{\partial x}
-+ \frac{\partial f_y}{\partial y} + \frac{\partial f_z}{\partial z} =
-div(\vec f) = \vec \nabla \vec f\]</span> <span
-class="math display">\[\left( \frac{\partial f_z}{\partial
-y}-\frac{\partial f_y}{\partial z};\frac{\partial f_x}{\partial z}-
-\frac{\partial f_z}{\partial x}; \frac{\partial f_y}{\partial
-x}-\frac{\partial f_x}{\partial y} \right) = rot(\vec f) = \vec \nabla
-\times \vec f\]</span></p>
-<p>Їх математичний зміст доволі складний, але якщо повертатись до течії
-води, можна провести наступні аналогії:<br />
-<span class="math inline">\(div(\vec f)\)</span> покаже, де вода
-з’являється або зникає. За звичайних умов, вода так себе не веде, тобто
-для неї <span class="math inline">\(div(\vec f) \equiv 0\)</span> (що
-насправді є дуже сильною умовою!)<br />
-<span class="math inline">\(rot(\vec f)\)</span> покаже, чи течія води
-закручуватиме невелику легеньку паличку, що помістили в неї.</p>
-<p>Описані величини можуть здатись не надто корисними, але зважайте що
-вектором у кожній точці простору може описуватись не лише потік
-води.</p>
-<footer>
-<span class="citation" data-cites="dzuchun">@dzuchun</span>, all rights
-reversed
-</footer>
+  <header id="title-block-header">
+    <nav>
+      (site navigation here)
+    </nav>
+  </header>
+  <main>
+    <h1 class="title">Похідні. Зміст та використання похідних.</h1>
+    <h1 class="unnumbered" id="означення">Означення</h1>
+    <p>Для розглядання похідних слід проговорити наступну деталь:</p>
+    <p><p class="qquad"></p>
+    <p><strong>Границя</strong> - позначається <span
+    class="math inline">\(\lim_{h \rightarrow 0}\)</span>. Означає, що
+    <span class="math inline">\(h\)</span>: дуже мале; настільки мале,
+    наскільки ви захочете; не 0.<br />
+    <p class="qquad"></p>
+    <p><strong>Операція похідної</strong> - функція, яка співставляє
+    кожній числовій функції іншу числову функцію за наступним
+    правилом:<br />
+    <span class="math display">\[D : f(x) \mapsto f&#39;(x) =
+    \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} =
+    \frac{df}{dx}\]</span> До операції похідної часто вживають термін
+    “оператор”. Це робиться виключно для того, аби означення вище не
+    надто сильно самоповторювалось.</p>
+    <p>Означення вище ні про що не каже, адже не дає наочної картини
+    того, що з себе представляє похідна. Для її усвідомлення пропоную
+    наступні приклади:</p>
+    <h1 class="unnumbered" id="узагальнені-приклади">Узагальнені
+    приклади</h1>
+    <p><p class="qquad"></p>
+    <p><strong>1.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = 1\)</span>.<br />
+    За означенням, <span class="math display">\[f&#39;(x) =
+    \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow
+    0} \frac{1 - 1}{h} = \lim_{h\rightarrow 0} \frac{0}{h} = 0\]</span>
+    Отже похідною є функція, тотожно рівна 0. Цікаво, а що як взяти
+    <span class="math inline">\(f(x) = 2\)</span>? <p class="qquad"></p>
+    <p><strong>1(2).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = 2\)</span>.<br />
+    За означенням, <span class="math display">\[f&#39;(x) =
+    \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow
+    0} \frac{2 - 2}{h} = \lim_{h\rightarrow 0} \frac{0}{h} = 0\]</span>
+    Отже знову виходить 0. Гадаю, тепер можна припустити, що 0 вийде для
+    будь-якої функції, яка всюди має однакове значення: <p class="qquad"></p>
+    <p><strong>1(3).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = C\)</span>.<br />
+    За означенням, <span class="math display">\[f&#39;(x) =
+    \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow
+    0} \frac{C - C}{h} = \lim_{h\rightarrow 0} \frac{0}{h} =
+    0\]</span></p>
+    <p><p class="qquad"></p>
+    <p><strong>Константа</strong> - функція або вираз, що завжди приймає
+    одне і те ж значення.<br />
+    <br />
+    Похідна константи тотожно рівна 0. Коротко це можна записати, як
+    <span class="math inline">\((C)&#39; \equiv 0\)</span>. Насправді,
+    тотожна рівність похідної 0 не тільки є властивістю константи, але і
+    може <strong>слугувати її ознакою</strong>. <p class="qquad"></p>
+    <p><strong>2.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = x\)</span>.<br />
+    За означенням, <span class="math display">\[f&#39;(x) =
+    \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow
+    0} \frac{(x+h) - x}{h} =\]</span> <span class="math display">\[=
+    \lim_{h\rightarrow 0} \frac{h}{h} = 1\]</span> Отже, <span
+    class="math inline">\((x)&#39; = 1\)</span>. Цікаво, а що як взяти
+    <span class="math inline">\(x^2\)</span>? <p class="qquad"></p>
+    <p><strong>2(2).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = x^2\)</span>.<br />
+    Наступне доведення дещо складніше за попередні. Тим не менш, маємо:
+    <span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{(x+h)^2 -
+    x^2}{h} =\]</span> <span class="math display">\[= \lim_{h\rightarrow
+    0} \frac{x^2 + 2xh + h^2 - x^2}{h} = \lim_{h\rightarrow 0} \frac{2xh
+    + h^2}{h} = \lim_{h\rightarrow 0} (2x + h)\]</span> Оскільки границя
+    каже, що “<span class="math inline">\(h\)</span> настільки мале,
+    наскільки ви захочете”, то <span class="math inline">\(h\)</span>
+    можна сміло опустити, та написати відповідь <span
+    class="math inline">\((x^2)&#39; = 2x\)</span>.<br />
+    Щоб краще розгледіти закономірність, пропоную розглянути <span
+    class="math inline">\(f(x) = x^3\)</span>: <p class="qquad"></p>
+    <p><strong>2(3).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = x^3\)</span>.<br />
+    <span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{(x+h)^3 -
+    x^3}{h} =\]</span> <span class="math display">\[= \lim_{h\rightarrow
+    0} \frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h} =\]</span> <span
+    class="math display">\[= \lim_{h\rightarrow 0} \frac{3x^2h + 3xh^2 +
+    h^3}{h} = \lim_{h\rightarrow 0} (3x^2 + \underbracket{3xh +
+    h^2}_{\rightarrow 0})\]</span> Отже, <span
+    class="math inline">\((x^3)&#39; = 3x^2\)</span>.<br />
+    Нарешті, можна помітити закономірність: похідна від <span
+    class="math inline">\(x\)</span> у деякому степені <span
+    class="math inline">\(n\)</span> рівна <span
+    class="math inline">\(x\)</span> в степені <span
+    class="math inline">\(n-1\)</span> та помножений на <span
+    class="math inline">\(n\)</span>: <span
+    class="math display">\[(x^n)&#39; = nx^{n-1}\]</span> Без строгого
+    доведення (адже останнє доволі складне та багатогранне), приймемо що
+    аналогічне виконується для всіх <strong>дійсних</strong> <span
+    class="math inline">\(n\)</span>.<br />
+    За допомогою останньої властивості можна знайти наступні похідні:
+    <p class="qquad"></p>
+    <p><strong>3.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = \sqrt{x}\)</span>.<br />
+    <span class="math display">\[(\sqrt{x})&#39; = (x^{\frac12})&#39; =
+    \frac12 x^{\frac12 - 1} = \frac12 x^{-\frac12} =
+    \frac{1}{2\sqrt{x}}\]</span> Отже, <span
+    class="math inline">\((\sqrt{x})&#39; =
+    \dfrac{1}{2\sqrt{x}}\)</span> <p class="qquad"></p>
+    <p><strong>3(2).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = \sqrt[n]{x}\)</span>.<br />
+    <span class="math display">\[(\sqrt[n]{x})&#39; = (x^{\frac1n})&#39;
+    = \frac1n x^{\frac1n - 1} = \frac1n x^{-\frac{n-1}{n}} =
+    \frac{1}{n\sqrt[n]{x^{n-1}}}\]</span> Отже, <span
+    class="math inline">\((\sqrt[n]{x})&#39; =
+    \dfrac{1}{n\sqrt[n]{x^{n-1}}}\)</span><br />
+    Загальновідомими вважаються наступні похідні:</p>
+    <h1 class="unnumbered" id="таблиця-похідних-довідка">Таблиця
+    похідних (довідка)</h1>
+    <div class="center">
+    <table>
+    <thead>
+    <tr class="header">
+    <th style="text-align: center;"><span
+    class="math inline">\(f(x)\)</span></th>
+    <th style="text-align: center;"><span
+    class="math inline">\(f&#39;(x)\)</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(x^n\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(nx^{n-1}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(a^x\)</span></td>
+    <td style="text-align: center;"><span class="math inline">\(\ln^*(a)
+    a^x\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span class="math inline">\(\log_a
+    (x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{\ln^*(a)x}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(\sin(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\cos(x)\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(\cos(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-\sin(x)\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span class="math inline">\(\tan(x)
+    = tg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\sec^2(x) = \dfrac{1}{\cos^2(x)}\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span class="math inline">\(\cot(x)
+    = ctg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-\csc^2(x) =
+    -\dfrac{1}{\sin^2(x)}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(arcsin(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{\sqrt{1-x^2}}\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(arccos(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-\dfrac{1}{\sqrt{1-x^2}}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(arctg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{1}{1+x^2}\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(arcctg(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(-\dfrac{1}{1+x^2}\)</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <p>У таблиці згадується дуже важлива функція - <strong>натуральний
+    логарифм</strong> <span class="math inline">\(\ln(x)\)</span>.<br />
+    Так позначається логарифм за основою <span
+    class="math inline">\(e\approx 2.718281...\)</span>, яке зазвичай
+    називають “число е”, або “число Ейлера (Ойлера)”.<br />
+    Тобто, <span class="math inline">\(\ln = \log_e\)</span>.</p>
+    <h1 class="unnumbered" id="узагальнені-властивості">Узагальнені
+    властивості</h1>
+    <p>Операція похідної має дуже цікаві властивості. Наведемо декілька
+    з них: <p class="qquad"></p>
+    <p><strong>4.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = 2\cdot g(x)\)</span>, <span
+    class="math inline">\(g&#39;(x)\)</span> - відома.<br />
+    <span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{2\cdot g(x+h)
+    - 2\cdot g(x)}{h} =\]</span> <span class="math display">\[=2\cdot
+    \underbracket{\lim_{h\rightarrow 0} \frac{g(x+h) -
+    g(x)}{h}}_{g&#39;(x)} =2\cdot g&#39;(x)\]</span> Отже, якщо функцію
+    у всіх точках збільшити в два рази, то і її похідна зросте вдвічі.
+    Двійка в цьому плані нічим не особлива: <p class="qquad"></p>
+    <p><strong>4(2).</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = C\cdot g(x)\)</span>, <span
+    class="math inline">\(g&#39;(x)\)</span> - відома.<br />
+    <span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{C\cdot g(x+h)
+    - C\cdot g(x)}{h} =\]</span> <span class="math display">\[=C\cdot
+    \underbracket{\lim_{h\rightarrow 0} \frac{g(x+h) -
+    g(x)}{h}}_{g&#39;(x)} =C\cdot g&#39;(x)\]</span> Коротко це можна
+    записати, як <span class="math inline">\((C\cdot f(x))&#39; = C
+    \cdot f&#39;(x)\)</span>. Та інтерпретувати, як дозвіл виносити
+    <strong>сталий</strong> множник з похідної. <p class="qquad"></p>
+    <p><strong>5.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = g(x) + l(x)\)</span>, <span
+    class="math inline">\(g&#39;(x)\)</span> та <span
+    class="math inline">\(l&#39;(x)\)</span> - відомі.<br />
+    <span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} =\]</span> <span
+    class="math display">\[=\lim_{h\rightarrow 0} \frac{g(x+h) + l(x+h)
+    - g(x) - l(x)}{h} =\]</span> <span
+    class="math display">\[=\lim_{h\rightarrow 0} \frac{\left[g(x+h)  -
+    g(x)\right]+ \left[l(x+h) - l(x)\right]}{h} =\]</span> <span
+    class="math display">\[=\lim_{h\rightarrow 0}
+    \underbracket{\frac{g(x+h)  - g(x)}{h}}_{g&#39;(x)} +
+    \underbracket{\frac{l(x+h) - l(x)}{h}}_{l&#39;(x)} = g&#39;(x) +
+    l&#39;(x)\]</span> Отже <span class="math inline">\((f +g)&#39; =
+    f&#39; + g&#39;\)</span>, тобто похідна суми рівна сумі похідних. Це
+    також можна інтерпретувати, як дозвіл розбивати функцію на доданки,
+    знаходити похідну кожного з них та складати їх назад, або навпаки:
+    об’єднувати сумму похідних під одним знаком похідної (<span
+    class="math inline">\(f&#39; + g&#39; = (f +g)&#39;\)</span>).
+    <p class="qquad"></p>
+    <p>В останньому абзаці було використано запис функцій у вигляді
+    просто їх імені, тобто не як <span
+    class="math inline">\(f(x)\)</span>, а просто <span
+    class="math inline">\(f\)</span>. Але при цьому не слід забувати, що
+    кожна з них - не число, і навіть не числова змінна. Кожна з них -
+    функція, тобто правило за яким з одних змінних можна отримати інші.
+    Подібний рівень абстракції може спершу здатись незвичним, проте він
+    <strong>значно</strong> спрощує записи. <p class="qquad"></p>
+    <p><strong>6.</strong> Знайдіть <span
+    class="math inline">\(f&#39;\)</span>, якщо <span
+    class="math inline">\(f = g\cdot l\)</span>, <span
+    class="math inline">\(g&#39;\)</span> та <span
+    class="math inline">\(l&#39;\)</span> - відомі.<br />
+    Як би не хотілось одразу написати у відповідь <span
+    class="math inline">\(g&#39;\cdot l&#39;\)</span>, слід формально
+    провести розрахунки:</p>
+    <p><span class="math display">\[f&#39;(x) = \lim_{h\rightarrow 0}
+    \frac{f(x+h) - f(x)}{h} = \lim_{h\rightarrow 0} \frac{g(x+h)\cdot
+    l(x+h) - g(x)\cdot l(x)}{h} =\]</span> <span
+    class="math display">\[^{= \lim_{h\rightarrow 0} \frac{(g(x) +
+    [g(x+h)-g(x)])\cdot (l(x) + [l(x+h)-l(x)]) - g(x)\cdot l(x)}{h} =
+    }\]</span> <span class="math display">\[^{= \lim_{h\rightarrow 0}
+    \frac{g(x)\cdot l(x) + (g(x+h)-g(x))\cdot l(x)+g(x)\cdot
+    (l(x+h)-l(x))- g(x)\cdot l(x)}{h} = }\]</span> <span
+    class="math display">\[= \lim_{h\rightarrow 0} l(x)\cdot
+    \underbracket{\frac{g(x+h)-g(x)}{h}}_{g&#39;(x)} + g(x)\cdot
+    \underbracket{\frac{l(x+h)-l(x)}{h}}_{l&#39;(x)} =\]</span> <span
+    class="math display">\[=l(x)\cdot g&#39;(x) + g(x)\cdot
+    l&#39;(x)\]</span> Тобто, <span class="math inline">\((fg)&#39; =
+    f&#39;g + fg&#39;\)</span>. Це також можна інтерпретувати наступним
+    чином: під час взяття похідної від добутку <span
+    class="math inline">\(fg\)</span>, ми спочатку враховуємо внесок в
+    неї тільки від функції <span class="math inline">\(f\)</span>, тобто
+    <span class="math inline">\(gf&#39;\)</span> (при цьому <span
+    class="math inline">\(g\)</span> вважаємо константою). Після цього
+    враховуємо внесок від функції <span
+    class="math inline">\(g\)</span>, тобто <span
+    class="math inline">\(fg&#39;\)</span> (при цьому константою
+    вважаємо <span class="math inline">\(f\)</span>). Щоб знайти похідну
+    <span class="math inline">\(fg\)</span> нам слід додати ці два
+    внески.<br />
+    Також корисною на практиці є наступна формула: <p class="qquad"></p>
+    <p><strong>6(2).</strong> Знайдіть <span
+    class="math inline">\(f&#39;\)</span>, якщо <span
+    class="math inline">\(f = \dfrac{g}{l}\)</span>, <span
+    class="math inline">\(g&#39;\)</span> та <span
+    class="math inline">\(l&#39;\)</span> - відомі.<br />
+    Якою би схожою ця ситуація не здавалася, результат виходить
+    кардинально інший: <span class="math display">\[\left
+    (\frac{g}{l}\right)&#39; =\left (g \cdot \frac1l\right)&#39; =
+    g&#39; \cdot \frac1l + g \cdot \left(\frac1l\right)&#39; =\]</span>
+    <span class="math display">\[=g&#39; \cdot \frac1l + g \cdot
+    \left(-\frac{1}{l^2}\right)= \frac{g&#39;l - gl&#39;}{l^2}\]</span>
+    Красивого запису в отриманої формули немає, як і інтуїтивної
+    інтерпретації. Єдине, що слід помітити - нерівноправість <span
+    class="math inline">\(g\)</span> та <span
+    class="math inline">\(l\)</span> у частці <span
+    class="math inline">\(g/l\)</span> повела за собою нерівноправність
+    у виразі для похідної частки.<br />
+    Якщо тут відповідь не <span
+    class="math inline">\(f&#39;g&#39;\)</span>, то тоді де вона може
+    бути? Ось тут: <p class="qquad"></p>
+    <p><strong>7.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f = g(l(x))\)</span>, <span
+    class="math inline">\(g&#39;\)</span> та <span
+    class="math inline">\(l&#39;\)</span> - відомі.<br />
+    Це доведення зручно проводити у наступному символьному записі: <span
+    class="math display">\[\frac{df}{dx} = \frac{dg}{dx} = \frac{dg\cdot
+    dl}{dx \cdot dl} = \underbracket{\frac{dg}{dl}}_{g&#39;} \cdot
+    \underbracket{\frac{dl}{dx}}_{l&#39;} = g&#39;\cdot l&#39;\]</span>
+    Хоча наведені записи і не є математично строгими, вони неймовірно
+    наочні.<br />
+    <p class="qquad"></p>
+    <p><strong>Композиція</strong> - операція, що для двох функцій <span
+    class="math inline">\(f(x)\)</span> та <span
+    class="math inline">\(g(x)\)</span> повертає функцію <span
+    class="math inline">\(f(g(x))\)</span>. Позначається <span
+    class="math inline">\(f \circ g\)</span>.<br />
+    Похідна композиції рівна добуткові похідних.<br />
+    Розглянуті властивості похідних зібрано до таблиці:</p>
+    <h1 class="unnumbered" id="властивості-похідної-довідка">Властивості
+    похідної (довідка)</h1>
+    <div class="center">
+    <table>
+    <thead>
+    <tr class="header">
+    <th style="text-align: center;"><span
+    class="math inline">\(f(x)\)</span></th>
+    <th style="text-align: center;"><span
+    class="math inline">\(f&#39;(x)\)</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td style="text-align: center;"><span class="math inline">\(C\cdot
+    g(x)\)</span></td>
+    <td style="text-align: center;"><span class="math inline">\(C\cdot
+    g&#39;(x)\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span class="math inline">\(g(x) +
+    l(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(g&#39;(x) + l&#39;(x)\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span class="math inline">\(A\cdot
+    g(x) + B\cdot l(x)\)</span></td>
+    <td style="text-align: center;"><span class="math inline">\(A\cdot
+    g&#39;(x) + B\cdot l&#39;(x)\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(g(x)\cdot l(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(g&#39;(x)\cdot l(x) + g(x)\cdot
+    l&#39;(x)\)</span></td>
+    </tr>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{g(x)}{l(x)}\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac{g&#39;(x)\cdot l(x) - g(x) \cdot
+    l&#39;(x)}{l^2(x)}\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(g(l(x))\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(g&#39;(l(x))\cdot l&#39;(x)\)</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <p>останньої стрічки можна отримати наступну цікаву формулу: <span
+    class="math display">\[(f(ax + b))&#39; = a\cdot f&#39;(ax +
+    b)\]</span> Хоча математично вона із себе представляє лише
+    нескладний висновок, ситуація що описана у ній, є доволі
+    поширеною.</p>
+    <h1 class="unnumbered" id="вправи-похідні">Вправи (похідні)</h1>
+    <p>      <strong>8.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = 3 \cdot x^2 + 5\cdot x +
+    11\)</span><br />
+    Розв’язок: <span class="math display">\[f&#39;(x) = (3 \cdot x^2 +
+    5\cdot x + 11)&#39; =\]</span> <span class="math display">\[=3 \cdot
+    \underbracket{(x^2)&#39;}_{2x} + 5\cdot \underbracket{(x)&#39;}_{1}
+    + \underbracket{(11)&#39;}_{0} = 6\cdot x + 5\]</span></p>
+    <p>      <strong>9.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(2)\)</span>, якщо <span
+    class="math inline">\(f(x) = \dfrac{1}{10} x^5\)</span><br />
+    Розв’язок: <span class="math display">\[f&#39;(x) =
+    \left(\frac{1}{10} x^5 \right)&#39; =  \frac{1}{10}
+    \underbracket{(x^5)&#39;}_{5x^4} = \frac12 x^4\]</span> <span
+    class="math display">\[f&#39;(2) = \frac12 \cdot 2^4 =
+    8\]</span></p>
+    <p>      <strong>10.</strong> Розв’яжіть рівняння <span
+    class="math inline">\(f&#39;(x) = 0\)</span>, якщо <span
+    class="math inline">\(f(x) = x^3 - 5x\)</span><br />
+    Розв’язок: <span class="math display">\[f&#39;(x) = (x^3 - 5x)&#39;
+    = (x^3)&#39; - 5\cdot (x)&#39; = 3x^2 - 5\]</span> <span
+    class="math display">\[f&#39;(x) = 0 \Rightarrow 3x^2 - 5 = 0
+    \Rightarrow x = \pm \sqrt{\frac{5}{3}}\]</span></p>
+    <p>      <strong>11.</strong> За яких умов <span
+    class="math inline">\((a^x)&#39; = a^x\)</span>?<br />
+    Розв’язок: <span class="math display">\[(a^x)&#39; = \ln(a) \cdot
+    a^x\]</span> <span class="math display">\[(a^x)&#39; = a^x
+    \Rightarrow \ln(a) \cdot a^x = a^x \Rightarrow\]</span> <span
+    class="math display">\[\Rightarrow \ln(a) = 1 \Rightarrow a =
+    e\]</span> Отже, за <span class="math inline">\(a=e\)</span>, тобто
+    <span class="math inline">\((e^x)&#39; = e^x\)</span> <p class="qquad"></p>
+    <p>      <strong>12.</strong> Знайдіть <span
+    class="math inline">\(f&#39;(x)\)</span>, якщо <span
+    class="math inline">\(f(x) = \ln(x)\)</span><br />
+    Розв’язок: <span class="math display">\[f&#39;(x) = (\ln(x))&#39; =
+    (\log_e(x))&#39; = \frac{1}{\underbracket{\ln(e)}_{1} x} =
+    \frac1x\]</span> Отже, <span class="math inline">\((\ln(x))&#39; =
+    \dfrac1x\)</span><br />
+    Останні два приклади використовуються настільки часто, що іноді їх
+    включають до таблиці похідних:</p>
+    <div class="center">
+    <table>
+    <thead>
+    <tr class="header">
+    <th style="text-align: center;"><span
+    class="math inline">\(f(x)\)</span></th>
+    <th style="text-align: center;"><span
+    class="math inline">\(f&#39;(x)\)</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td style="text-align: center;"><span
+    class="math inline">\(e^x\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(e^x\)</span></td>
+    </tr>
+    <tr class="even">
+    <td style="text-align: center;"><span
+    class="math inline">\(\ln(x)\)</span></td>
+    <td style="text-align: center;"><span
+    class="math inline">\(\dfrac1x\)</span></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <p>Тим не менш, корисно розуміти, як вони випливають з більш
+    загальних фактів.</p>
+    <h1 class="unnumbered" id="зміст-похідних-ч.-1">Зміст похідних (ч.
+    1)</h1>
+    <p>Похідна у позначенні <span
+    class="math inline">\(\dfrac{df}{dx}\)</span> є часткою приростів
+    <strong>значення функції</strong> та <strong>аргумента
+    функції</strong>. Інакше кажучи, похідна показує <strong>у скільки
+    разів швидше росте функція за свій аргумент</strong>. <p class="qquad"></p>
+    <p>До прикладу, якщо функція є константою, вона не росте взагалі.
+    Тобто, вона росте у <span class="math inline">\(0\)</span> разів
+    швидше за свій аргумент - похідна рівна <span
+    class="math inline">\(0\)</span>. <p class="qquad"></p>
+    <p>Функція, що росте <em>вдвічі</em> швидше за свій аргумент - <span
+    class="math inline">\(f(x) = 2\cdot x\)</span>. Відповідно, її
+    похідна рівна <span class="math inline">\(2\)</span>. <p class="qquad"></p>
+    <p>Функція також може спадати із ростом свого аргумента. Тоді, щоб
+    описати відношення приросту функції та аргумента нам знадобиться
+    від’ємне число. До прикладу, <span class="math inline">\(f(x) =
+    -10\cdot x\)</span> спадає із ростом <span
+    class="math inline">\(x\)</span>, притому робить це в <span
+    class="math inline">\(10\)</span> разів швидше, ніж росте <span
+    class="math inline">\(x\)</span>. В такому разі похідна рівна <span
+    class="math inline">\(-10\)</span>. <p class="qquad"></p>
+    <p>Нехай, машина рухається зі швидкістю <span
+    class="math inline">\(v=10\)</span>м/с. Тоді, за кожну секунду вона
+    долатиме відстань 10м. Отже, подолана відстань росте в 10 разів
+    швидше за час. Формулою це можна записати, як <span
+    class="math display">\[S = 10\cdot t\]</span> Отже, якщо взяти
+    похідну від <span class="math inline">\(S\)</span> за часом <span
+    class="math inline">\(t\)</span>, тобто <span
+    class="math inline">\(\dfrac{dS}{dt}\)</span>, ми якраз отримаємо
+    10, тобто швидкість з якою рухається машина.<br />
+    Зрозуміло, що те саме справедливо для будь-якої швидкості <span
+    class="math inline">\(v\)</span>: <span class="math display">\[S =
+    v\cdot t \qquad \frac{dS}{dt} = v\]</span> Отже, <strong>швидкість
+    машини (об’єкта) можна дізнатись, взявши похідну від шляху за
+    часом.</strong><br />
+    Ще одним класичним прикладом є розрахунок прибутку фінансової
+    компанії. До прикладу, якщо припустити, що ваша компанія заробляє
+    <span class="math inline">\(i = 5000\)</span>грн/день, то дохід
+    росте у <span class="math inline">\(5000\)</span> разів швидше за
+    кількість днів <span class="math inline">\(d\)</span>: <span
+    class="math display">\[I = 5000\cdot d\]</span> Відповідно, <span
+    class="math inline">\(\dfrac{dI}{di} = 5000\)</span>.
+    <strong>Прибутковість компанії можна дізнатись, взявши похідну
+    загального її заробітку за часом.</strong> <p class="qquad"></p>
+    <p>Як можна бачити, описані вище дії можна проробити і без знання
+    про похідні. Тоді, навіщо вони потрібні?<br />
+    Справа в тому, що машина може змінити швидкість. І тоді формула
+    <span class="math inline">\(S = v\cdot t\)</span> не
+    працюватиме.<br />
+    Компанія може випустити новий продукт, який збільшить її продажі
+    вдвічі, або навпаки збанкротувати. І тоді формула <span
+    class="math inline">\(I = i\cdot d\)</span> теж не згодиться.<br />
+    Тим не менш, навіть у такій ситуації, вам може бути відома
+    залежність шляху машини від часу <span
+    class="math inline">\(S(t)\)</span>, або заробітку компанії від
+    кількості днів <span class="math inline">\(I(d)\)</span>. І саме з
+    допомогою похідної ви можете знайти швидкість <span
+    class="math inline">\(v(t)\)</span> та прибуток <span
+    class="math inline">\(i(d)\)</span>. До прикладу: <p class="qquad"></p>
+    <p>      <strong>13.</strong> Відомо, що під час вільного
+    вертикального падіння шлях тіла описується формулою <span
+    class="math inline">\(S(t) = \dfrac{g}{2} t^2\)</span>. Знайдіть
+    швидкість тіла у момент часу <span class="math inline">\(t =
+    5\)</span>с<br />
+    Розв’язок: <span class="math display">\[v(t) = S&#39;(t) = \left(
+    \frac{g}{2} t^2 \right)&#39; = \frac{g}{2}\cdot (t^2)&#39; = g\cdot
+    t\]</span> <span class="math display">\[v(5) = g\cdot 5 \approx
+    49\frac{m}{s}\]</span> Тобто, тіло набуде швидкості майже 50м/c (що
+    доволі швидко).</p>
+    <p>      <strong>13(2).</strong> Оцініть, з якої висоти необхідно
+    впасти тілу, щоб подолати звуковий бар’єр <span
+    class="math inline">\(v_s \approx 334\frac{m}{s}\)</span>.<br />
+    Ця задача дещо складніша за минулу. Тим не менш, аналогічно
+    знаходимо <span class="math display">\[v(t) = g\cdot t\]</span>
+    Нехай, звуковий бар’єр подолається за <span
+    class="math inline">\(t_s\)</span> секунд. Тоді, <span
+    class="math display">\[v(t_s) = v_s \Rightarrow g\cdot t_s = v_s
+    \Rightarrow t_s = \frac{v_s}{g} \approx 34s\]</span> Отже, на
+    подолання звукового бар’єру піде близько 34с. За цей час буде
+    пройдено шлях <span class="math display">\[S(t_s) = \frac{g}{2}
+    t_s^2 = \frac{g}{2} \left( \frac{v_s}{g} \right)^2 =
+    \frac{v_s^2}{2g} \approx 5600m\]</span> Отже, за вільного падіння
+    тіло подолає звуковий бар’єр за 5,6км польоту.<br />
+          <strong>13(3).</strong> Тіло підкинули вертикально вгору за
+    швидкістю <span class="math inline">\(v_0 = 2\frac{m}{s}\)</span>.
+    Розрахувати час, через який тіло зупиниться у повітрі.<br />
+    Розв’язок: за описаних умов висота тіла в момент часу <span
+    class="math inline">\(t\)</span> визначатиметься за формулою:
+    (джерело - фізика) <span class="math display">\[h(t) = v_0 \cdot t -
+    \frac{g}{2} t^2\]</span> Тоді, швидкість <span
+    class="math inline">\(v(t)\)</span>: <span
+    class="math display">\[v(t) = h&#39;(t) = \left(v_0 \cdot t -
+    \frac{g}{2} t^2 \right)&#39; = v_0 - g\cdot t\]</span> Відповідно, у
+    момент зупинки: <span class="math display">\[v(t) = v_0 - g\cdot t =
+    0 \Rightarrow t = \frac{v_0}{g} \approx 0.2s\]</span> Отже, через
+    0.2с тіло зупиниться у повітрі.</p>
+    <h1 class="unnumbered" id="зміст-похідних-ч.-2">Зміст похідних (ч.
+    2)</h1>
+    <p>Інший зміст похідної відкриється нам, якщо розглянути графік
+    функції <span class="math inline">\(f(x)\)</span>:</p>
+    <figure id="fig:g1">
+    <img src="assets/g1.png" />
+    <figcaption> Позначення <span class="math inline">\(dx\)</span> та
+    <span class="math inline">\(df\)</span> на графіку функції <span
+    class="math inline">\(f(x) = \dfrac{x}{3}\)</span></figcaption>
+    </figure>
+    <p>З позначеного прямокутного трикутника видно, що <span
+    class="math inline">\(f&#39; = \dfrac{df}{dx} = tg(\alpha)\)</span>.
+    Отже, похідна рівна тангенсу кута нахилу графіка.<br />
+    Кут нахилу не завжди є однаковим для всього графіка - до
+    прикладу:</p>
+    <figure id="fig:g2">
+    <img src="assets/g2.png" />
+    <figcaption> Демонстрація змінного кута нахилу на прикладі графіку
+    функції <span class="math inline">\(f(x) = \dfrac{x^2}{3}\)</span>.
+    На другій світлині кут, його тангенс і, відповідно, похідна -
+    від’ємні.</figcaption>
+    </figure>
+    <p>Більше того, зміна положення будь-якої з синіх точок може вести
+    за собою зміну кута нахилу:</p>
+    <figure id="fig:g3">
+    <img src="assets/g3.png" />
+    <figcaption> Демонстрація зміни кута <span
+    class="math inline">\(\alpha\)</span> внаслідок руху однієї з
+    точок</figcaption>
+    </figure>
+    <p>Останню проблему якраз вирішує запис <span
+    class="math inline">\(\lim_{x \rightarrow 0}\)</span> у означенні
+    похідної - він змушує нас розташувати точки якнайближче одна до
+    одної:</p>
+    <figure id="fig:g4">
+    <img src="assets/g4.png" />
+    <figcaption> Демонстрація однозначності кута нахилу за близького
+    розташування точок</figcaption>
+    </figure>
+    <p>Показану побудову ви також можете знати, як дотичну.<br />
+    </p>
+    <a href="https://www.geogebra.org/calculator/j6jncmxt" target="_blank">За бажання, можете поекспериментувати з показаними побудовами самостійно.</a>
+    <p> </p>
+    <p><p class="qquad"></p>
+    <p><strong>Геометричний зміст похідної</strong> - тангенс кута
+    нахилу (кутовий коефіцієнт) дотичної до графіка <span
+    class="math inline">\(f(x)\)</span> у точці <span
+    class="math inline">\(x\)</span>.<br />
+    <p class="qquad"></p>
+    <p><strong>Екстремум (локальний максимум/мінімум)</strong> - Точка
+    графіка функції, де значення функції набуває найбільшого/найменшого
+    значення серед точок поряд.<br />
+    <br />
+    Візуально такі точки відповідають “розвороту” графіка. До прикладу,
+    у <span class="math inline">\(y=x^2\)</span> така точка знаходиться
+    у початку координат.<br />
+    Екстремуми мають корисну властивість: похідна функції за їх значення
+    аргументу дорівнює 0. <p class="qquad"></p>
+    <p>      <strong>14.</strong> Знайдіть точки, що відповідають
+    екстремумам функції <span class="math inline">\(f(x) = x^3 - 12\cdot
+    x\)</span><br />
+    Розв’язок: екстремуми відповідають похідній, що рівна 0. Тоді, <span
+    class="math display">\[f&#39;(x) = (x^3 - 12\cdot x)&#39; = 3x^2 -
+    12\]</span> <span class="math display">\[f&#39;(x_e) = 0 \Rightarrow
+    3x_e^2 - 12 = 0 \Rightarrow x_e^2 = 4\]</span> <span
+    class="math display">\[x_e = \pm 2\]</span> Отже, <span
+    class="math inline">\(f(x)\)</span> має екстремуми за <span
+    class="math inline">\(x = \pm 2\)</span>. Тоді, <span
+    class="math inline">\(f(x_e) = x_e^3 - 12\cdot x_e = \pm 2^3 \mp
+    12\cdot 2 = \mp 16\)</span>.<br />
+    Отже, екстремумами <span class="math inline">\(f(x)\)</span> є точки
+    <span class="math inline">\((2, -16)\)</span> та <span
+    class="math inline">\((-2, 16)\)</span>. Графічно це виглядає
+    так:</p>
+    <figure id="fig:g5">
+    <img src="assets/g5.png" />
+    <figcaption> Демонстрація екстремумів функції <span
+    class="math inline">\(f(x) = x^3 - 12\cdot x\)</span></figcaption>
+    </figure>
+    <p>Без використання похідних таку задачу вирішити неможливо. Слід
+    наголосиит на тому, що щойно відбулось - нами було знайдено таке
+    значення <span class="math inline">\(x\)</span>, що функція приймає
+    максимальне/мінімальне значення. Інакше кажучи, апарат похідних
+    можна застосовувати до будь-яких задач, які потребують максимізації
+    значення виразу. Звичайно, у розглянутому випадку можна було б
+    вгадати оптимальне значення <span class="math inline">\(x\)</span>,
+    але вже у такій сутації: <p class="qquad"></p>
+    <p>      <strong>14(2).</strong> Знайдіть точки, що відповідають
+    екстремумам функції <span class="math inline">\(f(x) =
+    \dfrac{2^x}{x^3}\)</span><br />
+    </p>
+    <figure id="fig:g6">
+    <img src="assets/g6.png" />
+    <figcaption> Графік функції <span class="math inline">\(f(x) =
+    \dfrac{2^x}{x^3}\)</span>. Очевидно, що мінімальне значення функції
+    існує, але яке воно і якому значенню <span
+    class="math inline">\(x\)</span> відповідає -
+    незрозуміло.</figcaption>
+    </figure>
+    <p>вгадати потрібну точку буде дуже важко. Тим не менш, алгоритм
+    розв’язку лишається без змін.<br />
+    Розв’язок: екстремуми відповідають похідній, що рівна 0. Тоді, <span
+    class="math display">\[f&#39;(x) = \left(\frac{2^x}{x^3}\right)&#39;
+    = \frac{(2^x)&#39;\cdot x^3 - 2^x \cdot
+    (x^3)&#39;}{(x^3)^2}=\]</span> <span
+    class="math display">\[=\frac{\ln(2)\cdot 2^x\cdot x^3 - 2^x \cdot
+    3\cdot x^2}{x^6} =\]</span> <span class="math display">\[=\frac{2^x
+    \cdot (\ln(2)\cdot x - 3)}{x^4}\]</span> <span
+    class="math display">\[f&#39;(x_e) = 0 \Rightarrow
+    \underbracket{2^{x_e}}_{\ne 0} \cdot (\ln(2)\cdot x_e - 3) = 0
+    \Rightarrow\]</span> <span class="math display">\[\Rightarrow
+    \ln(2)\cdot x - 3 = 0 \Rightarrow x_e = \frac{3}{\ln(2)} \approx
+    4.328...\]</span> Отже, <span class="math inline">\(f(x)\)</span>
+    має екстремум за <span class="math inline">\(x =
+    \dfrac{3}{\ln(2)}\)</span>. Тоді, <span
+    class="math display">\[f(x_e) = \frac{2^{x_e}}{x_e^3} =
+    \frac{2^{\frac{3}{\ln(2)}}}{\left(\frac{3}{\ln(2)}\right)^3} =
+    \frac{e^3 \cdot \ln^3(2)}{27} \approx 0.2477...\]</span> Отже,
+    загадкова точка на графіку це <span class="math inline">\(\left(
+    \dfrac{3}{\ln(2)}; \dfrac{e^3 \cdot \ln^3(2)}{27} \right) \approx
+    (4.328; 0.2477)\)</span>.<br />
+    Як використати такий потужний інструмент? Це вже прояв вашої
+    творчості. Інший приклад використання похідних:</p>
+    <p>      <strong>15.</strong> За допомогою геометричного змісту
+    похідної довести, що дотична до кола перпендикулярна його радіусу,
+    проведеному в ту ж точку.<br />
+    </p>
+    <figure id="fig:g7">
+    <img src="assets/g7.png" />
+    <figcaption> Унаочнення факту, що доводиться</figcaption>
+    </figure>
+    <p>Для початку слід якимось чином представити коло у вигляді
+    функції. Хоча все коло так представлене бути не може, тим не менш,
+    одиничне півколо можна описати функцією <span
+    class="math inline">\(f(x) = \sqrt{1-x^2}\)</span>:</p>
+    <figure id="fig:g8">
+    <img src="assets/g8.png" />
+    <figcaption> Графік функції <span class="math inline">\(f(x) =
+    \sqrt{1-x^2}\)</span></figcaption>
+    </figure>
+    <p>Проведемо радіус до якоїсь точки півкола <span
+    class="math inline">\(A\)</span>. Тоді, <span
+    class="math inline">\(A\)</span> має координати <span
+    class="math inline">\(A(x, \sqrt{1-x^2})\)</span>. Позначимо кут
+    <span class="math inline">\(\alpha\)</span> між віссю абсцис та
+    відрізком <span class="math inline">\(OA\)</span>.<br />
+    Після цього, проведемо дотичну до півкола у точці <span
+    class="math inline">\(A\)</span> та позначимо кут її нахилу <span
+    class="math inline">\(\beta\)</span>. Всі побудови показані на
+    малюнку:</p>
+    <figure id="fig:g9">
+    <img src="assets/g9.png" />
+    <figcaption> </figcaption>
+    </figure>
+    <p>Для доведення перпендикулярності радіуса та дотичної, достатньо
+    показати, що <span class="math inline">\(\alpha + \beta =
+    90\degree\)</span>.<br />
+    <span class="math display">\[tg(\alpha) = \frac{y}{x} =
+    \frac{\sqrt{1-x^2}}{x}\]</span> <span
+    class="math display">\[tg(\beta) = f&#39;(x) = (\sqrt{1-x^2})&#39;
+    =\]</span> <span
+    class="math display">\[=\frac{(1-x^2)&#39;}{2\sqrt{1-x^2}}=
+    \frac{-2\cdot x}{2\sqrt{1-x^2}} = -\frac{x}{\sqrt{1-x^2}}\]</span>
+    Отже, <span class="math inline">\(tg(\alpha) \cdot tg(\beta) =
+    -1\)</span>. Ви можете знати факт, що це означає перпендикулярність
+    кута між <span class="math inline">\(\alpha\)</span> та <span
+    class="math inline">\(\beta\)</span>, але пропоную це
+    перевірити:</p>
+    <p><span class="math display">\[tg(\alpha - \beta) =
+    \frac{tg(\alpha) - tg(\beta)}{1 + tg(\alpha)\cdot tg(\beta)}
+    =\]</span> <span
+    class="math display">\[=\frac{\overbracket{\frac{\sqrt{1-x^2}}{x} +
+    \frac{x}{\sqrt{1-x^2}}}^{\ne 0}}{\underbracket{1 + (-1)}_{= 0 }} =
+    \pm \infty\]</span> Тангенс кута між дотичною та радіусом
+    невизначений, тобто сам кут є прямим.<br />
+    </p>
+    <a href="https://www.geogebra.org/calculator/w98ryyw6" target="_blank">За потреби, можете самостійно переглянути побудови.</a>
+    <p><strong>16.</strong> За відомої функції <span
+    class="math inline">\(f(x)\)</span> побудувати пряму, дотичну до її
+    графіка у точці <span class="math inline">\(x=x_0\)</span>.<br />
+    Розв’язок: нехай, шукана пряма це <span class="math inline">\(y =
+    a\cdot x  +b\)</span>.<br />
+    Як було встановлено раніше, похідна визначає кутовий коефіцієнт
+    дотичної. Отже, <span class="math inline">\(a =
+    f&#39;(x_0)\)</span>.<br />
+    Також шукана пряма має перетинати заданий графік при <span
+    class="math inline">\(x=x_0\)</span>. Тобто, <span
+    class="math inline">\(a\cdot x_0 + b = f(x_0)\)</span> <span
+    class="math display">\[f&#39;(x_0)\cdot x_0 + b = f(x_0) \Rightarrow
+    b = f(x_0) - f&#39;(x_0)\cdot x_0\]</span> Шукана пряма запишеться у
+    вигляді: <span class="math inline">\(y = f&#39;(x_0)\cdot (x-x_0) +
+    f(x_0)\)</span>.</p>
+    <a href="https://www.geogebra.org/calculator/bdc2aydh" target="_blank">До цієї задачі також є ілюстрація, де ви можете задати власну довільну функцію f(x)</a>
+    <h1 class="unnumbered" id="похідні.-вища-математика.">Похідні. Вища
+    математика.</h1>
+    <p>Завдання вище демонструють, що вміння працювати з похідними
+    безумовно є корисним. Тим не менш, похідні у тому розумінні в якому
+    вони подані вище є доволі обмеженими - вони мають працювати лише з
+    числами. Але математика не зупиняється на числах. <p class="qquad"></p>
+    <p>Що, як ваша функція залежить не від числа, а від точки у
+    просторі? Що ж, тоді її можна сприймати, як функцію трьох змінних -
+    координат згаданої точки. Якщо спробувати застосувати поняття
+    похідної до такої функції, виникне проблема: яку зі змінних слід
+    збільшувати? <span class="math display">\[f(x, y, z) \Rightarrow
+    f&#39; = \frac{df}{dx} ?\]</span> <span class="math display">\[f(x,
+    y, z) \Rightarrow f&#39; = \frac{df}{dy} ?\]</span> <span
+    class="math display">\[f(x, y, z) \Rightarrow f&#39; =\frac{df}{dz}
+    ?\]</span></p>
+    <p>Насправді, ви можете збільшувати кожну з них окремо, вважаючи
+    інші сталими. Такі похідні називають частинними: <span
+    class="math display">\[\frac{\partial f}{\partial x} = \lim_{h
+    \rightarrow 0} \frac{f(x+h, y, z) - f(x, y, z)}{h}\]</span> <span
+    class="math display">\[\frac{\partial f}{\partial y} = \lim_{h
+    \rightarrow 0} \frac{f(x, y+h, z) - f(x, y, z)}{h}\]</span> <span
+    class="math display">\[\frac{\partial f}{\partial z} = \lim_{h
+    \rightarrow 0} \frac{f(x, y, z+h) - f(x, y, z)}{h}\]</span></p>
+    <p>Кожна з них описує, як функція реагує на зміну тієї чи іншої
+    змінної. Виявляється, що в такому разі зручно зібрати ці похідні в
+    один вектор: <span class="math display">\[\left( \frac{\partial
+    f}{\partial x};\frac{\partial f}{\partial y};\frac{\partial
+    f}{\partial z} \right) =grad(f)= \vec \nabla f\]</span> Такий вектор
+    називають градієнтом. Його напрям показує, куди слід рухатись, аби
+    функція росла якнайшвидше. Якщо градієнт не показує нікуди, тобто
+    рівний <span class="math inline">\((0;0;0)\)</span>, функція досягла
+    екстремуму. <p class="qquad"></p>
+    <p>Деякі функції можуть складатись з кількох компонент, тобто
+    видавати результатом не число, а вектор. Прикладом такого є
+    залежність положення об’єкта у просторі від часу: <span
+    class="math display">\[\vec r(t) = \left( x(t); y(t); z(t)
+    \right)\]</span> Як було показано вище, швидкість є похідною за
+    часом від положення. Власне, те саме залишається вірним і для
+    векторів: <span class="math display">\[(\vec r(t))&#39; = \left(
+    \frac{dx}{dt};\frac{dy}{dt};\frac{dz}{dt} \right) = \left( v_x(t),
+    v_y(t), v_z(t) \right) = \vec v\]</span> <p class="qquad"></p>
+    <p>Наостанок, згадаємо ситуацію, коли функція залежить від точки в
+    просторі, та сама є вектором. Записати це можна так: <span
+    class="math display">\[\vec f(\vec r) = \left( f_x(x, y, z); f_y(x,
+    y, z); f_z(x, y, z) \right)\]</span> Така конструкція треба,
+    наприклад, щоб описати течію води - у кожній точці вода тече у якусь
+    сторону та з деякою швидкістю.<br />
+    Якщо задатись питанням, що таке похідна від <span
+    class="math inline">\(\vec f(\vec r)\)</span>, у вас буде всього 9
+    варіантів: <span class="math display">\[\frac{\partial f_x}{\partial
+    x},\quad \frac{\partial f_x}{\partial y},\quad \frac{\partial
+    f_x}{\partial z},\quad \frac{\partial f_y}{\partial x},\quad
+    \frac{\partial f_y}{\partial y},\quad \frac{\partial f_y}{\partial
+    z},\quad \frac{\partial f_z}{\partial x},\quad \frac{\partial
+    f_z}{\partial y},\quad \frac{\partial f_z}{\partial z}\]</span></p>
+    <p>Хоча всі з них маюсь цілком конкретний зміст, окремо одне від
+    одного вони не часто бувають корисні.<br />
+    Натомість, у нагоді можуть стати наступні конструкції з цих 9ти
+    елементів: <span class="math display">\[\frac{\partial f_x}{\partial
+    x} + \frac{\partial f_y}{\partial y} + \frac{\partial f_z}{\partial
+    z} = div(\vec f) = \vec \nabla \vec f\]</span> <span
+    class="math display">\[\left( \frac{\partial f_z}{\partial
+    y}-\frac{\partial f_y}{\partial z};\frac{\partial f_x}{\partial z}-
+    \frac{\partial f_z}{\partial x}; \frac{\partial f_y}{\partial
+    x}-\frac{\partial f_x}{\partial y} \right) = rot(\vec f) = \vec
+    \nabla \times \vec f\]</span></p>
+    <p>Їх математичний зміст доволі складний, але якщо повертатись до
+    течії води, можна провести наступні аналогії:<br />
+    <span class="math inline">\(div(\vec f)\)</span> покаже, де вода
+    з’являється або зникає. За звичайних умов, вода так себе не веде,
+    тобто для неї <span class="math inline">\(div(\vec f) \equiv
+    0\)</span> (що насправді є дуже сильною умовою!)<br />
+    <span class="math inline">\(rot(\vec f)\)</span> покаже, чи течія
+    води закручуватиме невелику легеньку паличку, що помістили в неї.
+    <p class="qquad"></p>
+    <p>Описані величини можуть здатись не надто корисними, але зважайте
+    що вектором у кожній точці простору може описуватись не лише потік
+    води.</p>
+  </main>
+  <footer>
+    Have a suggestion/want contact me? Here's my <a target="_blank" href="mailto:Infernodambik@gmail.com">email</a>
+    and <a target="_blank" href="tg:t.me/dzuchun">telegram</a>.<br>
+    &#9400dzuchun, all rights reversed (of course they are)
+  </footer>
 </body>
+
 </html>
