@@ -2,7 +2,7 @@
 
 This is a tool for showing properties of trigonometric functions and solving simple equations.<br>
 I designed it myself, for personal use. But I'd be happy to know this tool helps someone else.<br>
-[Video Guide (it's a Rickroll for now)](https://youtu.be/dQw4w9WgXcQ)<br>
+[Video Guide](https://youtu.be/pLrIVEt54HE)<br>
 
 To anyone willing to audit the code: prepare to die of cringe.
 
