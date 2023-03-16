@@ -1,0 +1,519 @@
+:root {
+  /*Styleless vars*/
+  --mirror-opacity: 0.5;
+  --sweep-opacity: 0.4;
+
+  --header-details-size: min(40px, 15vw);
+}
+
+* {
+  /* Make everything more smooooooth */
+  transition-property: all;
+  transition-duration: 20ms;
+
+  /* Default font style */
+  font-style: normal;
+  font-weight: 500;
+  font-family: sans-serif;
+
+  /* A bit more space */
+  margin: 2px;
+}
+
+/* Font settings */
+
+h1 {
+  font-size: x-large;
+}
+
+h2,
+#functions-current-function-val {
+  font-size: large;
+}
+
+h3,
+div,
+button,
+input[type="text"],
+select {
+  font-size: medium;
+}
+
+button,
+.toggler-slider > .bool-toggle {
+  min-height: 30px;
+  margin: 2px;
+}
+
+h4 {
+  font-size: small;
+}
+
+h5 {
+  font-size: smaller;
+}
+
+h6 {
+  font-size: x-small;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+label,
+th,
+td,
+span,
+svg * {
+  user-select: none;
+  text-align: center;
+  margin: auto 0 auto 0;
+}
+
+input[type="text"] {
+  width: 100px;
+  flex-grow: 5;
+}
+
+#i-want-input-wrapper,
+#angle-iwant-pi-wrapper {
+  border-style: solid;
+  padding: 2px;
+  border-color: transparent;
+}
+
+/* I want pi styles */
+
+#i-want-input-wrapper > * {
+  border-width: 2px;
+  border-style: solid;
+  padding: 2px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+#i-want-input-wrapper > #angle-iwant-pi-wrapper {
+  margin-left: 0;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#i-want-input-wrapper > input {
+  margin-right: 0;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+body {
+  width: calc(100vw - 4px);
+  margin: auto;
+}
+
+main {
+  height: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+header {
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 0.3;
+
+  border-radius: 5px;
+  border-width: 3px;
+  border-color: transparent;
+  border-style: ridge;
+
+  width: fit-content;
+  height: fit-content;
+}
+
+header > details {
+  top: 0;
+  left: 0;
+}
+
+header > details > summary {
+  top: 0;
+  left: 0;
+  list-style-type: none;
+  width: var(--header-details-size);
+  height: var(--header-details-size);
+}
+
+header > details[open] > summary {
+  width: 100%;
+}
+
+#header-details-image {
+  margin: 0;
+  width: var(--header-details-size);
+  height: auto;
+}
+
+header > details[open] #header-details-image {
+  margin: 0 auto;
+}
+
+header:hover {
+  opacity: 1;
+}
+
+footer {
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+}
+
+#svg * {
+  transition-property: all;
+  transition-duration: 100ms;
+}
+
+.no-transitions * {
+  transition-property: none;
+  transition-duration: 0;
+}
+
+#svg {
+  min-width: 40vw;
+  width: min(850px, 95vw);
+  height: auto;
+  border-style: solid;
+  border-width: 2px;
+}
+
+#svg > circle {
+  position: relative;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.flex-spread {
+  justify-content: space-evenly;
+}
+
+.flex-grow > * {
+  flex-grow: 3;
+}
+
+button.wolfram {
+  width: min-content;
+  height: min-content;
+  height: 30px;
+  margin: auto 0 auto 5px;
+  padding: 0;
+}
+
+#function-values {
+  flex-wrap: nowrap;
+  width: 95%;
+  padding: 5px;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+#function-values > div {
+  margin: auto;
+  align-content: center;
+}
+
+#function-values > div * {
+  align-content: center;
+  margin: auto;
+}
+
+button.wolfram > img {
+  margin: 0;
+}
+
+.category {
+  align-content: center;
+  border-width: 2px;
+  border-style: solid;
+  padding-right: 5px;
+  flex-grow: 3;
+  padding: 2px;
+}
+
+.category-header {
+  margin-top: 10px;
+  padding-bottom: 5px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  margin-bottom: 5px;
+}
+
+.value-display {
+  min-width: 5em;
+  width: fit-content;
+}
+
+.resetter {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  outline-style: none;
+  margin: 2px;
+}
+
+.resetter::before {
+  content: "";
+  display: block;
+  opacity: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transition: all 1s;
+  pointer-events: none;
+}
+
+.toggle {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin: 5px;
+}
+
+.toggle > * {
+  margin-left: 3px;
+  margin-right: 3px;
+  flex-grow: 5;
+}
+
+.toggle > .toggler-wrapper {
+  flex-grow: 2;
+}
+
+.angle-label,
+.svg-axes {
+  font-size: 3px;
+  font-weight: 150;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+.label-bg {
+  stroke-width: 0.6px;
+}
+
+.pointer-label {
+  font-size: 3px;
+  font-weight: 150;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+.functions-label {
+  font-size: 2.5px;
+  font-weight: 150;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+#angle-iwant-pi {
+  display: none;
+}
+
+/* Control tabs */
+/* source: https://codeconvey.com/html-tabs-example-with-code */
+
+.settings-tabbar {
+  margin: 0;
+  padding: 0;
+  left: 0;
+  right: 0;
+  max-width: calc(100% - 20px - 4px);
+  list-style: none;
+  position: relative;
+  margin: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0;
+  align-content: baseline;
+  height: auto;
+}
+
+.settings-tabbar > input[type="radio"] {
+  display: none;
+}
+
+.settings-tabbar > label {
+  flex-grow: 3;
+  margin: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-align: center;
+  border-width: 2px;
+  border-bottom-width: 0;
+  border-style: groove;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-tabs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.settings-tab {
+  margin: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+  flex-grow: 3;
+  text-align: center;
+  border-width: 3px;
+  border-style: groove;
+  overflow-y: scroll;
+  align-content: flex-start;
+  max-width: min(95vw);
+}
+
+.settings-tab.thin {
+  max-height: 40vh;
+}
+
+.settings-tab.wide {
+  max-height: 700px;
+}
+
+/* Function selectors */
+.functions-selectors > input {
+  display: none;
+}
+
+.functions-selectors > label {
+  border-style: solid;
+  border-width: 2px;
+  flex-grow: 3;
+  margin: 0;
+  margin-left: 3px;
+  margin-right: 3px;
+  border-color: transparent;
+}
+
+#active-zones-category {
+  width: fit-content;
+  align-content: center;
+}
+
+#active-zones-category > h2 {
+  width: 100%;
+}
+
+#active-areas-table {
+  width: fit-content;
+  margin: 0 auto;
+  border-style: groove;
+  border-width: 2px;
+}
+
+#active-areas-table tr {
+  margin: 1px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0;
+}
+
+#active-areas-table td,
+#active-areas-table th {
+  text-align: center;
+}
+
+#active-areas-table th {
+  width: fit-content;
+}
+
+button.flex-row {
+  width: 100%;
+}
+
+button.flex-row > * {
+  margin: 5px;
+}
+
+.area-unstroked {
+  stroke-width: 0;
+}
+
+#button-clipboard-state,
+#button-clipboard-url,
+#share-generate {
+  flex-grow: 2;
+  max-width: 33%;
+}
+
+.clipboard-active,
+.clipboard-active:hover {
+  font-weight: 600;
+}
+
+#share-generate {
+  height: 30px;
+  max-width: 250px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+select {
+  background-color: transparent;
+  border: none;
+}
+
+#formulae-result {
+  width: 100%;
+  margin: 5px auto;
+}
+
+#formulae-result > * {
+  display: block;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  padding: 2px;
+  white-space: normal;
+  overflow-x: auto;
+  min-height: 30px;
+  overflow-y: hidden;
+  max-width: 95%;
+  margin: auto 0;
+}
+
+#formulae-result > * > input {
+  display: none;
+}
+
+.error-button {
+  min-width: 250px;
+}

@@ -1,3 +1,12 @@
+# ignore gimp project files
+**/*.xcf
+
+
+interactive-trigonometry/icon.html
+interactive-trigonometry/interactive-trigonometry.html
+interactive-trigonometry/favicon.svg
+
+
 learn/*.sh
 learn/tex/*
 learn/preamble.tex
