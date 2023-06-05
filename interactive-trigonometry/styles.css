@@ -1,0 +1,340 @@
+:root {
+  --graph-size: 40vw;
+  --controller-size: calc(100vw - var(--graph-size) - 30px);
+
+  --primary-border-color: black;
+  --secondary-border-color: rgb(52, 52, 52);
+
+  --primary-background: white;
+
+  --axis-color: black;
+  --graph-stroke-color: black;
+  --graph-background-color: white;
+
+  --pointer-color: rgb(0, 94, 0);
+  --sin-color: rgb(0, 0, 134);
+  --cos-color: rgb(119, 0, 0);
+  --tancot-color: rgb(102, 0, 102);
+
+  --controller-background: white;
+  --controller-highlight: rgb(217, 217, 217);
+  --controller-highlight2: rgb(185, 185, 185);
+  --controller-active: rgb(79, 79, 79);
+  --controller-font-normal: black;
+  --controller-font-inactive: rgb(131, 131, 131);
+  --controller-font-active: rgb(167, 167, 167);
+  --controller-wikiref: rgb(189, 255, 187);
+}
+
+.zones-equals-input,
+.zones-more-input,
+.zones-less-input,
+.zones-positive,
+.zones-negative,
+.zones-equals-button,
+.zones-more-button,
+.zones-less-button {
+  outline-color: transparent;
+  outline-style: solid;
+}
+
+/* Font settings */
+
+h1 {
+  font-size: x-large;
+}
+
+h2,
+#functions-current-function-val {
+  font-size: large;
+}
+
+h3,
+button,
+input[type="text"],
+select {
+  font-size: medium;
+}
+
+button,
+.toggler-slider > .bool-toggle {
+  min-height: 30px;
+  margin: 2px;
+}
+
+footer {
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+}
+
+/*
+I HAVE MYSELF.
+I DELETED LIKE 600 LINES OF THIS SH*T, AND I'M NOT IN RIGHT CONDITION, TO WRITE IT ALL BACK FROM A MEMORY.
+SO I'LL JUST LEAVE SOME ANGRY CAPS HERE, AND YOU WILL IGNORE THAT.
+*/
+
+.graph {
+  width: var(--graph-size);
+  height: var(--graph-size);
+  user-select: none;
+  border: 2px solid var(--primary-border-color);
+  stroke: var(--graph-stroke-color);
+  fill: var(--graph-stroke-color);
+  stroke-width: 0.3;
+  font-size: 4px;
+}
+
+.graph text.backgroundedlabel-fg,
+.graph .guideline-label {
+  stroke: transparent;
+}
+
+.graph text.backgroundedlabel-bg {
+  stroke-width: 0.7;
+  stroke: var(--graph-background-color);
+  fill: var(--graph-background-color);
+}
+
+.graph .pointer.pointer-label {
+  fill: var(--pointer-color);
+  font-size: 5px;
+}
+
+.graph .guideline-label {
+  font-size: 3px;
+}
+
+.graph .trigcircle-axis {
+  opacity: 0.2;
+}
+
+.graph .pointer {
+  stroke: var(--pointer-color);
+}
+
+.graph .pointer-tip {
+  fill: var(--graph-background-color);
+}
+
+.graph .pointer-xmirror,
+.graph .pointer-ymirror {
+  opacity: 0.6;
+}
+.graph .pointer-xmirror.pointer-ymirror {
+  opacity: 0.3;
+}
+
+.graph .guideline-tick {
+  opacity: 0.4;
+}
+
+.graph .function-sin.backgroundedlabel-fg {
+  fill: var(--sin-color);
+}
+
+.graph .function-cos.backgroundedlabel-fg {
+  fill: var(--cos-color);
+}
+
+.graph .function-tan.backgroundedlabel-fg,
+.graph .function-cot.backgroundedlabel-fg {
+  fill: var(--tancot-color);
+}
+
+.graph .function-sin.function-line {
+  stroke: var(--sin-color);
+}
+
+.graph .function-cos.function-line {
+  stroke: var(--cos-color);
+}
+
+.graph .function-tan.function-line,
+.graph .function-cot.function-line {
+  stroke: var(--tancot-color);
+}
+
+.graph .guideline.guideline-line.dynamic-guideline {
+  stroke-dasharray: 1 1;
+}
+
+body {
+  background-color: var(--primary-background);
+}
+
+main,
+.controls div.tabbar,
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.controls {
+  width: var(--controller-size);
+  color: var(--controller-font-normal);
+}
+
+.controls * {
+  user-select: none;
+  text-align: center;
+}
+
+.controls input[type="text"] {
+  user-select: text;
+}
+
+.controls div.tabbar {
+  justify-content: space-around;
+  align-items: end;
+  margin: 0 5px;
+}
+
+.controls div.tabbar > .tabs-label {
+  background-color: var(--controller-highlight);
+  border: 2px solid var(--primary-border-color);
+  padding: 5px;
+  margin: 0 5px;
+  height: 100%;
+  flex-grow: 5;
+  text-align: center;
+}
+
+.controls div.tabbar > .tabs-label.tabs-label-active {
+  background-color: var(--controller-highlight2);
+  border-bottom: none;
+}
+
+.controls .tabs-content {
+  border: 2px solid var(--primary-border-color);
+  margin: 0 3px;
+}
+
+.controls div.tabs-content.angle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.controls .section {
+  border: 2px solid var(--secondary-border-color);
+  margin: 5px;
+  padding: 5px;
+}
+
+.controls .section > h2:first-child {
+  border-bottom: 2px solid var(--secondary-border-color);
+  margin: 5px;
+}
+
+.controls button,
+.controls .selector + label {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  text-align: center;
+  justify-content: space-around;
+  border: 2px solid var(--primary-border-color);
+  border-radius: 3px;
+  margin: 3px;
+  min-height: 30px;
+}
+
+.controls button > * {
+  margin: 0;
+}
+
+.controls button:hover {
+  background-color: var(--controller-highlight2);
+}
+
+.controls button:active {
+  background-color: var(--controller-active);
+  color: var(--controller-font-active);
+}
+
+.controls .angle-interpreted-as-label,
+.controls .angle-interpreted-as,
+.controls .current-angle-degree-label,
+.controls .current-angle-degree,
+.controls .current-angle-radian-label,
+.controls .current-angle-radian {
+  flex-grow: 5;
+  margin: 3px;
+}
+
+.controls .angle-interpreted-as-label,
+.controls .current-angle-degree-label,
+.controls .current-angle-radian-label {
+  text-align: right;
+}
+
+.controls .angle-interpreted-as,
+.controls .current-angle-degree,
+.controls .current-angle-radian {
+  text-align: left;
+}
+
+.controls input[type="text"].angle-iwant-input {
+  flex-grow: 5;
+}
+
+.controls input[type="text"].angle-iwant-input.bad-angle-input {
+  color: red;
+}
+
+.controls input.selector {
+  display: none;
+}
+
+.controls label.angle-iwant-pi-label {
+  cursor: pointer;
+}
+
+.controls input:checked[type="checkbox"].angle-iwant-pi + label.angle-iwant-pi-label,
+.controls .selector:checked + label {
+  background-color: var(--controller-highlight2)
+}
+
+.controls .angle-utils-togglers {
+  display: flex;
+}
+
+.controls .angle-utils-togglers > label {
+  flex-grow: 2;
+  margin: 5px;
+}
+
+.controls .angle-utils-buttons {
+  display: flex;
+}
+
+.controls .angle-utils-buttons > button {
+  flex-grow: 2;
+  margin: 5px;
+  min-height: 40px;
+  padding: 4px;
+}
+
+.controls .functions-values {
+  justify-content: space-around;
+}
+
+.controls .functions-values > * {
+  flex-grow: 1;
+}
+
+.controls .functions-value-display {
+  align-items: center;
+  justify-content: left;
+}
+
+.controls .functions-values {
+  align-items: center;
+}
+
+.graph-configure {
+  top: 20px;
+  left: 20px;
+}

@@ -1,0 +1,88 @@
+/* Default font style */
+* {
+  font-style: normal;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.hidden-content-tab {
+  display: none !important;
+}
+
+/* Noscript warning */
+noscript {
+  display: block;
+  background-color: yellow;
+  border: orangered 3px solid;
+  color: red;
+  text-shadow: black 1px 0 2px;
+  border-radius: 20px;
+}
+
+noscript > ul {
+  position: relative;
+  left: 15%;
+  list-style: square;
+}
+
+/* Footer styling */
+footer {
+  opacity: 0.4;
+}
+footer:hover {
+  opacity: 1;
+}
+footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+footer a {
+  display: block;
+}
+
+/* Footer icons */
+footer a.footer-issue-tracker::before,
+footer a.footer-source-repo::before,
+footer a.footer-email::before,
+footer a.footer-telegram::before {
+  position: absolute;
+  margin-left: -24px;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  content: " ";
+  background-repeat: no-repeat;
+}
+
+footer a.footer-issue-tracker::before {
+  background-image: url(/interactive-trigonometry/assets/issue-tracker.png);
+}
+
+footer a.footer-source-repo::before {
+  background-image: url(/interactive-trigonometry/assets/source-code.png);
+}
+
+footer ul {
+  display: inline-block;
+  border-width: 2px;
+  border-style: dotted;
+  margin: 10px;
+  min-height: 40px;
+  padding: 0 30px;
+}
+
+footer ul * {
+  margin: auto;
+  text-align: center;
+}
+
+footer a.footer-email::before {
+  background-image: url(/interactive-trigonometry/assets/email-icon.png);
+}
+
+footer a.footer-telegram::before {
+  background-image: url(/interactive-trigonometry/assets/telegram-icon.png);
+}

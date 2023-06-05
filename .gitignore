@@ -2,11 +2,10 @@
 **/*.xcf
 
 
-interactive-trigonometry/icon.html
-interactive-trigonometry/interactive-trigonometry.html
 interactive-trigonometry/favicon.svg
+test.html
 
 
-learn/*.sh
+**/*.sh
 learn/tex/*
 learn/preamble.tex

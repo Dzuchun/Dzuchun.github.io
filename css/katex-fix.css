@@ -1,0 +1,23 @@
+.katex {
+  font-style: normal;
+}
+
+/*
+The following allows to add "inline-katex" class to any element that requires forced inline-like math rendering.
+This will force display-mode math to be positioned as if it's an inline-mode rendered math.
+*/
+
+.inline-katex .katex-display {
+  margin: 0; /* remove any margins */
+  display: inline!important; /* make it display inline */
+}
+
+.inline-katex .katex {
+  font-size: 1em !important; /* make math of the same size as surrounding text */
+  display: inline!important; /* make it display inline (2nd time) */
+}
+
+.inline-katex .katex-html {
+  text-align: left; /* force to uncenter math (even in display mode) */
+  display: inline!important; /* make it display inline (3rd time) */
+}
