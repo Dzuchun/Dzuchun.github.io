@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 12.7 12.7"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="language-icon.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#4e4e4e"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="15.279538"
+     inkscape:cx="21.597512"
+     inkscape:cy="23.789986"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:lockguides="false" />
+  <defs
+     id="defs2">
+    <filter
+       id="mask-powermask-path-effect1190_inverse"
+       inkscape:label="filtermask-powermask-path-effect1190"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect1190_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect1190_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1371">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.7874"
+         id="rect1373"
+         width="11.802755"
+         height="3.0995045"
+         x="0.43238467"
+         y="6.311655"
+         transform="rotate(-90)" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.396875;stroke-dasharray:none"
+       id="path234"
+       cx="6.3217807"
+       cy="6.3640289"
+       r="5.6447744" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.396875;stroke-dasharray:none"
+       id="path234-5"
+       cx="6.3499999"
+       cy="6.3499999"
+       rx="4.1315241"
+       ry="5.6636977" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.528785;stroke-dasharray:none"
+       id="path234-5-3-5"
+       cx="6.3499999"
+       cy="6.337606"
+       rx="1.8490463"
+       ry="5.5430818" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.396875;stroke-dasharray:none"
+       id="path234-5-3-5-2"
+       transform="matrix(0,1,-0.99869149,0,-0.01347567,0)"
+       mask="none"
+       ry="5.6428947"
+       rx="1.0099488"
+       cy="-6.3499999"
+       cx="6.3499999"
+       clip-path="url(#clipPath1371)" />
+  </g>
+</svg>

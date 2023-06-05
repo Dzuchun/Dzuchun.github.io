@@ -1,289 +1,59 @@
 :root {
-  --background-color: rgb(255, 255, 255);
-  --foreground-color: rgba(149, 149, 149, 0.426);
-  --focus-bgcolor: rgb(184, 184, 184);
-  --focus-fgcolor: rgba(30, 30, 30, 0.789);
-  --highlight-bgcolor: rgba(195, 195, 195, 0.342);
-  --highlight-fgcolor: rgb(0, 0, 0);
-  --reset-color: rgb(187, 0, 0);
-  --reset-background: rgba(122, 0, 0, 0.533);
+  --primary-border-color: black !important;
+  --secondary-border-color: rgb(187, 187, 187) !important;
 
-  background-color: var(--background-color);
+  --primary-background: white !important;
+
+  --axis-color: black !important;
+  --graph-stroke-color: black !important;
+  --graph-background-color: white !important;
+
+  --pointer-color: rgb(0, 94, 0) !important;
+  --sin-color: rgb(0, 0, 134) !important;
+  --cos-color: rgb(119, 0, 0) !important;
+  --tancot-color: rgb(102, 0, 102) !important;
+
+  --controller-background: white !important;
+  --controller-highlight: rgb(217, 217, 217) !important;
+  --controller-highlight2: rgb(185, 185, 185) !important;
+  --controller-active: rgb(79, 79, 79) !important;
+  --controller-font-normal: black !important;
+  --controller-font-inactive: rgb(131, 131, 131) !important;
+  --controller-font-active: rgb(167, 167, 167) !important;
+  --controller-wikiref: rgb(189, 255, 187) !important;
 }
 
-.pointer-color {
-  stroke: rgb(0, 99, 0);
+.controls input.angle-iwant-pi-lock[type="checkbox"] + label::after,
+.controls a.formulae-wikiref {
+  display: inline-block;
+  content: " ";
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.sin-line-color {
-  stroke: rgb(0, 0, 190);
+.controls input.angle-iwant-pi-lock[type="checkbox"] + label::after {
+  position: relative;
+  left: 2px;
+  height: 100%;
+  width: 20px;
+  background-image: url(assets/lock-unlocked.svg);
 }
 
-.cos-line-color {
-  stroke: rgb(194, 0, 0);
+.controls input.angle-iwant-pi-lock:checked[type="checkbox"] + label::after {
+  background-image: url(assets/lock-locked.svg);
 }
 
-.tan-line-color {
-  stroke: rgb(135, 0, 175);
+.controls a.formulae-wikiref {
+  height: 100%;
+  width: 16px;
+  background-image: url(assets/formulae-wikiref.svg);
 }
 
-.wikiref {
-  color: rgb(0, 155, 0);
-}
-
-* {
-  color: var(--highlight-fgcolor);
-  border-radius: 2px;
-}
-
-input,
-button,
-#active-areas-table {
-  background-color: var(--highlight-bgcolor);
-  outline-style: none;
-  border-color: var(--focus-bgcolor);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 2px;
-}
-
-button:hover {
-  background-color: var(--highlight-bgcolor);
-  border-color: var(--focus-bgcolor);
-  outline-style: none;
-  border-width: 2px;
-  border-style: groove;
-}
-
-input[type="text"] {
-  padding: 2px;
-  border-width: 1px;
-  border-color: transparent;
-}
-
-input[type="text"]:focus {
-  outline-color: var(--focus-bgcolor);
-  background-color: var(--focus-bgcolor);
-  color: var(--focus-fgcolor);
-
-  border-color: var(--highlight-fgcolor);
-}
-
-header:hover {
-  background-color: var(--foreground-color);
-  border-color: var(--focus-fgcolor);
-}
-
-#header-details-image {
+.graph-configure-image {
   content: url(assets/details-icon.svg);
 }
 
-footer,
-footer * {
-  background-color: var(--background-color);
-  color: rgb(187, 187, 187);
-}
-
-footer:hover,
-footer:hover * {
-  color: var(--highlight-fgcolor);
-}
-
-.little-border {
-  border-width: 2px;
-  border-style: solid;
-  border-color: var(--foreground-color);
-  width: fit-content;
-  align-self: center;
-  padding: 3px;
-}
-
-.little-border-right {
-  border-width: 1px;
-  border-right-style: solid;
-  border-right-color: var(--foreground-color);
-  height: 90%;
-  align-self: center;
-  margin-right: 10px;
-  padding-right: 10px;
-}
-
-div.delimiter {
-  border-width: 1px;
-  border-right-style: solid;
-  border-right-color: var(--foreground-color);
-  height: 90%;
-  align-self: center;
-}
-
-.category {
-  border-color: var(--foreground-color);
-  background-color: var(--highlight-bgcolor);
-}
-
-.category-header {
-  border-color: var(--highlight-bgcolor);
-}
-
-.resetter {
-  background-image: url(assets/reset-icon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  padding: 2px;
-}
-
-.resetter::before {
-  background: var(--reset-color);
-}
-
-.resetter:hover:active {
-  border-color: var(--reset-color);
-  transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-.resetter:active::before {
-  transition: all 0.05s;
-}
-
-.resetter:hover {
-  border-color: var(--reset-color);
-}
-
-.resetter:hover:active::before {
-  opacity: 0.2;
-  transition: all 0s;
-}
-
-.label-bg {
-  stroke: var(--background-color);
-}
-
-.default-guideline-stroke {
-  stroke: rgb(192, 192, 192);
-}
-
-.fill-primary {
-  fill: var(--highlight-fgcolor);
-}
-
-.stroke-primary {
-  stroke: var(--highlight-fgcolor);
-}
-
-/* I want pi styles */
-
-#i-want-input-wrapper {
-  padding: 0;
-  border-width: 1px;
-  border-color: transparent;
-}
-
-#i-want-input-wrapper:focus-within {
-  border-color: var(--highlight-fgcolor);
-}
-
-#i-want-input-wrapper:focus-within > #angle-iwant-pi-wrapper {
-  background-color: var(--focus-bgcolor);
-}
-
-#i-want-input-wrapper.pi-smashed:focus-within > #angle-iwant-pi-wrapper {
-  background-color: var(--highlight-bgcolor);
-}
-
-#i-want-input-wrapper > * {
-  border-color: var(--highlight-bgcolor);
-}
-
-/* Multiplier not active */
-#i-want-input-wrapper > #angle-iwant-pi-wrapper {
-  color: var(--foreground-color);
-  background-color: var(--highlight-bgcolor);
-}
-
-/* Multiplier active */
-#i-want-input-wrapper.pi-selected > #angle-iwant-pi-wrapper {
-  color: var(--highlight-fgcolor);
-}
-
-/* Multiplier smashed */
-#i-want-input-wrapper.pi-smashed > #angle-iwant-pi-wrapper {
-  background-color: transparent;
-}
-
-#svg,
-.katex * {
-  stroke: var(--highlight-fgcolor) !important;
-}
-
-/* Tab styles */
-.settings-tabbar > label {
-  border-color: var(--highlight-fgcolor);
-}
-
-.settings-tabbar > [id^="tab"]:checked + label {
-  color: var(--focus-fgcolor);
-  background-color: var(--focus-bgcolor);
-  border-color: var(--highlight-fgcolor);
-}
-
-/* Switches */
-
-.toggler-wrapper > input:checked + .toggler-slider.bool-toggle {
-  background-color: var(--focus-bgcolor); /* Active slider */
-  color: var(--focus-fgcolor);
-  border-color: var(--highlight-fgcolor);
-}
-
-.toggler-slider {
-  background-color: var(--highlight-bgcolor); /* Inactive slider */
-  color: var(--highlight-fgcolor);
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
-}
-
-.toggler-knob {
-  background-color: var(--focus-bgcolor); /* Knob color */
-}
-
-/* Function selectors style */
-.functions-selectors > label.function-selector-active {
-  border-color: var(--highlight-fgcolor);
-  background-color: var(--focus-bgcolor);
-  color: var(--focus-fgcolor);
-}
-
-button.sweep-button-used {
-  border-color: var(--highlight-fgcolor);
-  background-color: var(--focus-bgcolor);
-  color: var(--focus-fgcolor);
-}
-
-.svg-axes,
-.svg-axes *,
-marker * {
-  stroke: var(--foreground-color);
-  fill: var(--foreground-color);
-}
-
-.clipboard-active {
-  border-color: var(--highlight-fgcolor) !important;
-  background-color: var(--focus-bgcolor) !important;
-  color: var(--focus-fgcolor);
-}
-
-.state-error {
-  border-color: var(--reset-color) !important;
-  background-color: var(--reset-background) !important;
-}
-
-#formulae-result > * {
-  border-bottom-color: var(--focus-fgcolor);
-}
-
-.formulae-highlight {
-  border-color: var(--highlight-fgcolor);
-  background-color: var(--focus-bgcolor);
-  color: var(--focus-fgcolor);
+.graph-configure .graph-configure-language-icon {
+  content: url(assets/language-icon.svg);
 }
