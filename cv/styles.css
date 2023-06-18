@@ -125,6 +125,11 @@ details[open] > summary::marker {
   content: "--  ";
 }
 
-a { 
+a {
   color: rgb(0, 7, 107);
+}
+
+p > span {
+  color: rgb(0, 49, 70);
+  text-decoration: underline dashed;
 }
