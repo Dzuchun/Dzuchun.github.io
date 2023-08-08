@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="211.66115mm"
+   height="139.33263mm"
+   viewBox="0 0 211.66115 139.33263"
+   version="1.1"
+   id="svg9246"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="pebble-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview9248"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.95497112"
+     inkscape:cx="419.90799"
+     inkscape:cy="311.52775"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs9243">
+    <rect
+       x="102.50535"
+       y="40.759056"
+       width="615.19446"
+       height="84.949654"
+       id="rect9947" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect9479"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="matrix(1.0624324,0,0,1.0624324,-0.75168037,-36.451941)">
+    <path
+       style="fill:#b2b2b2;fill-opacity:1;stroke:#7f7f7f;stroke-width:15.6989;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 96.308446,45.767722 C 79.352998,47.850056 62.041994,49.017756 46.026962,54.96268 38.019447,57.935142 30.393179,62.116423 24.043141,67.828941 17.693104,73.54146 12.655016,80.838078 10.234204,89.029263 7.0358948,99.851227 8.6059202,111.8258 13.672344,121.90923 c 5.066423,10.08342 13.456756,18.31076 23.18596,24.02798 19.458408,11.43445 43.224367,12.79337 65.722656,11.00359 12.7494,-1.01424 25.49466,-2.95871 37.62791,-7.00345 12.13326,-4.04474 23.67366,-10.26009 32.92022,-19.09621 9.24656,-8.83611 16.10217,-20.40089 18.24858,-33.009172 2.14642,-12.608278 -0.68927,-26.213218 -8.62534,-36.242901 -4.76822,-6.02612 -11.20328,-10.631438 -18.23517,-13.730232 -7.03189,-3.098794 -14.65281,-4.730692 -22.31117,-5.362873 -15.31671,-1.264364 -30.64335,1.39836 -45.897544,3.27176 z"
+       id="path9477"
+       inkscape:path-effect="#path-effect9479"
+       inkscape:original-d="M 96.308446,45.767722 C 65.365545,44.717618 10.355254,53.365097 10.234204,89.029263 10.124417,121.37524 76.398873,145.44547 102.58096,156.9408 128.76304,168.43614 173.16835,30.133133 182.75233,61.589067 193.05074,95.389854 121.89952,46.636203 96.308446,45.767722 Z"
+       sodipodi:nodetypes="sssss" />
+    <text
+       xml:space="preserve"
+       transform="matrix(4.4259807,-0.60661153,0.60661153,4.4259807,-447.76358,-54.719482)"
+       id="text9945"
+       style="font-size:17.3333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';white-space:pre;shape-inside:url(#rect9947);display:inline;fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:1.78583;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"><tspan
+         x="102.50586"
+         y="56.530905"
+         id="tspan13096">PBL</tspan></text>
+  </g>
+</svg>
